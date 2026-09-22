@@ -20,6 +20,7 @@ const extensions = [
   { slug: 'bagisto',                   label: 'Bagisto'            },
   { slug: 'bigcommerce',               label: 'BigCommerce'        },
   { slug: 'azure-integration',         label: 'Azure Integration'  },
+  { slug: 'canva-connector',           label: 'Canva Connector',  icon: '/icons/extensions/canva-connector.svg' },
   { slug: 'cloudflare-r2-integration', label: 'Cloudflare R2'      },
   { slug: 'cs-cart',                   label: 'CS-Cart'            },
   { slug: 'dam',                       label: 'DAM'                },

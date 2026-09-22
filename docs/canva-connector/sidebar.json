@@ -1,0 +1,47 @@
+[
+  {
+    "text": "Canva Connector",
+    "items": [
+      { "text": "Overview",            "link": "/canva-connector/" },
+      { "text": "Installation",        "link": "/canva-connector/installation" },
+      { "text": "Connecting Canva",    "link": "/canva-connector/connecting" },
+      { "text": "Settings Reference",  "link": "/canva-connector/settings" }
+    ]
+  },
+  {
+    "text": "Editing Existing Files",
+    "items": [
+      { "text": "Product Images",  "link": "/canva-connector/product-images" },
+      { "text": "Galleries",       "link": "/canva-connector/galleries" },
+      { "text": "DAM Assets",      "link": "/canva-connector/dam-assets" }
+    ]
+  },
+  {
+    "text": "Bringing Designs In",
+    "items": [
+      { "text": "Importing Designs",      "link": "/canva-connector/importing-designs" }
+    ]
+  },
+  {
+    "text": "Working Inside Canva",
+    "items": [
+      { "text": "Using the Canva App", "link": "/canva-connector/canva-app-usage" }
+    ]
+  },
+  {
+    "text": "Reference",
+    "items": [
+      { "text": "How It Works",           "link": "/canva-connector/architecture" },
+      { "text": "File Formats",           "link": "/canva-connector/file-formats" },
+      { "text": "Permissions",            "link": "/canva-connector/permissions" },
+      { "text": "Limits and Constraints", "link": "/canva-connector/limits" }
+    ]
+  },
+  {
+    "text": "Help",
+    "items": [
+      { "text": "Troubleshooting", "link": "/canva-connector/troubleshooting" },
+      { "text": "Support",         "link": "/canva-connector/support" }
+    ]
+  }
+]

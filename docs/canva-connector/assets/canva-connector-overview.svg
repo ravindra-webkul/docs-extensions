@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 600" width="1120" height="600" role="img" aria-labelledby="cc-title cc-desc">
+  <title id="cc-title">How the Canva Connector moves work between UnoPim and Canva</title>
+  <desc id="cc-desc">Two flows. From the UnoPim admin panel a product image, gallery item or DAM asset is sent to Canva, edited, and written back to the same attribute, the same gallery slot, or a new DAM asset. From inside the Canva editor, the UnoPim Connector app reads the catalog, puts product values onto the canvas, and saves the finished design back to an image or gallery attribute.</desc>
+
+  <style>
+    .panel  { fill: #F8FAFC; stroke: #E2E8F0; }
+    .card   { fill: #FFFFFF; stroke: #CBD5E1; }
+    .canva  { fill: #FFFFFF; stroke: #00C4CC; stroke-width: 2; }
+    .lane   { fill: #F1F5F9; }
+    .h      { font: 600 15px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #0F172A; }
+    .t      { font: 400 13px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #334155; }
+    .m      { font: 400 12px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #64748B; }
+    .lbl    { font: 600 11px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #7C3AED; letter-spacing: .04em; }
+    .step   { font: 700 11px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #7C3AED; letter-spacing: .08em; }
+    .flow   { stroke: #7C3AED; stroke-width: 2; fill: none; }
+  </style>
+
+  <defs>
+    <marker id="cc-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7C3AED"/>
+    </marker>
+  </defs>
+
+  <rect x="1" y="1" width="1118" height="598" rx="18" class="panel" stroke-width="2"/>
+
+  <!-- ── Flow 1: Edit with Canva, from the admin panel ── -->
+  <rect x="28" y="28" width="1064" height="248" rx="14" class="lane"/>
+  <text x="52" y="58" class="step">FROM THE UNOPIM ADMIN PANEL</text>
+
+  <rect x="52" y="76" width="286" height="176" rx="10" class="card"/>
+  <text x="72" y="104" class="h">UnoPim</text>
+  <text x="72" y="132" class="t">Product image attribute</text>
+  <text x="72" y="158" class="t">One item of a gallery</text>
+  <text x="72" y="184" class="t">A DAM image or PDF</text>
+  <text x="72" y="220" class="m">Edit with Canva</text>
+
+  <line x1="352" y1="164" x2="414" y2="164" class="flow" marker-end="url(#cc-arrow)"/>
+  <text x="383" y="150" class="lbl" text-anchor="middle">upload</text>
+
+  <rect x="428" y="76" width="264" height="176" rx="10" class="canva"/>
+  <text x="448" y="104" class="h">Canva</text>
+  <text x="448" y="132" class="t">A design at the file's</text>
+  <text x="448" y="152" class="t">own pixel size</text>
+  <text x="448" y="188" class="m">PDFs arrive as fully</text>
+  <text x="448" y="208" class="m">editable designs</text>
+
+  <line x1="706" y1="164" x2="768" y2="164" class="flow" marker-end="url(#cc-arrow)"/>
+  <text x="737" y="150" class="lbl" text-anchor="middle">export</text>
+
+  <rect x="782" y="76" width="286" height="176" rx="10" class="card"/>
+  <text x="802" y="104" class="h">Back in UnoPim</text>
+  <text x="802" y="132" class="t">Same attribute, channel</text>
+  <text x="802" y="152" class="t">and locale - in place</text>
+  <text x="802" y="178" class="t">That one gallery slot</text>
+  <text x="802" y="204" class="t">A <tspan font-weight="600">new</tspan> DAM asset, never</text>
+  <text x="802" y="224" class="t">overwriting the original</text>
+
+  <!-- ── Flow 2: the Canva App, from inside the editor ── -->
+  <rect x="28" y="300" width="1064" height="272" rx="14" class="lane"/>
+  <text x="52" y="330" class="step">FROM INSIDE THE CANVA EDITOR</text>
+
+  <rect x="52" y="348" width="286" height="200" rx="10" class="card"/>
+  <text x="72" y="376" class="h">UnoPim catalog</text>
+  <text x="72" y="404" class="t">Products, attributes,</text>
+  <text x="72" y="424" class="t">prices and images</text>
+  <text x="72" y="460" class="m">Read in the channel and</text>
+  <text x="72" y="480" class="m">locale you choose</text>
+  <text x="72" y="516" class="m">/api/canva</text>
+
+  <line x1="352" y1="436" x2="414" y2="436" class="flow" marker-end="url(#cc-arrow)"/>
+  <text x="383" y="422" class="lbl" text-anchor="middle">reads</text>
+
+  <rect x="428" y="348" width="264" height="200" rx="10" class="canva"/>
+  <text x="448" y="376" class="h">UnoPim Connector app</text>
+  <text x="448" y="404" class="t">A panel beside</text>
+  <text x="448" y="424" class="t">the canvas</text>
+  <text x="448" y="460" class="m">Add a value, or select an</text>
+  <text x="448" y="480" class="m">element to replace it</text>
+  <text x="448" y="516" class="m">Text lands in text, an</text>
+  <text x="448" y="536" class="m">image in an image</text>
+
+  <line x1="706" y1="436" x2="768" y2="436" class="flow" marker-end="url(#cc-arrow)"/>
+  <text x="737" y="422" class="lbl" text-anchor="middle">saves</text>
+
+  <rect x="782" y="348" width="286" height="200" rx="10" class="card"/>
+  <text x="802" y="376" class="h">Onto the product</text>
+  <text x="802" y="404" class="t">An image attribute is</text>
+  <text x="802" y="424" class="t">replaced</text>
+  <text x="802" y="450" class="t">A gallery keeps what it</text>
+  <text x="802" y="470" class="t">has and gains the design</text>
+  <text x="802" y="506" class="m">Multi-page designs add</text>
+  <text x="802" y="526" class="m">one image per page</text>
+</svg>

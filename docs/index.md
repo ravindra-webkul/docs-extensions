@@ -48,6 +48,10 @@ features:
     details: Azure-based storage and media integration for UnoPim extensions.
     link: /azure-integration/
     linkText: Read docs
+  - title: Canva Connector
+    details: Edit product images, gallery items, and DAM assets in Canva, and bind live product data onto a design from inside the Canva editor.
+    link: /canva-connector/
+    linkText: Read docs
   - title: Cloudflare R2 Integration
     details: Offload product and category media to Cloudflare R2 storage with CDN delivery.
     link: /cloudflare-r2-integration/

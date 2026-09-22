@@ -57,6 +57,7 @@ const extensions = [
   { slug: 'bagisto',                   label: 'Bagisto',          icon: '/icons/extensions/bagisto.png'  },
   { slug: 'bigcommerce',               label: 'BigCommerce',      icon: '/icons/extensions/bigcommerce.png' },
   { slug: 'azure-integration',         label: 'Azure Integration', icon: '/icons/extensions/azure-integration.png' },
+  { slug: 'canva-connector',           label: 'Canva Connector', icon: '/icons/extensions/canva-connector.svg' },
   { slug: 'cloudflare-r2-integration', label: 'Cloudflare R2', icon: '/icons/extensions/cloudflare-r2-integration.png' },
   { slug: 'cs-cart',                   label: 'CS-Cart',     icon: '/icons/extensions/cs-cart.png'      },
   { slug: 'dam',                       label: 'DAM',              icon: '/icons/extensions/dam.png'      },
