@@ -10,7 +10,7 @@ The extension registers **two separate Canva applications**. They are created in
 
 | | Connect API integration | Canva App |
 |---|---|---|
-| Created in the portal as | An **Integration** (Connect API) | An **App** |
+| Created in the portal as | An **App**, configured under **Outside Canva** | An **App**, configured under **Inside Canva** |
 | Runs in | The UnoPim admin panel | The Canva editor |
 | Signs in with | OAuth 2.0 + PKCE, per admin user | The Canva user token, verified by UnoPim |
 | Canva scopes | Five, all required | None |

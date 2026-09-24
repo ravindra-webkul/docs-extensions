@@ -25,7 +25,7 @@ These drive the app that runs inside Canva. Full setup in [Connecting Canva](./c
 | Field | Purpose |
 |---|---|
 | **Canva App ID** | The App ID from the Developer Portal. Every request from the app is verified against Canva's key set for this ID |
-| **Backend Host** | The UnoPim base URL the app calls, no trailing slash |
+| **Backend Host** | The UnoPim base URL the app calls, no trailing slash. Must be publicly reachable over HTTPS: Canva fetches product images from it when binding them onto a canvas |
 | **Frontend Port** | Port for the local dev server. Blank means Canva's default, `8080` |
 | **App Origin** | The origin allowed to load modules from the dev server, needed only for hot reloading. Left empty it is calculated from the App ID as `https://app-<app-id>.canva-apps.com`; fill it in only for a tunnel or LAN host, with no trailing slash |
 | **Enable HMR** | Hot module reloading, development only |

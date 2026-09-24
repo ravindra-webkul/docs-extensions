@@ -5,7 +5,7 @@ The extension talks to Canva through **two separate applications**, both created
 | | Connect API integration | Canva App |
 |---|---|---|
 | Gives you | Edit with Canva, and importing designs into a gallery | A catalog panel inside the Canva editor |
-| Created as | An **Integration** (Connect API) | An **App** |
+| Created as | An **App**, configured under **Outside Canva** | An **App**, configured under **Inside Canva** |
 | Signs in with | OAuth 2.0 + PKCE - shared credentials, one account per admin user | The Canva user token, verified by UnoPim |
 | Canva scopes | Five, all required | None |
 | Required? | Yes, for anything in the admin panel | Yes, for the panel inside the Canva editor |
@@ -16,16 +16,16 @@ Neither depends on the other, so they are set up in turn: start with [Part 1](#p
 
 Everything in the admin panel runs through this. You create it once, enter its credentials into UnoPim, and then each administrator links their own Canva account.
 
-### 1. Create the integration
+### 1. Create the app and copy its credentials
 
 1. Sign in at the [Canva Developer Portal](https://www.canva.com/developers/).
-2. Open **Your integrations** from the portal's navigation.
-3. Create an **Integration** of type **Connect API**.
-4. Name it. Admins see this name on Canva's consent screen.
+2. Open **Your Apps** from the portal's navigation.
+3. Go to **Outside Canva** → **Configuration** → **Credentials**, copy the **Client** ID and generate a Client secret. Store the secret securely because Canva only displays it when it is generated.
 
 ### 2. Enable the scopes
+Go to **Outside Canva** → **Configuration** → **REST APIs**.
 
-All five are required:
+Under Scopes, select the following permissions required by the Canva Connector. All five are required:
 
 | Scope | Without it |
 |---|---|
@@ -44,7 +44,9 @@ Canva only returns to a URL registered in advance.
 
 1. Open **Canva Connector** in UnoPim.
 2. The screen shows the exact redirect URI for your installation. Copy it verbatim.
-3. Paste it into the integration's **Redirect URLs**.
+3. In the Canva Developer Portal, open **Your Apps** from the portal's navigation.
+4. Go to **Outside Canva** → **Redirect URLs**.
+5. Paste the copied URI into the Redirect URLs field.
 
 ![The Connections group of the Canva Connector settings screen, with the Enabled toggle, Client ID and Client Secret fields, the connected Canva account, and the redirect URI to copy](./assets/settings-connections.png)
 
@@ -127,10 +129,13 @@ That has two consequences:
 ### 1. Create the app
 
 1. Sign in at the [Canva Developer Portal](https://www.canva.com/developers/).
-2. Open **Your apps** from the portal's navigation - not *Your integrations*, which is where Part 1's Connect integration lives.
-3. Create an **App** and copy its **App ID**.
-4. Under **Intents**, add the **Design editor** intent. This is what makes it open as an object panel inside a design.
-5. Under **App source**, set the **Development URL** to your dev server - `http://localhost:8080` unless you change the port below.
+2. Open **Your Apps** from the portal's navigation.
+3. Click **Create an app**.
+4. Enter an **App name** and choose the appropriate audience:
+**Public** — for apps intended for general Canva users and potential Apps Marketplace distribution.
+Accept the Developer Terms and click Create app.
+5. After the app is created, open **Inside Canva** and Click **Add intent**. The **Design Editor** intent is configured by default when you create an app using the Apps SDK starter kit
+6. Go to **Inside Canva** → **Code upload**. In the App URL field, enter the URL where your Canva app is running.
 
 **No Canva scopes are needed.** The app calls UnoPim, not Canva's APIs. The portal's **Authentication** section is for apps that sign a user in to a third-party service, which this one does not do.
 
@@ -141,7 +146,7 @@ Open **Canva Connector → Canva App Frontend Setting**:
 | Field | Value |
 |---|---|
 | **Canva App ID** | The App ID from the portal |
-| **Backend Host** | Your UnoPim base URL, no trailing slash |
+| **Backend Host** | Your UnoPim base URL, without a trailing slash. It must be publicly accessible over HTTPS, because Canva fetches product images from it directly |
 | **Frontend Port** | The dev server's port; blank means `8080` |
 | **App Origin** | Leave empty to calculate it from the App ID; set it only for an HMR dev host |
 | **Enable HMR** | Development only |

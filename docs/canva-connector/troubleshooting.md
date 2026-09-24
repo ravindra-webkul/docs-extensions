@@ -137,7 +137,7 @@ The app authenticates with a Canva token, but *saving* needs a Canva Connect acc
 
 ### The dev server will not start, or the panel is blank
 
-Another process holds the port. Set **Frontend Port**, restart `npm start`, and update the **Development URL** in the Developer Portal to match.
+Another process holds the port. Set **Frontend Port**, restart `npm start`, and update the **App URL** under **Inside Canva** → **Code upload** in the Developer Portal to match.
 
 ### A product shows no thumbnail, or is listed by its SKU
 
