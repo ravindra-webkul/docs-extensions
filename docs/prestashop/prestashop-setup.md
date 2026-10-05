@@ -35,25 +35,25 @@ The connector communicates with PrestaShop through its built-in WebService (REST
 
 3. Under **Permissions**, enable the following resources and grant at least the permissions listed:
 
-| Resource | GET | POST | PUT | DELETE |
-|---|---|---|---|---|
-| `categories` | ✓ | ✓ | ✓ | |
-| `products` | ✓ | ✓ | ✓ | |
-| `combinations` | ✓ | ✓ | ✓ | |
-| `product_features` | ✓ | ✓ | ✓ | |
-| `product_feature_values` | ✓ | ✓ | ✓ | |
-| `product_options` | ✓ | ✓ | ✓ | |
-| `product_option_values` | ✓ | ✓ | ✓ | |
-| `images` | ✓ | ✓ | ✓ | |
-| `languages` | ✓ | | | |
-| `shops` | ✓ | | | |
-| `currencies` | ✓ | | | |
-| `stock_availables` | ✓ | ✓ | ✓ | |
-| `tax_rules` | ✓ | | | |
+| Resource | GET | POST | PUT | DELETE | Used for |
+|---|---|---|---|---|---|
+| `shop_urls` | ✓ | | | | Connection test and shop list |
+| `shops` | ✓ | | | | Shop details for Shop Mapping |
+| `languages` | ✓ | | | | Language list for locale mapping |
+| `categories` | ✓ | ✓ | ✓ | | Category export and import |
+| `products` | ✓ | ✓ | ✓ | | Product export and import |
+| `combinations` | ✓ | ✓ | ✓ | | Variant export and import |
+| `product_features` | ✓ | ✓ | ✓ | | Feature attributes |
+| `product_feature_values` | ✓ | ✓ | ✓ | | Feature attribute options |
+| `product_options` | ✓ | ✓ | ✓ | | Variant attributes |
+| `product_option_values` | ✓ | ✓ | ✓ | | Variant attribute options |
+| `stock_availables` | ✓ | ✓ | ✓ | | Product and variant quantities |
+| `images` | ✓ | ✓ | ✓ | ✓ | Product and category images |
+| `attachments` | ✓ | ✓ | ✓ | | Non-image files exported with **With Media** |
 
 ![PrestaShop API Key Permissions](./assets/prestashop-setup/permissions.png)
 
 4. Set **Status** to **Enabled**.
-5. Save the key and copy the generated API key — you will need it in UnoPim.
+5. Save the key and copy the generated API key — you will need it when you [create the credential](./setup-credentials.md) in UnoPim.
 
-> **Note:** For a read-only import setup, you only need GET permission on each resource.
+> **Note:** For an import-only setup, GET permission on each resource is enough. Without GET on `shop_urls`, UnoPim rejects the key with *"Check PrestaShop API key permissions, get(view) shop access is not given."*

@@ -12,7 +12,8 @@
     "items": [
       { "text": "Setup Credentials", "link": "/prestashop/setup-credentials" },
       { "text": "Shop & Channel Mapping", "link": "/prestashop/shop-channel-mapping" },
-      { "text": "Attribute & Other Mapping", "link": "/prestashop/attribute-mapping" }
+      { "text": "Attribute & Other Mapping", "link": "/prestashop/attribute-mapping" },
+      { "text": "Category Mapping", "link": "/prestashop/category-mapping" }
     ]
   },
   {

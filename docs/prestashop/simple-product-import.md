@@ -6,13 +6,13 @@ The simple product import job pulls simple (non-variant) products from PrestaSho
 
 ## How to Run
 
-1. Go to **Data Transfer → Imports → Create Import Job**.
+1. Go to **Data Transfer → Imports → Create Import**.
 
 !["Data Transfer"](./assets/import/data-transfer-import.png)
 !["Create Import Job"](./assets/import/create%20import.png)
 
 
-2. Select importer type **Prestashop Simple Products**.
+2. Select type **Prestashop Simple Products**.
 
 !["Prestashop Simple Products"](./assets/import/import-simple-product.png)
 
@@ -20,10 +20,10 @@ The simple product import job pulls simple (non-variant) products from PrestaSho
 
 | Filter | What to pick |
 |---|---|
-| **Credential** | Your PrestaShop connection |
-| **Shop** | The shop to import from |
-| **Locales** | Which languages to import |
-| **Default Attribute Family** | The family to assign to imported products |
+| **Prestashop Credential** | Your PrestaShop connection (only enabled credentials are listed) — required |
+| **Channel** | The UnoPim channel mapped to the shop you import from — required |
+| **Locales** | The locales to import, from those mapped for the channel — required |
+| **Family** | The attribute family assigned to imported products — required |
 
 4. Save and run the job.
 
@@ -42,10 +42,11 @@ The simple product import job pulls simple (non-variant) products from PrestaSho
 | **Meta title / description** | Localized |
 | **EAN13 / UPC / MPN / Weight** | If mapped in Attribute Mapping |
 | **Stock / Quantity** | If mapped |
+| **Features** | PrestaShop feature values are filled into the feature attributes selected in the Other Mapping tab |
 | **Categories** | Linked using category import mappings |
 | **Images** | Downloaded from PrestaShop and stored in UnoPim |
 
-Field values are populated based on the **Attribute Mapping** configuration. Only attributes that are mapped will be imported.
+Field values are populated based on the **Attribute Mapping** tab, including Extra Mappings. Only mapped fields are imported, and default values are not used on import.
 
 ---
 
@@ -74,7 +75,7 @@ Those products should be imported with the **Configurable Product Import** job i
 
 Images are downloaded directly from the PrestaShop image API and stored in UnoPim's file storage.
 
-- The **cover image** goes to the main image attribute configured in **Attribute Mapping → Other → Image Mapping**.
+- The **cover image** goes to the main image attribute set in **Other Mapping → Images Mapping**.
 - Additional images go to the additional image attribute (if configured).
 - Images are downloaded once — re-importing does not re-download images that already exist.
 
@@ -90,7 +91,7 @@ Run **Category Import** before **Simple Product Import** to ensure category link
 
 ## Localization
 
-Localized fields (name, description, meta fields) are imported for each selected locale using the credential's **Shop & Channel Mapping** (PrestaShop language ID → UnoPim locale code).
+Localized fields (name, description, meta fields) are imported for each selected locale using the credential's **Shop Mapping** (PrestaShop language ID → UnoPim locale code).
 
 ---
 
@@ -99,7 +100,7 @@ Localized fields (name, description, meta fields) are imported for each selected
 | Issue | Fix |
 |---|---|
 | Product fields missing | Check Attribute Mapping — only mapped fields are imported |
-| Default family not found | Ensure the family code in the job filter exists in UnoPim |
+| Default family not found | Select an existing family in the **Family** filter |
 | Categories not linked | Run **Category Import** first |
 | Images not downloading | Check the credential's API key has permission to read images |
 | Product created but no values | Verify the attribute mapping is configured and the attributes exist in the selected family |

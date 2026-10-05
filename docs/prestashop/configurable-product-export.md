@@ -1,29 +1,31 @@
 # Configurable Product Export
 
-The configurable product export job pushes UnoPim configurable products (products with variants) to PrestaShop. In PrestaShop these become **products with combinations** — a parent product that holds shared data, with each variant as a combination underneath it.
+The configurable product export job pushes UnoPim configurable products to PrestaShop. In PrestaShop these become **products with combinations** — a parent product that holds the shared data, with each UnoPim variant as a combination underneath it. The parent and all of its variants are exported in the same job.
+
+---
+
+## Before You Start
+
+- Map **Name** and **Price** in the [Attribute Mapping](./attribute-mapping.md) tab — the job cannot be saved without them.
+- Add the variant-defining attributes (e.g. Color, Size) to *Attributes to be used for variant (For Export)* in the **Other Mapping** tab.
+- Run [Attribute Export](./attribute-export.md) and [Category Export](./category-export.md) first.
 
 ---
 
 ## How to Run
 
-1. Go to **Data Transfer → Exports → Create Export Job**.
+1. Go to **Data Transfer → Exports → Create Export**.
 
 !["Data Transfer"](./assets/export/data-trasnfer.png)
 
 !["Create Export Job"](./assets/export/create-export.png)
 
 
-2. Select exporter type **Prestashop Configurable Products**.
+2. Select type **Prestashop Product Configurable**.
 
-!["Prestashop Configurable Products"](./assets/export/export-configurable.png)
+!["Prestashop Product Configurable"](./assets/export/export-configurable.png)
 
-3. Set the filters:
-
-| Filter | What to pick |
-|---|---|
-| **Credential** | Your PrestaShop connection |
-| **Shop** | The shop to export to |
-| **Locales** | Which languages to include |
+3. Set the filters. They are the same as for [Simple Product Export](./simple-product-export.md#product-export-filters); the data filters apply to the configurable (parent) products.
 
 4. Save and run the job.
 
@@ -35,30 +37,17 @@ The configurable product export job pushes UnoPim configurable products (product
 
 ### Parent Product
 
-| Field | Notes |
-|---|---|
-| **Name** | Localized per language |
-| **Description / Short description** | Localized |
-| **Price** | Base price (required) |
-| **SKU** (`reference`) | From product code |
-| **Slug** (`link_rewrite`) | Auto-generated from name |
-| **Meta title / description** | Localized |
-| **EAN13 / UPC / MPN** | If mapped in Attribute Mapping |
-| **Weight, dimensions** | If mapped |
-| **Active status** | Defaults to active |
-| **Categories** | Linked via category export mappings |
-| **Features** | Attributes marked as features in Attribute Mapping |
-| **Images** | Uploaded via image attribute in Attribute Mapping |
+The parent receives the same mapped fields as a simple product — name, descriptions, meta fields, price, reference, categories, features, and images. See [Simple Product Export](./simple-product-export.md#what-gets-exported).
 
 ### Variants (Combinations)
 
-Each variant is exported as a combination on the parent product with:
-- Its own SKU
-- Price offset (variant price minus parent price)
-- Stock quantity
-- Linked option values (e.g. Color: Red, Size: M)
+Each variant of the parent is exported as a combination with:
+- Its own SKU as the reference
+- A price impact (variant price minus parent price)
+- Its stock quantity
+- Its option values (e.g. Color: Red, Size: M), taken from the parent's variant attributes
 
-> The first variant is set as the **default combination** shown on the product page.
+The parent is linked to its default combination, shown first on the product page.
 
 ---
 
@@ -66,31 +55,30 @@ Each variant is exported as a combination on the parent product with:
 
 | Situation | What happens |
 |---|---|
-| Parent product not in PrestaShop | Parent is **created** first, then variants |
+| Parent product not in PrestaShop | Parent is **created** first, then its combinations |
 | Parent already exported | Parent is **updated** |
 | Variant not yet in PrestaShop | Combination is **created** |
 | Variant already exported | Combination is **updated** |
-| Saved ID missing in PrestaShop | Stale record removed, product **recreated** |
+| Saved ID missing in PrestaShop | **Recreated** |
 
 ---
 
 ## Export Order
 
-The connector always creates the **parent product first**, then exports its variants. Variant attributes (combinations options) must exist in PrestaShop before variants can be linked — run the **Attribute Export** job first.
+The connector always saves the **parent product first**, then its combinations. The option values used by the combinations must already exist in PrestaShop, so run **Attribute Export** first.
 
 **Recommended export order:**
 1. Attribute Export
 2. Category Export
 3. Configurable Product Export
 
+To update only variants later — for example after price or stock changes — use [Product Variant Export](./product-variant-export.md).
+
 ---
 
 ## Images
 
-Images are attached to the **parent product**, not individual combinations.
-
-- Set the image attribute in **Attribute Mapping → Other → Image Mapping**.
-- Images removed from UnoPim are deleted from PrestaShop on the next export.
+Images are attached to the **parent product**, not to individual combinations. They come from **Other Mapping → Images Mapping**. Images removed in UnoPim are deleted from PrestaShop on the next export.
 
 ---
 
@@ -98,8 +86,8 @@ Images are attached to the **parent product**, not individual combinations.
 
 | Issue | Fix |
 |---|---|
-| Variants missing in PrestaShop | Run **Attribute Export** first so combination options exist |
+| Combinations missing in PrestaShop | Run **Attribute Export** first so the option values exist |
+| Parent created but no combinations | Check the variant attributes in Other Mapping and the job log for variant-level errors |
 | Categories not linked | Run **Category Export** first |
-| Parent created but no combinations | Check the job log for variant-level errors |
-| Price shows as 0 on combinations | Ensure the parent product has a base price set |
-| Images not uploading | Set the image attribute in Attribute Mapping → Other → Image Mapping |
+| Price shows as 0 on combinations | Make sure the parent and variants have prices |
+| Images not uploading | Add the image attribute in Images Mapping |

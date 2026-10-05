@@ -6,23 +6,23 @@ The configurable product import job pulls products with combinations from Presta
 
 ## How to Run
 
-1. Go to **Data Transfer → Imports → Create Import Job**.
+1. Go to **Data Transfer → Imports → Create Import**.
 
 !["Data Transfer"](./assets/import/data-transfer-import.png)
 !["Create Import Job"](./assets/import/create%20import.png)
 
-2. Select importer type **Prestashop Configurable Products**.
+2. Select type **Prestashop Product Configurable**.
 
-!["Prestashop Configurable Products"](./assets/import/import-configurable-product.png)
+!["Prestashop Product Configurable"](./assets/import/import-configurable-product.png)
 
 3. Set the filters:
 
 | Filter | What to pick |
 |---|---|
-| **Credential** | Your PrestaShop connection |
-| **Shop** | The shop to import from |
-| **Locales** | Which languages to import |
-| **Default Attribute Family** | The family to assign to imported products |
+| **Prestashop Credential** | Your PrestaShop connection (only enabled credentials are listed) — required |
+| **Channel** | The UnoPim channel mapped to the shop you import from — required |
+| **Locales** | The locales to import, from those mapped for the channel — required |
+| **Family** | The attribute family assigned to imported products — required |
 
 4. Save and run the job.
 
@@ -43,8 +43,8 @@ Same fields as simple product import (name, price, description, categories, imag
 
 The connector picks super attributes in this order:
 
-1. **Variant Import Attributes** — configured in Attribute Mapping → Other → Variant Import Attributes
-2. **Variant Export Attributes** — used as fallback if no import mapping is set
+1. **Option groups imported by Attribute Import** — the attributes recorded when PrestaShop product options were imported
+2. **Variant attributes for export** — the *Attributes to be used for variant (For Export)* list in the Other Mapping tab, used if no import record exists
 
 If a variant attribute is not part of the selected attribute family, it is skipped with a warning in the job log.
 
@@ -84,7 +84,7 @@ If an existing UnoPim product with the same SKU is already type `simple`, the im
 
 ## Images
 
-Handled the same as simple product import — downloaded from PrestaShop and stored in UnoPim's file storage using the image attribute configured in Attribute Mapping.
+Handled the same as simple product import — downloaded from PrestaShop and stored in UnoPim's file storage using the image attributes set in **Other Mapping → Images Mapping**.
 
 ---
 
@@ -102,7 +102,7 @@ Handled the same as simple product import — downloaded from PrestaShop and sto
 | Issue | Fix |
 |---|---|
 | No configurable products found | Verify PrestaShop products have combinations set |
-| Variant attributes missing | Configure Variant Import Attributes in Attribute Mapping → Other |
+| Variant attributes missing | Run **Attribute Import** first, or set the variant attributes in the Other Mapping tab |
 | Variant attributes not assigned to product | Ensure the attributes exist in the selected attribute family |
 | Existing simple product skipped | The SKU exists as `simple` in UnoPim — resolve the conflict manually |
 | Categories not linked | Run **Category Import** first |

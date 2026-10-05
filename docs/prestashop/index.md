@@ -10,32 +10,30 @@ The UnoPim PrestaShop Connector allows businesses to integrate one or more Prest
   <img src="./assets/prestashop-banner.png" width="100%" style="max-height:330px; object-fit:cover; border-radius:8px;" />
 </div>
 
-<br> 
+<br>
 
 
 ---
 
 ## Introduction
 
-With this connector, store owners can synchronize catalog data between UnoPim and PrestaShop through a WebService API-based integration.
+With this connector, store owners can synchronize catalog data between UnoPim and PrestaShop through the PrestaShop WebService API.
 
-It supports both export and import workflows, allowing businesses to manage product information in one central system and keep data aligned across platforms more efficiently. Whether you run a single PrestaShop storefront or multiple shops, the connector handles the complexity of multi-shop and multi-language catalog management from a single place.
+It supports both export and import workflows, so product information can be managed in one central system and kept aligned across platforms. Whether you run a single PrestaShop storefront or a multistore setup, the connector handles shop, channel, currency, and language mapping from a single credential.
 
 ---
 
 ## What the Connector Supports
 
-The connector supports the export and import of categories, attributes, attribute options, simple products, configurable product models, and their variants (combinations).
+The connector exports and imports categories, attributes (features and combination options), simple products, configurable products, and their variants (combinations).
 
-It also supports mapping for standard attributes, custom attributes, categories, images, shop channels, and locales, so product data can be transferred in a structured and reliable way across any number of PrestaShop shops.
+Every connection is configured on one credential page, with tabs for:
 
----
-
-## Why Use This Connector
-
-Managing product data across PrestaShop and other systems manually leads to errors, duplication, and wasted time. The UnoPim PrestaShop Connector centralizes your catalog in UnoPim and automates the sync in both directions.
-
-It keeps product data consistent across platforms and supports important product details such as name, description, short description, SKU, price, special price, quantity, EAN13, UPC, MPN, SEO fields, images, category assignments, attribute options, and product variant combinations.
+- **Shop Mapping** — links each PrestaShop shop to a UnoPim channel, currency, and locales.
+- **Attribute Mapping** — links PrestaShop product fields to UnoPim attributes or fixed default values.
+- **Other Mapping** — image attributes, feature attributes, and variant attributes.
+- **Category Mapping** — links PrestaShop category fields to UnoPim category fields.
+- **History** — a version log of every change made to the credential and its mappings.
 
 ---
 
@@ -43,63 +41,52 @@ It keeps product data consistent across platforms and supports important product
 
 ### Bidirectional Data Sync
 
-- Supports a full PrestaShop to UnoPim import pipeline in addition to UnoPim to PrestaShop exports.
-- Tracks synced records using external ID mapping so updates are applied to the correct entities on re-runs.
-- Persists credential and shop mappings so they can be reused across multiple import and export runs.
+- Exports from UnoPim to PrestaShop and imports from PrestaShop to UnoPim.
+- Tracks synced records by external ID, so re-running a job updates existing records instead of creating duplicates.
+- Recreates a record in PrestaShop if it was deleted there after a previous export.
 
 ### Export Capabilities
 
-- Exports categories from UnoPim to PrestaShop, including full parent-child hierarchy and locale-aware names and descriptions.
-- Exports attributes as PrestaShop product features, with attribute options exported as feature values.
-- Exports variant-defining attributes as PrestaShop product options with their corresponding option values.
-- Exports simple products with all mapped attribute data, category assignments, pricing, SEO fields, and images.
-- Exports configurable product models and their combinations (variants) together in a single pipeline.
-- Supports re-running export jobs to update previously exported catalog data without duplication.
+- Exports categories with their full parent-child hierarchy, localized fields, and category images.
+- Exports feature attributes as PrestaShop product features, and variant attributes as PrestaShop product options, together with their values.
+- Exports simple products with mapped fields, prices, stock, categories, features, images, attachments, and related products.
+- Exports configurable products as PrestaShop products with combinations, including all of their variants.
+- Exports variants on their own with a dedicated variant-only job.
+- Supports **Skip inventory update** and **Skip price update** to leave stock and prices of existing products untouched.
 
 ### Export Mapping and Filtering
 
-- Supports standard attribute mapping and additional custom PrestaShop field mapping.
-- Supports image attribute mapping for main image and additional images.
-- Supports feature-type and variant-type attribute mapping to control how attributes are exported to PrestaShop.
-- Allows filtering exported products by credential, channel, locale, and attribute family.
-- Supports multiple export job profiles for categories, attributes, simple products, product models, and product variants.
+- Maps PrestaShop product fields to UnoPim attributes, with a default value for fields that have no attribute.
+- Maps PrestaShop category fields to UnoPim category fields.
+- Filters exports by channel, locale, currency, attribute, family, status, completeness, update date, category, SKU, and attribute conditions.
 
 ### Import Capabilities
 
-- Imports PrestaShop product features as UnoPim attributes with their feature values as attribute options.
-- Imports PrestaShop product options as variant-defining UnoPim attributes with mapped option values.
-- Imports categories with full hierarchy and locale-aware labels mapped to UnoPim channel-locales.
-- Imports simple products with full attribute mapping, media sync, and category links.
-- Imports configurable products and their combinations as UnoPim product models and variants.
-
-### Import Mapping and Filtering
-
-- Supports shop-to-channel mapping, linking PrestaShop shops to UnoPim channels with locale and currency configuration.
-- Supports locale mapping between PrestaShop language IDs and UnoPim locale codes.
-- Supports filtering imported data by credential, channel, and locale.
-- Automatically assigns attribute families to imported products based on configured mapping.
+- Imports PrestaShop features and product options as UnoPim select attributes with their options.
+- Imports categories with hierarchy, using the Category Mapping to fill UnoPim category fields, including the category image.
+- Imports simple products, configurable products, and variants with images and category links.
 
 ### Multi-Shop Support
 
-- Supports syncing product and catalog data across multiple PrestaShop shops from a single credential.
-- Stores per-shop locale and channel mappings so each shop receives the correct localized data.
-- Maintains shop-specific external ID records to ensure entities are created or updated in the right shop context.
+- Syncs data across multiple PrestaShop shops from a single credential.
+- Stores per-shop channel, currency, default locale, and language mappings so each shop receives the correct localized data.
 
 ### Credential and Connection Management
 
-- Stores PrestaShop WebService credentials (host name and API key) securely within UnoPim.
-- Credentials can be enabled or disabled independently.
-- All import and export jobs require a credential selection, ensuring controlled and auditable connections.
-- Connection configuration and shop mapping are persisted so they do not need to be re-entered for each job.
+- Stores the PrestaShop host URL and WebService key securely, and tests the connection on save.
+- Credentials can be enabled or disabled; only enabled credentials can be used in jobs.
+- Every change to a credential and its mappings is recorded in the **History** tab.
 
 ---
 
 ## Basic Requirements
 
-- PrestaShop 1.7.x up to the latest supported PrestaShop version.
-- PrestaShop WebService must be enabled with a valid API key that has the required permissions.
-- UnoPim version v0.2.x or later.
+- A PrestaShop store with the WebService enabled and an API key with the required permissions (see [PrestaShop Setup](./prestashop-setup.md)).
+- UnoPim 3.0.x or later.
+- PHP 8.4.1 or higher.
 - Your server must meet the UnoPim system requirements before installation.
+
+> For UnoPim 2.1.x, use version 1.1.1 of the connector.
 
 ---
 

@@ -1,43 +1,38 @@
-# Product Variation Export
+# Product Variant Export
 
-The product variation export job pushes variant combinations (child products) to PrestaShop. It focuses only on the combinations — SKU, price, stock, and option values — without re-exporting the parent product's description, images, or categories.
+The product variant export job exports UnoPim **variant products** as PrestaShop combinations. It works variant by variant — the filters apply to the variants themselves — and does not re-send the parent product's data.
 
 ---
 
-## Configurable Product Export vs Product Variation Export
+## Configurable Product Export vs Product Variant Export
 
-Both jobs work with configurable products (products that have variants), but they do different things:
-
-| | Configurable Product Export | Product Variation Export |
+| | Configurable Product Export | Product Variant Export |
 |---|---|---|
-| **Exports parent product** | Yes — name, price, description, images, categories, features | No (only creates parent if it is completely missing) |
-| **Exports variants** | Yes — after exporting the parent | Yes — this is the main focus |
-| **Use when** | First-time sync or updating parent product details | Variants changed (price, stock, options) but parent is unchanged |
-
-> Think of it this way: **Configurable Product Export** does the full job. **Product Variation Export** is a targeted update for combinations only.
+| **Loads** | Configurable (parent) products | Variant products |
+| **Exports parent product** | Yes — name, price, descriptions, images, categories, features | No — only creates the parent if it is missing in PrestaShop |
+| **Exports combinations** | Yes — every variant of each exported parent | Yes — only the variants matched by the filters |
+| **Job count** | One per parent product | One per variant |
+| **Use when** | First-time sync or parent details changed | Only variants changed (price, stock, options) |
 
 ---
 
 ## How to Run
 
-1. Go to **Data Transfer → Exports → Create Export Job**.
+1. Go to **Data Transfer → Exports → Create Export**.
 
 !["Data Transfer"](./assets/export/data-trasnfer.png)
 
 !["Create Export Job"](./assets/export/create-export.png)
 
 
-2. Select exporter type **Prestashop Product Variants**.
+2. Select type **Prestashop Product Variants**.
 
 !["Prestashop Product Variants"](./assets/export/export-product-variant.png)
 
-3. Set the filters:
+3. Set the filters. They are the same as for [Simple Product Export](./simple-product-export.md#product-export-filters), with these differences:
 
-| Filter | What to pick |
-|---|---|
-| **Credential** | Your PrestaShop connection |
-| **Shop** | The shop to export to |
-| **Locales** | Which languages to include |
+- **Identifiers**, **Status**, **Attribute Families**, and the other data filters match the **variants** — for example, paste variant SKUs to export only those combinations.
+- **Categories** matches the categories of the variant's **parent** product.
 
 4. Save and run the job.
 
@@ -49,11 +44,12 @@ Both jobs work with configurable products (products that have variants), but the
 
 | Field | Notes |
 |---|---|
-| **SKU** (`reference`) | Variant's own SKU |
-| **Price offset** | Variant price minus parent base price |
-| **Stock / Quantity** | Variant stock |
-| **Option values** | e.g. Color: Red, Size: M — linked to PrestaShop product option values |
-| **Default combination** | First (or configured default) variant is marked as default |
+| **Reference** | The variant's own SKU |
+| **Price impact** | Variant price minus parent price |
+| **Quantity** | Variant stock |
+| **Option values** | e.g. Color: Red, Size: M — from the parent's variant attributes |
+
+Variant images are not exported by this job.
 
 ---
 
@@ -61,21 +57,21 @@ Both jobs work with configurable products (products that have variants), but the
 
 | Situation | What happens |
 |---|---|
-| Parent product missing | Parent is **created first**, then variants |
-| Combination not in PrestaShop | **Created** and linked to parent |
+| Parent product missing in PrestaShop | Parent is **created first** (logged in the job), then the combination |
+| Combination not in PrestaShop | **Created** and linked to the parent |
 | Combination already exported | **Updated** |
-| Saved combination ID missing in PrestaShop | Recreated |
+| Saved combination ID missing in PrestaShop | **Recreated** |
 
 ---
 
 ## Prerequisites
 
-Variant option values (e.g. "Red", "M") must exist in PrestaShop before combinations can be created. Run jobs in this order:
+Option values (e.g. "Red", "M") must exist in PrestaShop before combinations can be created. Run jobs in this order:
 
 1. Attribute Export
 2. Category Export
 3. Configurable Product Export *(first time)*
-4. **Product Variation Export** *(for variant-only updates after that)*
+4. **Product Variant Export** *(for variant-only updates after that)*
 
 ---
 
@@ -84,6 +80,6 @@ Variant option values (e.g. "Red", "M") must exist in PrestaShop before combinat
 | Issue | Fix |
 |---|---|
 | Combinations not created | Run **Attribute Export** first so option values exist |
-| Parent product missing | Run **Configurable Product Export** first |
-| Price shows as 0 | Ensure parent product has a base price; variant price offset is calculated from it |
-| Options not linked | Check that variant attributes are added in Attribute Mapping → Other → Variant Attributes |
+| Variant not exported | It must belong to a configurable parent; check the job log |
+| Price impact looks wrong | It is the difference between variant and parent price — check both prices |
+| Options not linked | Add the variant attributes in Other Mapping → *Attributes to be used for variant (For Export)* |

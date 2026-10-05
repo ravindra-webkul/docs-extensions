@@ -1,18 +1,18 @@
 # Attribute Export
 
-The attribute export job pushes UnoPim attributes to PrestaShop. Depending on how the attribute is configured in **Attribute Mapping**, it exports as either a **Feature** or a **Variant Option**.
+The attribute export job pushes UnoPim attributes to PrestaShop. Depending on how the attribute is configured in the **Other Mapping** tab, it exports as either a **Feature** or a **Product Option** (used for combinations).
 
 ---
 
 ## How to Run
 
-1. Go to **Data Transfer → Exports → Create Export Job**.
+1. Go to **Data Transfer → Exports → Create Export**.
 
 !["Data Transfer"](./assets/export/data-trasnfer.png)
 
 !["Create Export Job"](./assets/export/create-export.png)
 
-2. Select exporter type **Prestashop Attributes**.
+2. Select type **Prestashop Attributes**.
 
 !["Prestashop Attributes"](./assets/export/attribute-export.png)
 
@@ -20,11 +20,14 @@ The attribute export job pushes UnoPim attributes to PrestaShop. Depending on ho
 
 | Filter | What to pick |
 |---|---|
-| **Credential** | Your PrestaShop connection |
-| **Shop** | The shop to export attributes to |
-| **Locales** | Which languages to include |
+| **Prestashop Credential** | Your PrestaShop connection — required |
+| **Channel** | One or more channels mapped in the credential's Shop Mapping — required |
+| **Locales** | The locales to export — required |
+| **Filter By Code** | Optional. Export only the mapped attributes whose code is listed here; leave empty to export all mapped attributes |
 
 4. Save and run the job.
+
+!["Save and run"](./assets/export/save-attribute-export.png)
 
 !["Job Log"](./assets/export/attribute-export-log.png)
 
@@ -34,10 +37,10 @@ The attribute export job pushes UnoPim attributes to PrestaShop. Depending on ho
 
 | Type | Where configured | What it becomes in PrestaShop |
 |---|---|---|
-| **Feature** | Added to *Feature Attributes* in Attribute Mapping | A product feature (e.g. "Material: Cotton") |
-| **Variant Option** | Added to *Variant Attributes* in Attribute Mapping | A product option used in combinations (e.g. "Color", "Size") |
+| **Feature** | Other Mapping → *Attributes to be used as feature attribute (For Export)* | A product feature (e.g. "Material: Cotton") |
+| **Variant** | Other Mapping → *Attributes to be used for variant (For Export)* | A product option used in combinations (e.g. "Color", "Size") |
 
-Only attributes configured in one of these two sections are exported. Unmapped attributes are skipped.
+Only attributes selected in one of these two lists are exported. If neither list has attributes, the job log reports that no attributes are mapped for export.
 
 ---
 
@@ -45,7 +48,7 @@ Only attributes configured in one of these two sections are exported. Unmapped a
 
 For each attribute:
 
-- **Attribute name** — localized per language
+- **Attribute name** — localized per mapped PrestaShop language
 - **All attribute options** — each option's label is also localized
 
 ---
@@ -63,24 +66,24 @@ For each attribute:
 
 ## Localization
 
-Attribute names and option labels are sent as localized XML — one entry per PrestaShop language ID, using the locale mappings from the credential's **Shop & Channel Mapping**.
+Attribute names and option labels are sent once per PrestaShop language, using the locale mappings from the credential's **Shop Mapping**.
 
-If a locale has no label, it falls back to the attribute/option code.
+If a locale has no label, the attribute or option code is used.
 
 ---
 
 ## Example
 
-UnoPim attribute `color` (Feature type) with options: Red, Blue.
+UnoPim attribute `material` (Feature) with options: Cotton, Wool.
 
 PrestaShop receives:
 ```
-Feature: Color
-  Feature Value: Red
-  Feature Value: Blue
+Feature: Material
+  Feature Value: Cotton
+  Feature Value: Wool
 ```
 
-UnoPim attribute `size` (Variant type) with options: S, M, L.
+UnoPim attribute `size` (Variant) with options: S, M, L.
 
 PrestaShop receives:
 ```
@@ -96,7 +99,7 @@ Product Option: Size
 
 | Issue | Fix |
 |---|---|
-| Attribute not exported | Check it is added in Attribute Mapping (Feature or Variant section) |
-| Options missing | Re-run the job — options sync after the parent attribute is created |
+| Attribute not exported | Add it to the feature or variant list in the Other Mapping tab |
+| Attribute missing from the feature/variant list | Only select-type attributes can be chosen |
 | Names are blank | Make sure the selected locales have label values in UnoPim |
-| Export fails at startup | Verify the credential is active and shop mapping is complete |
+| Export fails at startup | Verify the credential is enabled and its Shop Mapping is complete |

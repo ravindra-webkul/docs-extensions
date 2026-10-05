@@ -6,13 +6,13 @@ The product variant import job pulls combinations (variants) from PrestaShop int
 
 ## How to Run
 
-1. Go to **Data Transfer → Imports → Create Import Job**.
+1. Go to **Data Transfer → Imports → Create Import**.
 
 !["Data Transfer"](./assets/import/data-transfer-import.png)
 
 !["Create Import Job"](./assets/import/create%20import.png)
 
-2. Select importer type **Prestashop Product Variants**.
+2. Select type **Prestashop Product Variants**.
 
 !["Prestashop Product Variants"](./assets/import/import-product-variant.png)
 
@@ -20,10 +20,10 @@ The product variant import job pulls combinations (variants) from PrestaShop int
 
 | Filter | What to pick |
 |---|---|
-| **Credential** | Your PrestaShop connection |
-| **Shop** | The shop to import from |
-| **Locales** | Which languages to import |
-| **Default Attribute Family** | The family to assign to imported products |
+| **Prestashop Credential** | Your PrestaShop connection (only enabled credentials are listed) — required |
+| **Channel** | The UnoPim channel mapped to the shop you import from — required |
+| **Locales** | The locales to import, from those mapped for the channel — required |
+| **Family** | The attribute family assigned to imported products — required |
 
 4. Save and run the job.
 

@@ -1,18 +1,25 @@
 # Category Export
 
-The category export job pushes UnoPim categories to PrestaShop, keeping the same parent-child hierarchy. Each category is created or updated via the PrestaShop Webservice API.
+The category export job pushes UnoPim categories to PrestaShop, keeping the same parent-child hierarchy. Which fields are sent is controlled by the [Category Mapping](./category-mapping.md).
+
+---
+
+## Before You Start
+
+- Complete the credential's [Shop Mapping](./shop-channel-mapping.md).
+- Map at least **Name** in the [Category Mapping](./category-mapping.md) tab. Without it the job cannot be saved: *"The Category Mappings are not set. Please map the category fields in the Category Mapping tab of the credential first."*
 
 ---
 
 ## How to Run
 
-1. Go to **Data Transfer → Exports → Create Export Job**.
+1. Go to **Data Transfer → Exports → Create Export**.
 
 !["Data Transfer"](./assets/export/data-trasnfer.png)
 
 !["Create Export Job"](./assets/export/create-export.png)
 
-2. Select exporter type **Prestashop Categories**.
+2. Select type **Prestashop Categories**.
 
 !["Prestashop Categories"](./assets/export/category-export.png)
 
@@ -20,9 +27,11 @@ The category export job pushes UnoPim categories to PrestaShop, keeping the same
 
 | Filter | What to pick |
 |---|---|
-| **Credential** | Your PrestaShop connection |
-| **Shop** | The shop to export categories to |
-| **Locales** | Which languages to include |
+| **Prestashop Credential** | Your PrestaShop connection (only enabled credentials are listed) — required |
+| **Channel** | One or more channels mapped in the credential's Shop Mapping — required |
+| **Locales** | The locales to export, from those mapped for the selected channel — required |
+| **Filter By Code** | Optional. Export only the categories whose code is listed here; leave empty to export all |
+| **Categories** | Optional. Pick categories from the tree; selected categories are exported along with their parent categories |
 
 4. Save and run the job.
 
@@ -34,50 +43,41 @@ The category export job pushes UnoPim categories to PrestaShop, keeping the same
 
 ## What Gets Exported
 
-For each category (except the root), the connector exports:
+For each category except the UnoPim `root`, the connector sends the fields set in the Category Mapping:
 
-- **Name** — localized per language
-- **Description** — localized
-- **Slug** (`link_rewrite`) — auto-generated from the name if not set
-- **Meta title / Meta description** — localized
-- **Active status**
-- **Parent category** — resolved automatically so PrestaShop hierarchy matches UnoPim
+- **Name, Link Rewrite, Description, Additional Description, Meta Title, Meta Description** — localized per mapped PrestaShop language
+- **Active** status
+- **Image** — the category image, if mapped
+- **Parent category** — resolved automatically so the PrestaShop hierarchy matches UnoPim
+
+If Name has no value, the category code is used; if Link Rewrite has no value, a slug of the name is used. See [Category Mapping](./category-mapping.md) for the full rules.
 
 ![exported category](./assets/export/prestashop-cat.png)
-
-> The `root` category is always skipped.
 
 ---
 
 ## Create vs Update
 
-The connector checks the `prestashop_data_mapping` table to see if a category was exported before.
-
 | Situation | What happens |
 |---|---|
-| No mapping found | Category is **created** in PrestaShop; the new ID is saved |
-| Mapping found, ID exists | Category is **updated** |
-| Mapping found, ID missing in PrestaShop (404) | Category is **recreated** and mapping is refreshed |
+| Category exported before | **Updated** using the saved PrestaShop ID |
+| Not exported before, but a PrestaShop category has `link_rewrite` equal to the UnoPim code | That category is **updated** and linked |
+| No match found | Category is **created**; its new ID is saved |
+| Saved ID no longer exists in PrestaShop | Category is **recreated** and the saved ID refreshed |
+
+New categories are created in the first shop mapped to the selected channel. Other mapped shops receive the localized values for the categories that already exist.
 
 ---
 
 ## Parent-Child Hierarchy
 
-Categories are exported in the correct order — parents before children. The connector:
+Categories are always sent parents first:
 
-1. Builds a full tree of categories.
-2. Walks the tree top-down (depth-first).
-3. Ensures the parent exists in PrestaShop before creating a child.
+1. Top-level UnoPim categories are placed under PrestaShop's **Home** category.
+2. Each child is sent after its parent, with the parent's PrestaShop ID already set.
+3. When you filter by code or category, the parents of the selected categories are added automatically so the tree stays complete.
 
-If a parent category hasn't been exported yet during the same job, the connector creates it first automatically.
-
----
-
-## Localization
-
-Category names and descriptions are sent as localized XML nodes — one entry per PrestaShop language ID.
-
-The connector maps PrestaShop language IDs to UnoPim locales using the **Shop & Channel Mapping** configured in the credential. If a locale has no value, it falls back to the **Default Locale**.
+If a parent cannot be resolved, the child is skipped with a warning in the job log instead of being attached to the wrong place.
 
 ---
 
@@ -90,7 +90,7 @@ Electronics (parent)
         └── Smartphones (grandchild)
 ```
 
-PrestaShop receives them in order: **Electronics → Phones → Smartphones**, each with its parent ID already set.
+PrestaShop receives them in order: **Electronics → Phones → Smartphones**, each with its parent ID already set. Exporting only `smartphones` with **Filter By Code** also sends Electronics and Phones.
 
 ---
 
@@ -98,7 +98,8 @@ PrestaShop receives them in order: **Electronics → Phones → Smartphones**, e
 
 | Issue | Fix |
 |---|---|
-| Categories missing in PrestaShop | Check the job log — look for skipped items or API errors |
-| Category names are blank | Make sure the selected locales have values in UnoPim |
-| Parent category not linked | Ensure the full category tree is included in the export |
-| Export fails at startup | Verify the credential is active and shop mapping is configured |
+| Category job cannot be saved | Map **Name** in the Category Mapping tab |
+| Category names are blank or show the code | Map **Name** and make sure the selected locales have values |
+| Category image not exported | Map **Image** in the Category Mapping tab |
+| Child category skipped | Check the job log — its parent could not be exported |
+| *"The Prestashop Credential is not active."* | Enable the credential in its General tab |

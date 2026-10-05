@@ -6,7 +6,7 @@
 
 The PrestaShop Connector for UnoPim enables seamless synchronization of product data between UnoPim and PrestaShop.
 
-It allows businesses to centrally manage their product catalog in UnoPim and export it directly to their PrestaShop store. Using this connector, users can maintain product information within UnoPim and push categories, products, attributes, and variants to PrestaShop efficiently.
+It allows businesses to centrally manage their product catalog in UnoPim, export categories, attributes, products, and variants to PrestaShop, and import the same data from PrestaShop into UnoPim.
 
 ---
 
@@ -14,9 +14,12 @@ It allows businesses to centrally manage their product catalog in UnoPim and exp
 
 | Requirement | Version |
 |---|---|
-| UnoPim | 2.1.x |
-| PHP | 8.3 or higher |
-| Laravel | 12.x |
+| UnoPim | 3.0.x or later |
+| PHP | 8.4.1 or higher |
+| Laravel | 13.x |
+| Database | MySQL 8.0 or PostgreSQL 16 |
+
+> For UnoPim 2.1.x, use version 1.1.1 of the connector.
 
 ---
 
@@ -95,6 +98,9 @@ php artisan queue:restart
 
 After successful installation:
 
-1. Navigate to the **PrestaShop Connector** section in the UnoPim admin panel.
-2. Add your PrestaShop credentials.
-3. Export categories, attributes, products, and variants to PrestaShop.
+1. Open **Prestashop** in the UnoPim admin sidebar.
+2. Create a credential for your PrestaShop store — see [Setup Credentials](./setup-credentials.md).
+3. Complete the **Shop Mapping**, **Attribute Mapping**, and **Category Mapping** tabs of the credential.
+4. Create export or import jobs under **Data Transfer**.
+
+> The `php artisan prestashop:install` command runs the connector's database migrations and publishes its assets. Run it again after upgrading the connector.

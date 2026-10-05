@@ -4,40 +4,72 @@
 
 ## Credentials
 
-Navigate to **Prestashop → Credentials** in the left sidebar.
+Navigate to **Prestashop** in the left sidebar. It opens the **Credentials** list, which shows each credential's **Host URL** and **Status**, with **Edit**, **Delete**, and **History** actions.
 
 ![PrestaShop Credentials](./assets/setup-credential/credentials.png)
 
 ### Create a Credential
 
-Click **Create Credential**. A modal opens with two fields:
+Click **Create Credential**. A modal opens with two required fields:
 
 | Field | Description |
 |---|---|
-| **Host Name (URL)** | Full URL of your PrestaShop store, e.g. `https://myshop.example.com` |
-| **Webservice Account Key** | The API key from PrestaShop **Advanced Parameters → Webservice** |
+| **Host name (URL of Prestashop)** | Full URL of your PrestaShop store, e.g. `https://myshop.example.com` |
+| **Webservice Account Key** | The API key from PrestaShop **Advanced Parameters → Webservice** (see [PrestaShop Setup](./prestashop-setup.md)) |
 
-UnoPim tests the connection immediately on save. If the URL or key is incorrect, or the API key lacks `GET` permission on the `shops` resource, the form returns an error. On success the credential is saved with **Status: Enabled** and you are redirected to the edit page.
+Click **Save Credential**. UnoPim tests the connection immediately:
+
+- If another credential already uses the same URL, the form shows *"Credentials already exist for this Host URL"*.
+- If the key is wrong or lacks GET permission on `shop_urls`, the error from PrestaShop is shown under the key field, for example *"Check PrestaShop API key permissions, get(view) shop access is not given."*
+- On success the credential is saved as **Enabled** and you are taken to its edit page.
 
 ![PrestaShop Create Credential](./assets/setup-credential/create-credentials.png)
 
-### Edit a Credential
+---
 
-The edit page has two sections:
+## Edit a Credential
 
-**General Settings** — Update the Webservice Account Key or toggle the credential status. The host URL cannot be changed after creation. If you leave the key field showing the masked value (30 asterisks), the existing key is kept.
+The **Edit Credential** page is split into tabs:
+
+| Tab | What you configure | Permission needed |
+|---|---|---|
+| **General** | Webservice key and status | Credentials → Edit |
+| **Shop Mapping** | PrestaShop shop → UnoPim channel, currency, and locales — see [Shop & Channel Mapping](./shop-channel-mapping.md) | Credentials → Edit |
+| **Attribute Mapping** | PrestaShop product fields → UnoPim attributes — see [Attribute & Other Mapping](./attribute-mapping.md) | Attribute Mapping |
+| **Other Mapping** | Images, feature attributes, and variant attributes — see [Attribute & Other Mapping](./attribute-mapping.md) | Attribute Mapping |
+| **Category Mapping** | PrestaShop category fields → UnoPim category fields — see [Category Mapping](./category-mapping.md) | Category Mapping |
+| **History** | Version log of changes | History |
+
+> Attribute Mapping, Other Mapping, and Category Mapping are shared by all credentials. Changing them on one credential changes them for every credential.
+
+### General
+
+**General Settings** — The **Host name (URL of Prestashop)** cannot be changed after creation. The **Webservice Account Key** is shown masked; leave it masked to keep the current key, or type a new one.
+
+**Settings** — The **Status** switch enables or disables the credential.
 
 ![PrestaShop Edit Credential](./assets/setup-credential/edit-cred.png)
 
-**Prestashop Multishops and Channels Mapping** — Maps each PrestaShop shop to a UnoPim channel. UnoPim fetches the shop list from your PrestaShop instance via the API. For each shop, configure:
+When you change the key or status, the connection is tested again before saving.
 
-| Column | What to set |
+> A disabled credential is hidden from the **Prestashop Credential** dropdown in jobs, and existing jobs that use it fail validation with *"The Prestashop Credential is not active."*
+
+### Saving Changes
+
+The credential tabs have no separate Save button. As soon as you change a field, a bar appears at the bottom of the page showing **You have unsaved changes** and how many fields are modified, with **Discard** and **Save changes** buttons. Changed fields are marked **Unsaved** until you save.
+
+### History
+
+The **History** tab lists every saved version with **Date / Time**, **Version**, **User**, and **Section**. The section is **Credential** for changes to the General and Shop Mapping tabs, **Mapping** for attribute mapping changes, and **Category Mapping** for category mapping changes. Use **View** to see exactly which values changed.
+
+---
+
+## Permissions
+
+Under **Settings → Roles**, the connector adds a **Prestashop** group:
+
+| Permission | Allows |
 |---|---|
-| **Unopim Channel** | The UnoPim channel to sync with this shop |
-| **Currency** | The currency for this shop (only currencies on the selected channel are listed) |
-| **Default Locale** | The primary locale for this shop |
-| **Locale Mapping** | Maps each PrestaShop language to a UnoPim locale — every language must be mapped |
-
-At least one shop must have a channel selected. For any shop with a channel selected, Currency, Default Locale, and all Locale Mappings are required before you can save.
-
-> A credential with **Status: Disabled** does not appear in job filter dropdowns and cannot be used to run jobs.
+| **Credentials** → Create / Edit / Delete | Managing credentials and their Shop Mapping |
+| **Attribute Mapping** | The Attribute Mapping and Other Mapping tabs |
+| **Category Mapping** | The Category Mapping tab |
