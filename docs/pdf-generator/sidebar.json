@@ -16,16 +16,28 @@
     "text": "Usage",
     "items": [
       {
-        "text": "Flexible Attribute Layout",
+        "text": "Build a Template",
         "link": "/pdf-generator/flexible-attribute-layout"
       },
       {
-        "text": "Product Identification & Description",
+        "text": "Product Data in Templates",
         "link": "/pdf-generator/product-identification"
       },
       {
-        "text": "Generate PDF from Product View",
+        "text": "Download a Product Datasheet",
         "link": "/pdf-generator/generate-pdf-from-product-view"
+      },
+      {
+        "text": "Create a Catalogue",
+        "link": "/pdf-generator/create-catalogue"
+      },
+      {
+        "text": "Custom Fonts",
+        "link": "/pdf-generator/custom-fonts"
+      },
+      {
+        "text": "Manage Templates",
+        "link": "/pdf-generator/manage-templates"
       }
     ]
   },

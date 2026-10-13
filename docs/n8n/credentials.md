@@ -50,6 +50,8 @@ Five fields:
 
 The UnoPim labels and the n8n labels differ in three places. n8n's *Client Secret* is UnoPim's **Secret Key**, n8n's *Username* is UnoPim's **API Username**, and n8n's *Password* is UnoPim's **API Password**.
 
+![n8n UnoPim API credential configuration showing UnoPim URL, Client ID, Client Secret, API Username, and connection test status](./assets/n8n/n8n-credential-setup.png)
+
 > [!CAUTION]
 > ### The Username is not your admin login
 >

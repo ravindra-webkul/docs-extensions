@@ -46,6 +46,8 @@ Returns a list. Two controls decide how much:
 
 UnoPim caps a page at 100 records, so Return All pages through for you. It uses a keyset cursor rather than page offsets, which stays fast on a large catalog where deep offsets slow down.
 
+![UnoPim action node configuration in n8n showing Resource, Operation, and Return All settings](./assets/n8n/n8n-action-node-config.png)
+
 ### Filters and sorting
 
 Open **Options** on a Get Many to narrow the result.
@@ -152,6 +154,8 @@ A shape that works well:
 2. **UnoPim** with Get Many, Return All on, and a filter for the records you care about
 3. Whatever transforms or enriches them
 4. **UnoPim** with Update Partially to write the result back
+
+![Complete catalog sync workflow canvas in n8n connecting UnoPim Trigger to actions](./assets/n8n/n8n-workflow-canvas.png)
 
 For a first full catalog load, UnoPim's own importers and exporters are still the better tool. They batch, they retry, and they have a mapping UI.
 

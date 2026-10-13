@@ -1,31 +1,23 @@
-# Generate PDF from Product View
+# Download a Product Datasheet
 
-After creating and saving a PDF template, you can generate the final PDF directly from the product view.
+A product datasheet is a PDF for one product. Once you have a **Product Datasheet** template, anyone with access can download it from the product page.
 
 ## Steps
 
-### Navigate to Product Catalog
+1. Go to **Catalog > Products** and open the product you want.
+2. At the top of the page, pick the **channel** and **locale** you want in the PDF. The datasheet uses the values for that channel and locale.
+3. Click **Download PDF**. The list shows all your Product Datasheet templates.
+4. Click a template. The PDF downloads right away.
 
-To download a PDF, navigate to the Product Detail Page for the product you've associated with the PDF template. Go to **Catalog > Products**.
+![Download PDF menu on the product edit page](./assets/datasheet/download-pdf.webp)
 
-![product](./assets/generate-pdf/product-catalog.png)
+Here is a datasheet made with the starter **Product Datasheet** template:
 
-### Open Product Detail Page
+![A product datasheet PDF](./assets/datasheet/datasheet-output.webp)
 
-Navigate to the Product Detail Page for the specific product to access the customized PDF template. This page provides a comprehensive view of the product's details, including its name, description, images, pricing, and other relevant information.
+## Good to know
 
-It's where all the key product data is displayed for both admin use and customer browsing.
-
-![edit product](./assets/generate-pdf/editproduct.webp)
-
-### Select PDF Template
-
-User can see a pop-up of templates that has been created and then select the desired template to download PDF. Templates dropdown as shown below:
-
-![templates](./assets/generate-pdf/template-1.webp)
-
-### Download PDF
-
-Once on this page, you'll find the section dedicated to PDF Settings, where the generated PDF is ready for download.
-
-![downloaded pdf](./assets/generate-pdf/downloadedpdf.webp)
+- Only **Product Datasheet** templates show in this menu. Catalogue templates are used from the product grid and from exports. See [Create a Catalogue](./create-catalogue).
+- If the menu says **No PDF template available**, create a Product Datasheet template first, or duplicate the starter one.
+- The **Download PDF** button needs the **Download PDF** permission. Without it, the button is hidden.
+- Not happy with the layout? Open the template under **PDF Templates > Templates**, change it and save. The next download uses the new design.

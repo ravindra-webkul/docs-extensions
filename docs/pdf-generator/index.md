@@ -2,33 +2,47 @@
 
 Store Link: [View on Webkul Store](https://store.webkul.com/unopim-pdf-generator.html)
 
-Unopim PDF Generator helps you create custom PDF templates with structured layouts, dynamic product attributes, and advanced styling controls.
+The PDF Generator turns your UnoPim product data into print-ready PDF files. You design a template once in the admin, and UnoPim fills it with real product values every time you print.
 
-With this module, you can design professional, brand-aligned PDFs and download them directly from the product view.
+There are two kinds of templates:
 
-## Features
+- **Product Datasheet**: one product per PDF. You download it from the product edit page.
+- **Catalogue**: many products in one PDF, with a cover page, category pages, a product grid and a back cover. You create it from the product grid or from an export profile under **Data Transfer > Exports**.
 
-- Create personalized PDF templates with flexible layouts using multiple rows and columns for better content organization.
-- Add dynamic product data such as text, textarea, images, select fields, multiselect values, and price fields.
-- Include permanent content like logos, taglines, or other static text and images to keep branding consistent.
-- Apply background colors or background images to match your brand identity.
-- Adjust font style, font size, and text alignment to give every PDF a polished appearance.
-- Generate and download the final PDF directly from the product view in a fast and simple workflow.
+![A catalogue PDF made with the Alternating Showcase starter template](./assets/catalogue/catalogue-output.webp)
 
-## Benefits
+## What you can do
 
-- Save time by generating ready-to-share PDFs without manual formatting or repeated design work.
-- Keep documents professional by using consistent logos, brand colors, and static visual elements.
-- Present product information in a clean and well-structured format that is easy to read.
-- Use one flexible tool to create product sheets, invoices, catalogs, and marketing documents.
-- Let users build templates through a drag-and-drop interface without needing coding or design expertise.
-- Reduce mistakes by pulling real-time product attributes directly into the PDF template.
-- Share accurate and visually appealing PDFs with clients, partners, and customers in just a few clicks.
+- Build templates in a drag and drop editor that shows real product data while you work.
+- Add text, images, product attributes, product images, attribute tables, system fields, dividers, spacers and page numbers.
+- Split each row into up to 12 columns and style every element: font, size, colour, background, spacing, border and more.
+- Print on A4, A5 or Letter paper, in portrait or landscape.
+- Make catalogues for up to 1000 products. They run in the background, so the admin stays fast.
+- Show product images, gallery images and DAM assets, stored locally or on AWS S3.
+- Upload your own `.ttf` fonts, including fonts for Japanese, Chinese, Korean, Hindi and other scripts.
+- Start from nine ready-made templates, and move templates between UnoPim installs as JSON files.
+- Control who can design, export and download PDFs with role permissions.
+
+## Where to go next
+
+| I want to... | Read |
+|---|---|
+| Install or update the module | [Installation](./manual-installation) |
+| Design a template | [Build a Template](./flexible-attribute-layout) |
+| Show product values, images and DAM assets | [Product Data in Templates](./product-identification) |
+| Download a PDF for one product | [Download a Product Datasheet](./generate-pdf-from-product-view) |
+| Print a catalogue for many products | [Create a Catalogue](./create-catalogue) |
+| Use my brand fonts | [Custom Fonts](./custom-fonts) |
+| Copy, share or delete templates, or set permissions | [Manage Templates](./manage-templates) |
 
 ## Requirements
 
 | Requirement | Version |
 |---|---|
-| **UnoPim** | 2.0.0 |
-| **PHP** | 8.3 or higher |
-| **Laravel** | 12.x |
+| **UnoPim** | 3.1.3 |
+| **PHP** | 8.4 or higher |
+| **Laravel** | 13.x |
+| **Database** | PostgreSQL (tested on 14 and 16) |
+| **UnoPim DAM** | 3.1.0 (optional, only for DAM asset images) |
+
+A queue worker must be running, because catalogues are created in the background.

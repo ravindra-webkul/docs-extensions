@@ -116,6 +116,8 @@ Log in and look for **n8n** in the sidebar. You should see two pages:
 
 Both will be empty until a workflow connects.
 
+![UnoPim Admin Sidebar showing Connected Workflows and Delivery Logs under the n8n section](./assets/admin/unopim-sidebar-n8n.png)
+
 ## Part two: the n8n node
 
 ### 8. Install the node in n8n
@@ -126,7 +128,11 @@ In your n8n instance:
 
 Accept the risk prompt and wait for the install to finish. n8n restarts the node loader by itself.
 
+![n8n Community nodes settings showing n8n-nodes-unopim installed](./assets/n8n/n8n-community-nodes-installed.png)
+
 The package is published on npm at [`https://www.npmjs.com/package/n8n-nodes-unopim`](https://www.npmjs.com/package/n8n-nodes-unopim).
+
+It is a **verified community node**, so both nodes have a page in n8n's integrations directory: [UnoPim](https://n8n.io/integrations/unopim/) for reading and writing the catalog, and [UnoPim Trigger](https://n8n.io/integrations/unopim-trigger/) for starting a workflow when the catalog changes.
 
 To confirm it worked, open any workflow and search the node panel for **UnoPim**. You should find three entries:
 
@@ -135,6 +141,8 @@ To confirm it worked, open any workflow and search the node panel for **UnoPim**
 | **UnoPim** | Reads and writes the catalog |
 | **UnoPim Trigger** | Starts a workflow when the catalog changes |
 | **UnoPim API** | The credential both nodes use |
+
+![Searching for UnoPim in the n8n node creator panel](./assets/n8n/n8n-node-search-unopim.png)
 
 > [!NOTE]
 > Community node installs are disabled on some managed n8n plans. If you do not see the **Community nodes** section, check with whoever administers your instance.

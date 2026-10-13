@@ -26,6 +26,8 @@ Every workflow that has subscribed to an event. Rows appear on their own when so
 
 Search by event, host or workflow id. Filter by event, status, last delivery or connection date.
 
+![UnoPim Connected Workflows listing showing active subscriptions, status, and failure counts](./assets/admin/unopim-connected-workflows.png)
+
 ### Disconnecting a workflow
 
 The list is **read only apart from a manual disconnect**, because n8n creates and removes these rows itself. The delete action exists for the case where a workflow was deleted in n8n before it could unregister.
@@ -72,6 +74,8 @@ Counts that are zero are shown in grey rather than coloured, so a healthy instal
 
 Search by event, record or host. Filter by event, record, status, HTTP code or date.
 
+![UnoPim Delivery Logs with expanded Delivery Summary metrics and attempts datagrid](./assets/admin/unopim-delivery-logs.png)
+
 ### View Payload
 
 Every row has an eye icon. It opens exactly **what was sent** alongside exactly **what came back**.
@@ -84,6 +88,8 @@ The panel shows:
 - The **error message**, when the attempt failed
 - The **payload sent**, as JSON
 - The **response received**, as JSON
+
+![UnoPim Delivery Log Payload modal showing Sent Payload and Response Received side by side](./assets/admin/unopim-delivery-log-payload.png)
 
 ### Why a delivery is Blocked
 

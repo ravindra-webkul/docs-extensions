@@ -11,6 +11,8 @@ Every event is instant. UnoPim pushes the moment a record changes, so there is n
 3. Choose an **Event**. The list is loaded from your instance, so it always matches what that PIM publishes.
 4. Save, then switch the workflow **Active**.
 
+![UnoPim Trigger node configuration in n8n showing event selection and options](./assets/n8n/n8n-trigger-node-config.png)
+
 The moment the workflow goes active, a row appears under **n8n → Connected Workflows** in the UnoPim admin.
 
 ## The 17 events
@@ -77,6 +79,8 @@ A product payload carries:
 | `created_at`, `updated_at` | Timestamps |
 
 A category, attribute or family payload carries `id`, `entity`, `reference`, `event`, `code`, `labels` and the timestamps.
+
+![n8n execution view showing the UnoPim trigger output payload with nested attribute values](./assets/n8n/n8n-trigger-execution-payload.png)
 
 ### Flatten Values
 
