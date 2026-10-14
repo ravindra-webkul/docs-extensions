@@ -1,48 +1,29 @@
 # Mapping history
 
-Every change made to [attribute](./standard-mapping), [custom](./custom-mapping), or [other](./other-mapping) mapping is recorded automatically. Use the history page to see *who changed what, when*, and which mapping the change applied to.
+Every change made to a credential and its [attribute](./standard-mapping), [custom](./custom-mapping), [other](./other-mapping), or [association](./association-mapping) mapping is recorded automatically. Use the history to see *who changed what, when*.
 
-**Open it from:** *BigCommerce → Attribute Mappings → History*
+History now lives **with the credential**: each credential keeps its own change log, covering the credential's own settings and all of its mappings.
 
-<!-- TODO: capture screenshot - bigcommerce-mapping-history.png - Mapping history grid -->
+**Open it from:** *BigCommerce → Credentials → edit a credential → **History*** (the history panel on the credential's edit page)
 
-## What the grid shows
-
-Each row in the list is one change to a mapping:
-
-| Column | What it means |
-|--|--|
-| **Credential** | The BigCommerce credential whose mappings were changed. |
-| **Mapping Type** | `standard`, `custom`, or `other`. |
-| **Changed By** | The admin user that made the change. |
-| **Action** | `created`, `updated`, or `deleted`. |
-| **Changed At** | Timestamp of the change. |
-
-![History detail view](./assets/mapping/history.png)
-
-Click into a row to see the full **before / after** state of the mapping - which attributes were added, removed, or repointed.
-
-You can search, filter by credential or by mapping type, and sort columns. The eye icon opens the detail view.
-
----
+![History detail view](./assets/mapping/mapping-history.png)
 
 ## What's recorded
 
-For each change the history captures:
+Each entry is one change, with:
 
-- The complete **before** snapshot of the mapping.
-- The complete **after** snapshot.
-- Which **specific fields** changed (added, removed, or repointed to a different attribute).
+- **Who** made the change and **when**.
+- The **action** - created, updated, or deleted.
+- The complete **before / after** state, so you can see which fields were added, removed, or repointed to a different attribute.
 
-That way you can answer questions like *"who repointed the `weight` field last Tuesday?"* without reading the audit log.
+Because the credential and its mappings share one history, you can follow the whole story of a store's configuration in a single place - from the credential being created through every mapping tweak since.
 
 ---
 
 ## What's not recorded
 
-- Changes to a **credential's connection settings** (label, API URL, tokens, status). Those are tracked separately on the credential edit page's history tab.
-- Changes to **products / categories** themselves - the connector doesn't audit your catalog, only the mappings.
-- Job runs (imports / exports). Those live in the **Data Transfer Tracker**.
+- Changes to **products / categories** themselves - the connector doesn't audit your catalog, only the credential and its mappings.
+- Job runs (imports / exports). Those live in the **Data Transfer Tracker**, where each job also shows any warnings it raised.
 
 ---
 
@@ -50,9 +31,9 @@ That way you can answer questions like *"who repointed the `weight` field last T
 
 If yesterday's export sent products with the wrong values, the history is the first place to look:
 
-1. Open *BigCommerce → Attribute Mappings → History*.
-2. Filter by **Credential** to the one that ran the export.
-3. Sort by **Changed At** descending - look for changes around the time before yesterday's run.
-4. Open the detail view of any suspicious change and confirm which field moved.
+1. Open **BigCommerce → Credentials** and edit the credential that ran the export.
+2. Open its **History**.
+3. Look for changes around the time before yesterday's run.
+4. Open a suspicious entry and confirm which field moved in the before / after view.
 
 This narrows down whether the problem is a mapping issue (recent change → fix here) or a catalog issue (no mapping changes → check the source data).

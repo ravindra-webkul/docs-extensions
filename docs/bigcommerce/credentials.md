@@ -50,6 +50,9 @@ Before adding a credential in UnoPim, create an **API account** in BigCommerce:
 
 ![BigCommerce API account credentials](./assets/cred/api-cred.png)
 
+> [!NOTE]
+> The connector only needs the **API path** and the **Access Token**. BigCommerce still displays a Client ID and Client Secret, but you don't need to enter them in UnoPim.
+
 You'll paste these into UnoPim next.
 
 ---
@@ -66,38 +69,47 @@ Fill in:
 |--|--|
 | **Label** | Any name you want, e.g. *Production Store*. Used to identify this credential everywhere. |
 | **API URL** | The BigCommerce API path, e.g. `https://api.bigcommerce.com/stores/<store-hash>/`. Copy this from the BigCommerce API account screen. |
-| **Client ID** | Client ID from the API account. |
-| **Client Secret** | Client Secret from the API account. |
 | **Access Token** | Access Token from the API account. |
-| **Status** | Active / Inactive. Inactive credentials are hidden from the import / export filter dropdowns. |
 
 ![credential form](./assets/cred/cred-field.png)
 
 Click **Save Credential**.
 
-> The connector verifies the credentials against BigCommerce before saving. If anything is wrong you see a clear error and nothing is stored.
+> The connector verifies the credentials against BigCommerce before saving. If the API URL or access token is wrong you see a clear error and nothing is stored.
 
-After saving, you land on the edit page where you can adjust the credential settings, locale mapping, and currency mapping.
+A new credential is **active** by default. After saving, you land on its edit page, where each of the credential's mapping screens is available as a tab.
 
 ---
 
 ## Edit a credential
 
-Click the pencil icon on any row.
+Click the pencil icon on any row. The edit page is organised into tabs:
 
-<!-- TODO: capture screenshot - bigcommerce-credential-edit.png - Edit BigCommerce credential page -->
-
-You can:
-
-- Change any of the values you set when creating.
-- Leave **Access Token** and **Client Secret** blank (or as `**********`) to keep the current values - type a new value to replace.
-- Set the **Default Currency** and **Default Locale** that BigCommerce expects when a product doesn't carry a locale-specific value.
-- Configure the **Locale Mapping** - match each UnoPim locale to a BigCommerce locale.
-- Configure the **Currency Mapping** - match each UnoPim currency to a BigCommerce currency.
+| Tab | What it holds |
+|--|--|
+| **General** | The credential itself - see the fields below. |
+| **Attribute Mapping** | [Attribute (standard) mapping](./standard-mapping) for this credential. |
+| **Custom Fields Mapping** | [Custom mapping](./custom-mapping) for this credential. |
+| **Other Mapping** | [Other mapping](./other-mapping) - images, brand, flags. |
+| **Association Mapping** | [Association mapping](./association-mapping) - related products. |
+| **History** | Every change to this credential and its mappings - see [Mapping history](./mapping-history). |
 
 ![Edit credential form](./assets/cred/edit-cred.png)
 
-Click **Update** when done.
+On the **General** tab you can:
+
+- Change the **Label**.
+- Replace the **Access Token** - it shows as `******************************`; leave it untouched to keep the current token, or type a new one to replace it.
+- Toggle the **Status** (Active / Inactive). Inactive credentials are hidden from the import / export filter dropdowns.
+
+The **API URL** is fixed once the credential exists and is shown read-only.
+
+> The connector re-verifies the connection against BigCommerce whenever you save. If it can't reach the store with the new values, the change is rolled back and you see an error.
+
+Click **Update Credential** when done.
+
+> [!NOTE]
+> Earlier versions asked for a Client ID, Client Secret, and per-credential locale / currency mapping on this page. Those are gone - the connector needs only the API path and access token, and export locale / currency are chosen per job on the [product export](./export-products) filters.
 
 ---
 

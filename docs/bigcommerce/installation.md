@@ -43,7 +43,7 @@ return [
 > This registers `BigCommerceServiceProvider` in Laravel so the connector can bootstrap its services, routes, and package configuration during application startup.
 
 > [!TIP]
-> **For UnoPim < 2.0**, add the provider to the `providers` array in `config/app.php` instead.
+> This version of the connector targets **UnoPim 3.0+** (PHP 8.4.1+, Laravel 13) and runs on both MySQL and PostgreSQL.
 
 ### 4. Run the install command
 
@@ -78,22 +78,22 @@ In production use Supervisor / systemd / Horizon. Every export and import is a b
 Open **Settings → Roles**, edit the role, and tick the BigCommerce permissions you want them to have:
 
 - **Credentials** - create, edit, delete BigCommerce credentials.
-- **Standard Mapping** - open and update the standard attribute mapping.
+- **Attribute Mapping** - open and update the attribute (standard) mapping.
 - **Custom Mapping** - open and update the BigCommerce custom-fields mapping.
-- **Other Mapping** - variant axes and category mappings.
-- **Mapping History** - view the change history.
+- **Other Mapping** - images, brand, and product-visibility mapping.
+- **Association Mapping** - map UnoPim associations to BigCommerce related products.
 
 <!-- TODO: capture screenshot - bigcommerce-acl.png - BigCommerce permissions in Settings → Roles -->
 
-Without these the menu and buttons stay hidden.
+Each mapping is a tab on the credential's edit page; a user only sees the tabs they have permission for. Without any of these, the menu and buttons stay hidden.
 
 ## Check it worked
 
-1. **Menu shows up.** Open the admin panel - a **BigCommerce** menu appears in the sidebar with **Credentials** and **Export Mappings** under it.
+1. **Menu shows up.** Open the admin panel - a **BigCommerce** menu appears in the sidebar with **Credentials** under it. The mapping screens now live as tabs on each credential's edit page rather than as their own menu entries.
 
-![BigCommerce menu](./assets/big-comerce.png)
+![BigCommerce menu](./assets/bigcommerce.png)
 
-2. **Add a credential works.** Open **BigCommerce → Credentials → Create Credential**, fill the form, and save. If the API URL or access token is wrong, you see a clear error.
+2. **Add a credential works.** Open **BigCommerce → Credentials → Add Credential**, fill the form, and save. If the API URL or access token is wrong, you see a clear error.
 
 
 3. **Export profile shows up.** Open **Data Transfer → Export → Create Export Profile** - *Export Categories to BigCommerce*, *Export Products to BigCommerce*, and *Export Configurable Product to BigCommerce* appear in the type dropdown.

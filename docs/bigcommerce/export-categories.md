@@ -22,23 +22,28 @@ Push your UnoPim category tree to BigCommerce, keeping the parent / child hierar
 ![Export profile form filled](./assets/export/category-export.png)
 
 
-3. **Fill the filter**
+3. **Fill the filters**
+
+Only **Credential** is required.
 
 | Filter | Required | What it does |
 |--|--|--|
 | **Credential** | ✓ | Pick the BigCommerce credential to export to. Only **active** credentials appear in the dropdown. |
+| **Export with media** | | Also send each category's image. |
+| **Categories** | | Export only the selected categories. Leave empty to push the whole tree. |
+| **With Child Categories** | | Also export every category beneath the ones selected. |
 
 ![Export profile filters](./assets/export/category-filter.png)
 
-There are no other filters - the job pushes every UnoPim category visible to the user.
+Leave the optional filters empty and the job pushes every UnoPim category visible to the user.
 
 Click **Save**.
 
  4. **Run it**
 
-Open the profile and click **Start Export**.
+Open the profile and click **Export Now**.
 
-![Start export button](./assets/export/category-export-now.png)
+![Export Now button](./assets/export/category-export-now.png)
 
 The job is queued. Watch progress in the Data Transfer Tracker.
 

@@ -2,7 +2,7 @@
 
 BigCommerce **custom fields** are key/value pairs you can attach to any product to store extra information (warranty period, technical specs, fit guides - anything that doesn't fit a standard field). The **Custom Mapping** page tells the connector which UnoPim attributes get pushed as BigCommerce custom fields.
 
-**Open it from:** *BigCommerce → Attribute Mappings → Custom Mappings*
+**Open it from:** *BigCommerce → Credentials → edit a credential → **Custom Fields Mapping** tab*
 
 ![Custom Mappings page](./assets/mapping/custom.png)
 

@@ -1,32 +1,31 @@
 # Other mapping
 
-You can use the **Other Mapping** section to configure additional BigCommerce product fields that are not covered under Attribute Mapping.
+You can use the **Other Mapping** tab to configure additional BigCommerce product fields that are not covered under Attribute Mapping - product images, brand, and visibility flags.
 
-**Open it from:** *BigCommerce → Attribute Mappings → Other Mapping*
-
-## Other mapping fields
-
-You can configure the following fields under Other Mapping:
-
-- `Attributes to be used as Image`
-- `Attribute to be used as Cover Image`
-- `Image Description`
-- `Is Featured`
-- `Is Free Shipping`
-- `Brand Id`
+**Open it from:** *BigCommerce → Credentials → edit a credential → **Other Mapping** tab*
 
 ![Other Mapping page](./assets/mapping/other-mapping.png)
 
-## What this section does
+The fields are grouped into two sections:
 
-These mappings help the connector send extra product details from UnoPim to BigCommerce during product export.
+## Image Mapping
 
-- `Attributes to be used as Image` lets you choose the attribute whose value should be used as the product image.
-- `Attribute to be used as Cover Image` lets you choose the attribute used as the main or cover image.
-- `Image Description` maps the attribute used for image description text.
-- `Is Featured` maps the value used to mark the product as featured in BigCommerce.
-- `Is Free Shipping` maps the value used to control free shipping for the product.
-- `Brand Id` maps the attribute used to assign the product to a BigCommerce brand.
+| Field | UnoPim attribute types | What it does |
+|--|--|--|
+| **Attributes to be used as Image** | Image, Gallery, **Asset (DAM)** | The attributes whose values are exported as the product's images. You can pick more than one. |
+| **Attribute to be used as Cover Image** | Image, Asset (DAM) | The attribute used as the product's main / thumbnail image in BigCommerce. |
+| **Image Description** | Text, Textarea | The attribute used as the image alt text / description. |
+
+> [!NOTE]
+> DAM assets can be mapped directly as image fields - the DAM bundle stays optional. Non-image assets and unreachable images are skipped rather than breaking the export, and a warning is recorded on the job.
+
+## Product Visibility
+
+| Field | UnoPim attribute types | What it does |
+|--|--|--|
+| **Is Featured** | Boolean, Simple Select | Marks the product as featured in BigCommerce. |
+| **Is Free Shipping** | Boolean, Simple Select | Controls free shipping for the product. |
+| **Brand ID** | Simple Select | Assigns the product to a BigCommerce brand. If the brand doesn't exist on the store yet, the connector creates it. |
 
 ## Save the mapping
 

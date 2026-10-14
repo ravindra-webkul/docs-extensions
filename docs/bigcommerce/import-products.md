@@ -20,17 +20,20 @@ Pull BigCommerce products into UnoPim - both **simple products** and **configura
 
 ![Import profile form filled](./assets/import/product-import.png)
 
-3. **Fill the filter**
+3. **Set the import filters**
+
+BigCommerce imports take a single filter, in the **Settings** panel on the right of the form:
 
 | Filter | Required | What it does |
 |--|--|--|
-| **Credential** | ✓ | Which BigCommerce store to pull from. Only **active** credentials appear. |
+| **BigCommerce Credential** | ✓ | Which BigCommerce store to pull from. Only **active** credentials appear in the dropdown. |
 
 ![Import profile filters](./assets/import/product-imprt-filter.png)
 
-There are no other filters - the job pulls every available product from the selected BigCommerce store.
+> [!NOTE]
+> Unlike the [product export](./export-products#2-choose-what-to-export), imports have **no field, category, status, or date filters**. The job pulls **every** product from the selected store - both **simple** and **configurable** (variable) products - through this one job. Curate what you keep in UnoPim after the import.
 
-Click **Save**.
+Click **Save Import**.
 
 4. **Run it**
 

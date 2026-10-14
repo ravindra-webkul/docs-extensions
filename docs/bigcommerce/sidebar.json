@@ -13,6 +13,7 @@
       { "text": "Attribute mapping",         "link": "/bigcommerce/standard-mapping" },
       { "text": "Custom mapping",            "link": "/bigcommerce/custom-mapping" },
       { "text": "Other mapping",             "link": "/bigcommerce/other-mapping" },
+      { "text": "Association mapping",       "link": "/bigcommerce/association-mapping" },
       { "text": "Mapping history",           "link": "/bigcommerce/mapping-history" }
     ]
   },

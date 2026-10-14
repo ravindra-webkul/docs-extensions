@@ -20,17 +20,20 @@ Pull your BigCommerce category tree into UnoPim, keeping the parent / child hier
 
 ![Import profile form filled](./assets/import/category-import.png)
 
-3. **Fill the filter**
+3. **Set the import filters**
+
+BigCommerce imports take a single filter, in the **Settings** panel on the right of the form:
 
 | Filter | Required | What it does |
 |--|--|--|
-| **Credential** | ✓ | Which BigCommerce store to pull from. Only **active** credentials appear. |
+| **BigCommerce Credential** | ✓ | Which BigCommerce store to pull from. Only **active** credentials appear in the dropdown. |
 
 ![Import profile filters](./assets/import/category-import-filter.png)
 
-There are no other filters - the job pulls every available category from the selected BigCommerce store.
+> [!NOTE]
+> Imports have **no other filters** - the job pulls the **whole** category tree from the selected store, keeping the parent / child hierarchy intact.
 
-Click **Save**.
+Click **Save Import**.
 
 4. **Run it**
 
