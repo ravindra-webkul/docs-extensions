@@ -7,8 +7,8 @@ The configurable product export job pushes UnoPim configurable products to Prest
 ## Before You Start
 
 - Map **Name** and **Price** in the [Attribute Mapping](./attribute-mapping.md) tab — the job cannot be saved without them.
-- Add the variant-defining attributes (e.g. Color, Size) to *Attributes to be used for variant (For Export)* in the **Other Mapping** tab.
-- Run [Attribute Export](./attribute-export.md) and [Category Export](./category-export.md) first.
+- Make sure each configurable product has its variant attributes (e.g. Color, Size) set in UnoPim. The combinations are built from these attributes.
+- Run [Category Export](./category-export.md) first, and [Attribute Export](./attribute-export.md) for feature attributes and translated option names.
 
 ---
 
@@ -44,10 +44,16 @@ The parent receives the same mapped fields as a simple product — name, descrip
 Each variant of the parent is exported as a combination with:
 - Its own SKU as the reference
 - A price impact (variant price minus parent price)
+- Its ecotax, if Ecotax is mapped
 - Its stock quantity
-- Its option values (e.g. Color: Red, Size: M), taken from the parent's variant attributes
+- Its option values (e.g. Color: Red, Size: M), taken from the configurable product's variant attributes
+- Its images, with **With Media** on
 
-The parent is linked to its default combination, shown first on the product page.
+Other fields such as weight, Ean13, or dimensions are not sent for combinations.
+
+All variants of an exported parent are sent; the data filters apply to the parent only. Variants grouped in several levels are sent as one flat list of combinations.
+
+The parent is linked to its default combination (UnoPim's default variant, or the first one), shown first on the product page.
 
 ---
 
@@ -65,7 +71,7 @@ The parent is linked to its default combination, shown first on the product page
 
 ## Export Order
 
-The connector always saves the **parent product first**, then its combinations. The option values used by the combinations must already exist in PrestaShop, so run **Attribute Export** first.
+The connector always saves the **parent product first**, then its combinations. If an option group (e.g. Color) or option value (e.g. Red) does not exist in PrestaShop yet, it is created automatically. Running **Attribute Export** first gives the options their translated names.
 
 **Recommended export order:**
 1. Attribute Export
@@ -78,7 +84,12 @@ To update only variants later — for example after price or stock changes — u
 
 ## Images
 
-Images are attached to the **parent product**, not to individual combinations. They come from **Other Mapping → Images Mapping**. Images removed in UnoPim are deleted from PrestaShop on the next export.
+Images come from **Other Mapping → Images Mapping**:
+
+- The parent's images are uploaded to the PrestaShop product, with the main image as cover.
+- Each variant's images are uploaded to the same PrestaShop product and assigned to that variant's combination.
+- Image order follows UnoPim, as described in [Simple Product Export](./simple-product-export.md#images).
+- Images removed in UnoPim are deleted from PrestaShop on the next export.
 
 ---
 
@@ -86,8 +97,9 @@ Images are attached to the **parent product**, not to individual combinations. T
 
 | Issue | Fix |
 |---|---|
-| Combinations missing in PrestaShop | Run **Attribute Export** first so the option values exist |
-| Parent created but no combinations | Check the variant attributes in Other Mapping and the job log for variant-level errors |
+| *"No super attributes found for configurable product … Skipping variants."* | Set the variant attributes on the configurable product in UnoPim |
+| *"No option values resolved for variant … Skipping combination export."* | Give the variant a value for each variant attribute |
+| Parent created but no combinations | Check the job log for variant-level errors |
 | Categories not linked | Run **Category Export** first |
 | Price shows as 0 on combinations | Make sure the parent and variants have prices |
 | Images not uploading | Add the image attribute in Images Mapping |

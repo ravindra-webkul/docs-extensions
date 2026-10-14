@@ -48,9 +48,10 @@ Every connection is configured on one credential page, with tabs for:
 ### Export Capabilities
 
 - Exports categories with their full parent-child hierarchy, localized fields, and category images.
-- Exports feature attributes as PrestaShop product features, and variant attributes as PrestaShop product options, together with their values.
-- Exports simple products with mapped fields, prices, stock, categories, features, images, attachments, and related products.
-- Exports configurable products as PrestaShop products with combinations, including all of their variants.
+- Exports feature attributes as PrestaShop product features — select attributes with predefined values, text attributes as custom values per product — and variant attributes as PrestaShop product options.
+- Exports simple products with mapped fields, prices, ecotax, dimensions, brand, stock, categories, features, images, attachments, and related products.
+- Keeps the PrestaShop image order and cover image in line with UnoPim on every export.
+- Exports configurable products as PrestaShop products with combinations, including all of their variants and their images.
 - Exports variants on their own with a dedicated variant-only job.
 - Supports **Skip inventory update** and **Skip price update** to leave stock and prices of existing products untouched.
 
@@ -64,12 +65,14 @@ Every connection is configured on one credential page, with tabs for:
 
 - Imports PrestaShop features and product options as UnoPim select attributes with their options.
 - Imports categories with hierarchy, using the Category Mapping to fill UnoPim category fields, including the category image.
-- Imports simple products, configurable products, and variants with images and category links.
+- Imports simple products, configurable products, and variants with images and category links, including custom feature values into text attributes.
+- Places combination images on the matching variants and assigns a variant structure to imported configurable products.
 
 ### Multi-Shop Support
 
 - Syncs data across multiple PrestaShop shops from a single credential.
-- Stores per-shop channel, currency, default locale, and language mappings so each shop receives the correct localized data.
+- Stores per-shop channel, currency, default locale, root category, and language mappings so each shop receives the correct localized data.
+- Exports to every shop mapped to the selected channel, sending each shop only the categories and products under its root category.
 
 ### Credential and Connection Management
 

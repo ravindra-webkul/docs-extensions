@@ -47,9 +47,10 @@ The connector communicates with PrestaShop through its built-in WebService (REST
 | `product_feature_values` | ✓ | ✓ | ✓ | | Feature attribute options |
 | `product_options` | ✓ | ✓ | ✓ | | Variant attributes |
 | `product_option_values` | ✓ | ✓ | ✓ | | Variant attribute options |
-| `stock_availables` | ✓ | ✓ | ✓ | | Product and variant quantities |
+| `stock_availables` | ✓ | | ✓ | | Product and variant quantities |
 | `images` | ✓ | ✓ | ✓ | ✓ | Product and category images |
-| `attachments` | ✓ | ✓ | ✓ | | Non-image files exported with **With Media** |
+| `attachments` | ✓ | ✓ | ✓ | ✓ | Non-image files exported with **With Media** |
+| `manufacturers` | ✓ | ✓ | | | Brand mapped to **Id Manufacturer** |
 
 ![PrestaShop API Key Permissions](./assets/prestashop-setup/permissions.png)
 

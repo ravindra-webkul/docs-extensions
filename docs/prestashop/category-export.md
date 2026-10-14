@@ -28,8 +28,7 @@ The category export job pushes UnoPim categories to PrestaShop, keeping the same
 | Filter | What to pick |
 |---|---|
 | **Prestashop Credential** | Your PrestaShop connection (only enabled credentials are listed) — required |
-| **Channel** | One or more channels mapped in the credential's Shop Mapping — required |
-| **Locales** | The locales to export, from those mapped for the selected channel — required |
+| **Locales** | The locales to export, from those mapped in the credential — required |
 | **Filter By Code** | Optional. Export only the categories whose code is listed here; leave empty to export all |
 | **Categories** | Optional. Pick categories from the tree; selected categories are exported along with their parent categories |
 
@@ -43,11 +42,11 @@ The category export job pushes UnoPim categories to PrestaShop, keeping the same
 
 ## What Gets Exported
 
-For each category except the UnoPim `root`, the connector sends the fields set in the Category Mapping:
+For each category except root categories (categories without a parent), the connector sends the fields set in the Category Mapping:
 
 - **Name, Link Rewrite, Description, Additional Description, Meta Title, Meta Description** — localized per mapped PrestaShop language
-- **Active** status
-- **Image** — the category image, if mapped
+- **Active** status — active unless mapped
+- **Image** — the category image, if mapped. Clearing the image in UnoPim removes it from PrestaShop on the next export
 - **Parent category** — resolved automatically so the PrestaShop hierarchy matches UnoPim
 
 If Name has no value, the category code is used; if Link Rewrite has no value, a slug of the name is used. See [Category Mapping](./category-mapping.md) for the full rules.
@@ -65,7 +64,7 @@ If Name has no value, the category code is used; if Link Rewrite has no value, a
 | No match found | Category is **created**; its new ID is saved |
 | Saved ID no longer exists in PrestaShop | Category is **recreated** and the saved ID refreshed |
 
-New categories are created in the first shop mapped to the selected channel. Other mapped shops receive the localized values for the categories that already exist.
+A category is sent to every mapped shop whose **Root Category** (from Shop Mapping) contains it. It is created in the first of these shops, with its image, and updated in the others with each shop's languages. A category outside every shop's root category is skipped with *"Category … is not under the root category of any mapped shop. Skipping."*
 
 ---
 
@@ -73,7 +72,7 @@ New categories are created in the first shop mapped to the selected channel. Oth
 
 Categories are always sent parents first:
 
-1. Top-level UnoPim categories are placed under PrestaShop's **Home** category.
+1. Top-level UnoPim categories are placed under the PrestaShop shop's root category (usually **Home**).
 2. Each child is sent after its parent, with the parent's PrestaShop ID already set.
 3. When you filter by code or category, the parents of the selected categories are added automatically so the tree stays complete.
 
@@ -102,4 +101,5 @@ PrestaShop receives them in order: **Electronics → Phones → Smartphones**, e
 | Category names are blank or show the code | Map **Name** and make sure the selected locales have values |
 | Category image not exported | Map **Image** in the Category Mapping tab |
 | Child category skipped | Check the job log — its parent could not be exported |
+| Category skipped — *"not under the root category of any mapped shop"* | Move the category under a shop's Root Category, or check the Root Category in Shop Mapping |
 | *"The Prestashop Credential is not active."* | Enable the credential in its General tab |

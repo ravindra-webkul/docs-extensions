@@ -33,6 +33,7 @@ The product variant export job exports UnoPim **variant products** as PrestaShop
 
 - **Identifiers**, **Status**, **Attribute Families**, and the other data filters match the **variants** — for example, paste variant SKUs to export only those combinations.
 - **Categories** matches the categories of the variant's **parent** product.
+- The variant is sent to the shops its parent belongs to, based on the parent's categories.
 
 4. Save and run the job.
 
@@ -46,10 +47,12 @@ The product variant export job exports UnoPim **variant products** as PrestaShop
 |---|---|
 | **Reference** | The variant's own SKU |
 | **Price impact** | Variant price minus parent price |
+| **Ecotax** | If Ecotax is mapped |
 | **Quantity** | Variant stock |
-| **Option values** | e.g. Color: Red, Size: M — from the parent's variant attributes |
+| **Option values** | e.g. Color: Red, Size: M — from the configurable product's variant attributes |
+| **Images** | With **With Media** on — uploaded to the parent product and assigned to the combination |
 
-Variant images are not exported by this job.
+**Skip price update** leaves the price impact and ecotax of existing combinations unchanged, and **Skip inventory update** leaves their stock unchanged.
 
 ---
 
@@ -66,7 +69,7 @@ Variant images are not exported by this job.
 
 ## Prerequisites
 
-Option values (e.g. "Red", "M") must exist in PrestaShop before combinations can be created. Run jobs in this order:
+Option groups and values (e.g. "Color", "Red") that do not exist in PrestaShop yet are created automatically. For translated option names and complete parent data, run jobs in this order:
 
 1. Attribute Export
 2. Category Export
@@ -79,7 +82,7 @@ Option values (e.g. "Red", "M") must exist in PrestaShop before combinations can
 
 | Issue | Fix |
 |---|---|
-| Combinations not created | Run **Attribute Export** first so option values exist |
-| Variant not exported | It must belong to a configurable parent; check the job log |
+| *"Configurable parent not found for variant … Skipping."* | The variant must belong to a configurable parent |
+| *"No option values resolved for variant … Skipping combination export."* | Give the variant a value for each variant attribute of its parent |
 | Price impact looks wrong | It is the difference between variant and parent price — check both prices |
-| Options not linked | Add the variant attributes in Other Mapping → *Attributes to be used for variant (For Export)* |
+| Variant images missing | Turn on **With Media** and add the image attribute in Images Mapping |

@@ -40,7 +40,7 @@ Each PrestaShop field mapped in the **Category Mapping** tab is written into its
 |---|---|
 | **Name, Link Rewrite, Description, Additional Description, Meta Title, Meta Description** | Written per selected locale into localizable category fields, or once into non-localizable ones |
 | **Active** | Written as true / false |
-| **Image** | The PrestaShop category image is downloaded into the mapped image field; unchanged images are not downloaded again |
+| **Image** | The PrestaShop category image is downloaded into the mapped image field as `ps_category_{id}`. It is downloaded on every run but stored again only when it has changed |
 
 Fields that are not mapped are not imported, and default values are not used on import. The **parent category** is always resolved from the hierarchy.
 
@@ -61,7 +61,9 @@ Each category needs a unique code in UnoPim. The connector derives it in this or
 
 Categories are imported parent-first (depth-first order) so the parent always exists before its children are created.
 
-Categories directly under PrestaShop's root or **Home** category are placed under the **channel's root category** in UnoPim.
+Categories directly under PrestaShop's root or **Home** category are placed under the **channel's root category** in UnoPim. PrestaShop's Home category is itself also imported under the channel's root category.
+
+If a category's parent cannot be found in UnoPim, the category is created without a parent.
 
 ---
 
@@ -72,7 +74,7 @@ Categories directly under PrestaShop's root or **Home** category are placed unde
 | Category not in UnoPim | **Created** |
 | Category already exists (same code) | **Updated** |
 
-The connector matches on code — if a category was previously imported, it is updated in-place without creating a duplicate.
+The connector matches on code — if a category was previously imported, it is updated in-place without creating a duplicate. Existing values of fields that are not mapped are kept.
 
 ---
 
@@ -91,3 +93,5 @@ Names, descriptions, and meta fields are imported for each selected locale using
 | Duplicate categories | These shouldn't happen; if they do, check for conflicting codes in the data mapping table |
 | Names missing | Map **Name** in the Category Mapping tab and make sure the selected locales are mapped in the credential's Shop Mapping |
 | Category image not imported | Map **Image** to an image-type category field in the Category Mapping tab |
+| *"No categories found in PrestaShop."* | The key has no GET permission on `categories`, or the store has no categories |
+| *"Failed to create category …"* or *"Failed to update category …"* | The rest of the message gives the reason — usually a required category field without a value |

@@ -21,8 +21,7 @@ The attribute export job pushes UnoPim attributes to PrestaShop. Depending on ho
 | Filter | What to pick |
 |---|---|
 | **Prestashop Credential** | Your PrestaShop connection — required |
-| **Channel** | One or more channels mapped in the credential's Shop Mapping — required |
-| **Locales** | The locales to export — required |
+| **Locales** | The locales to export, from those mapped in the credential — required |
 | **Filter By Code** | Optional. Export only the mapped attributes whose code is listed here; leave empty to export all mapped attributes |
 
 4. Save and run the job.
@@ -37,7 +36,8 @@ The attribute export job pushes UnoPim attributes to PrestaShop. Depending on ho
 
 | Type | Where configured | What it becomes in PrestaShop |
 |---|---|---|
-| **Feature** | Other Mapping → *Attributes to be used as feature attribute (For Export)* | A product feature (e.g. "Material: Cotton") |
+| **Feature** (select attribute) | Other Mapping → *Attributes to be used as feature attribute (For Export)* | A product feature with one value per option (e.g. "Material: Cotton") |
+| **Feature** (text attribute) | Other Mapping → *Attributes to be used as feature attribute (For Export)* | A product feature without predefined values. Each product's value is sent by the product export as a custom value |
 | **Variant** | Other Mapping → *Attributes to be used for variant (For Export)* | A product option used in combinations (e.g. "Color", "Size") |
 
 Only attributes selected in one of these two lists are exported. If neither list has attributes, the job log reports that no attributes are mapped for export.
@@ -49,7 +49,9 @@ Only attributes selected in one of these two lists are exported. If neither list
 For each attribute:
 
 - **Attribute name** — localized per mapped PrestaShop language
-- **All attribute options** — each option's label is also localized
+- **All attribute options** — each option's label is also localized (select attributes only)
+
+Each attribute is sent once, to the shop where it was first exported, or to the first mapped shop. Features and options already in PrestaShop that were not exported from UnoPim are not matched by name, so a new one is created.
 
 ---
 
@@ -68,7 +70,7 @@ For each attribute:
 
 Attribute names and option labels are sent once per PrestaShop language, using the locale mappings from the credential's **Shop Mapping**.
 
-If a locale has no label, the attribute or option code is used.
+If a locale has no label, the label from another locale is used, and if there is none, the attribute or option code.
 
 ---
 
@@ -100,6 +102,7 @@ Product Option: Size
 | Issue | Fix |
 |---|---|
 | Attribute not exported | Add it to the feature or variant list in the Other Mapping tab |
-| Attribute missing from the feature/variant list | Only select-type attributes can be chosen |
+| Attribute missing from the feature list | Only select and text attributes can be chosen |
+| Attribute missing from the variant list | Only select attributes can be chosen |
 | Names are blank | Make sure the selected locales have label values in UnoPim |
 | Export fails at startup | Verify the credential is enabled and its Shop Mapping is complete |

@@ -26,8 +26,11 @@ If no shops are returned, the tab shows *"No Prestashop Shops Found / Waiting fo
 | **UnoPim Channel** | Which UnoPim channel feeds this shop |
 | **Currency** | The currency for this shop — only the selected channel's currencies are listed |
 | **Default Locale** | The primary language for this shop — only the selected channel's locales are listed |
+| **Root Category** | The UnoPim category tree for this shop — the channel's root category is selected by default |
 
-**Currency** and **Default Locale** stay disabled until a channel is selected. Changing the channel clears Currency, Default Locale, and every locale row for that shop, so they must be selected again.
+**Currency**, **Default Locale**, and **Root Category** stay disabled until a channel is selected. Changing the channel clears Currency, Default Locale, and every locale row for that shop, so they must be selected again.
+
+The **Root Category** decides which categories and products go to this shop: only categories under this tree, and products in at least one of them, are exported to the shop. The PrestaShop shop's own root category (usually **Home**) is read from PrestaShop automatically; exported top-level categories are placed under it.
 
 ### Locale Mapping
 
@@ -57,6 +60,7 @@ Shop 1 (Default Shop)
   UnoPim Channel → default
   Currency       → US Dollar
   Default Locale → English (United States)
+  Root Category  → Root
   EN English     → English (United States)
   FR Français    → French (France)
 
@@ -64,6 +68,7 @@ Shop 2 (European Store)
   UnoPim Channel → europe
   Currency       → Euro
   Default Locale → French (France)
+  Root Category  → Europe Catalog
   EN English     → English (United Kingdom)
   FR Français    → French (France)
 ```
@@ -77,6 +82,7 @@ Shop 2 (European Store)
 | *"Please map atleast one channel with a shop."* | Select a UnoPim Channel for at least one shop |
 | *"Please select currency for the selected channel"* | Select a Currency for every mapped shop |
 | *"Please select default locale for the selected channel"* | Select a Default Locale for every mapped shop |
+| *"Please select root category for the selected channel"* | Select a Root Category for every mapped shop |
 | *"Please map all locale for the selected channel"* | Map every PrestaShop language row to a UnoPim locale |
 | *"No shops are mapped in the Prestashop credential…"* (job log) | Complete the Shop Mapping tab and save |
 | *"Selected locales are not available for the chosen channel."* | In the job, choose locales that belong to the selected channel |
