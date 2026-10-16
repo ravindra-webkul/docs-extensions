@@ -2,6 +2,12 @@
 
 Store Link: [View on Webkul Store](https://store.webkul.com/unopim-shopify-connector.html)
 
+Pro Version: [UnoPim Shopify Connector Pro](https://store.webkul.com/unopim-shopify-connector-pro.html)
+
+::: tip Shopify Connector Pro
+Need real-time product sync, scheduled exports, Shopify catalogs and catalog prices, advanced export filters, association mapping or external media mapping? These come with [**UnoPim Shopify Connector Pro**](https://store.webkul.com/unopim-shopify-connector-pro.html). The free connector already shows them inside UnoPim as locked features with an **Upgrade to Pro** link.
+:::
+
 <br>
 
 <div align="center">
