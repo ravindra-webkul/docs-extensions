@@ -1,3 +1,3 @@
 # Support
 
-For any questions, reach out to us at [support@webkul.com](mailto:support@webkul.com) or raise a ticket through our [HelpDesk System](https://webkul.uvdesk.com/en/).
+For help with the Custom XLSX Connector, contact [support@webkul.com](mailto:support@webkul.com) or open a ticket through the [Webkul HelpDesk](https://webkul.uvdesk.com/en/).

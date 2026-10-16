@@ -2,9 +2,9 @@
 
 The Custom XLSX Connector has no dedicated settings page. Configuration is split across three areas:
 
-1. **Templates** — the mapping payloads, managed under **Custom XLSX Connector → Templates**.
-2. **Permissions** — assigned via admin roles, controlling who can see and modify templates.
-3. **Standard Data Transfer settings** — the queue, file storage, and upload limits already configured for UnoPim's import/export pipeline.
+1. **Templates** - the mapping payloads, managed under **Custom XLSX Connector → Templates**.
+2. **Permissions** - assigned via admin roles, controlling who can see and modify templates.
+3. **Standard Data Transfer settings** - the queue, file storage, and upload limits already configured for UnoPim's import/export pipeline.
 
 ## Permissions
 
@@ -53,15 +53,9 @@ Imported uploads and generated export files use UnoPim's standard Data Transfer 
 php artisan storage:link
 ```
 
-### Sample file
+### Import files
 
-Both the importer and exporter ship with a sample file reference:
-
-```
-data-transfer/samples/products.csv
-```
-
-Use **Download Sample** inside any import or export job screen to download a structured example before authoring a template.
+The XLSX Products importer accepts `.csv`, `.xls`, and `.xlsx` uploads. The file's header row must match the selected template's import mapping; use a small representative file when creating or changing a template.
 
 ## Template status
 
@@ -75,4 +69,4 @@ Use the toggle on the listing row, or the **Mass Update** action, to change stat
 
 ## Localization
 
-Admin UI translations ship for 30+ locales under `src/Resources/lang/`. The connector follows the active admin locale set in UnoPim's language settings — no extra configuration is required.
+Admin UI translations ship for 30+ locales under `src/Resources/lang/`. The connector follows the active admin locale set in UnoPim's language settings - no extra configuration is required.

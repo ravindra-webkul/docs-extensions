@@ -4,7 +4,7 @@
 
 | Item | Value |
 |---|---|
-| UnoPim | 3.0.0 |
+| UnoPim | 3.1.3 |
 | PHP | ^8.4.1 |
 | Laravel | ^13.0 |
 | Database | MySQL with JSON column support |

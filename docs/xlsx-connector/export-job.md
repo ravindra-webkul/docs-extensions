@@ -1,4 +1,4 @@
-# Export Job — XLSX Products
+# Export Job - XLSX Products
 
 A **Job Operator** is an admin user who runs export jobs using the Custom XLSX Connector. Operators select a saved mapping template, apply product filters, and run the job. They do not need to author the column mapping themselves.
 
@@ -6,26 +6,28 @@ See the [Author Guide](./author-guide) for template creation (Step 1 of the thre
 
 ---
 
-## Step 1 — Open the export job form
+## Step 1 - Open the export job form
 
 Navigate to **Data Transfer → Exports → Create**.
 
 ![Export Job Form](./images/export-step-1.png)
 
-## Step 2 — Configure the job
+## Step 2 - Configure the job
 
 Set the following fields in the job form:
 
-- **Type** — choose **XLSX Products**
-- **Filters** — narrow by channel, locale, family, category, or status as needed
-- **With Media** — turn on to include images and file attachments in the export archive
-- **XLSX Template** — pick the template whose export mapping defines your output columns; only enabled templates appear here
+- **Type** - choose **XLSX Products**
+- **Filters** - narrow by channel, locale, family, category, or status as needed
+- **With Media** - include mapped file, image, gallery, and asset values as media resources
+- **With Associations** - include association columns
+- **Date Format** and **File Name** - set date output and the generated filename pattern
+- **XLSX Template** - pick the template whose export mapping defines your output columns; only enabled templates appear here
 
-> If no template is selected, the export falls back to standard UnoPim attribute codes as column headers.
+> An enabled XLSX template is required. The export cannot be saved or run without one.
 
 ![Export Job Configuration](./images/export-step-2.png)
 
-## Step 3 — Save and run
+## Step 3 - Save and run
 
 Save and click **Run**. The export is dispatched to the queue:
 
@@ -47,7 +49,7 @@ Formula-safe values written to the workbook
 If With Media is on, media files are copied into the archive
 ```
 
-## Step 4 — Download the file
+## Step 4 - Download the file
 
 When the job completes, click the download link in **Data Transfer → Exports** to retrieve the `.xlsx` file (or a `.zip` archive if **With Media** was enabled).
 
@@ -94,33 +96,33 @@ If no worker is running, jobs stay in **Pending** and never produce results.
 
 ### Template not visible in the job form
 
-- The template's status is **Disabled** — enable it from **Custom XLSX Connector → Templates**.
-- The template may only have an import mapping (not visible in export jobs).
+- The template's status is **Disabled** - enable it from **Custom XLSX Connector → Templates**.
+- Confirm that the template is enabled. The picker does not filter templates by whether their import or export mapping has field rows.
 - Confirm your role includes view access to the Custom XLSX Connector (contact your administrator).
 
 ### Export produces an empty or incomplete file
 
-- Check the product filters on the export job — they may exclude all products.
-- Confirm the template has an **Export Mapping** populated. A template with only an Import Mapping produces no columns on export.
-- Check the template's category scope and product-status filter — they may be narrower than expected.
+- Check the product filters on the export job - they may exclude all products.
+- Confirm the template has the export mappings needed for the workbook layout you expect.
+- Check the template's category scope and product-status filter - they may be narrower than expected.
 - Ensure a queue worker is running and completed the job without errors.
 
 ### Export file opens with formula errors in Excel
 
-This should not happen — all exported values are passed through `EscapeFormulaOperators::escapeValue()`. If you see formula output, confirm you are on connector version `2.0.x` or higher and that the export ran through the XLSX exporter (not a CSV fallback).
+This should not happen - exported values are passed through `EscapeFormulaOperators::escapeValue()`. If you see formula output, confirm that the job ran through the XLSX exporter rather than a different export type.
 
 ### Job is stuck in Pending
 
 - Confirm a queue worker is running: `php artisan queue:work`.
 - Check `storage/logs/laravel.log` for queue exceptions.
-- Restart the worker after any code change — workers cache class definitions until restart.
+- Restart the worker after any code change - workers cache class definitions until restart.
 
 ---
 
 ## Best practices
 
-1. **Open the export in Excel before sharing** — verify column order, headers, and multiselect separators match what the recipient expects.
-2. **Keep the same template across recurring runs** — consistent templates make job-history comparison straightforward.
-3. **Use With Media for full handovers** — when sending data to an external party, enable **With Media** so the archive is self-contained.
-4. **Watch logs on the first run after a template change** — `storage/logs/laravel.log` and the queue worker output show any mapping errors early.
-5. **Do not cancel a queued job externally** — once dispatched, the job runs to completion or until the worker is stopped.
+1. **Open the export in Excel before sharing** - verify column order, headers, and multiselect separators match what the recipient expects.
+2. **Keep the same template across recurring runs** - consistent templates make job-history comparison straightforward.
+3. **Use With Media for full handovers** - when sending data to an external party, enable **With Media** so the archive is self-contained.
+4. **Watch logs on the first run after a template change** - `storage/logs/laravel.log` and the queue worker output show any mapping errors early.
+5. **Do not cancel a queued job externally** - once dispatched, the job runs to completion or until the worker is stopped.

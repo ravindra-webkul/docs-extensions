@@ -1,4 +1,4 @@
-# Import Job — XLSX Products
+# Import Job - XLSX Products
 
 A **Job Operator** is an admin user who runs import jobs using the Custom XLSX Connector. Operators select a saved mapping template, point it at a file, and run the job. They do not need to author the column mapping themselves.
 
@@ -6,27 +6,27 @@ See the [Author Guide](./author-guide) for template creation (Step 1 of the thre
 
 ---
 
-## Step 1 — Open the import job form
+## Step 1 - Open the import job form
 
 Navigate to **Data Transfer → Imports → Create**.
 
 ![Import Job Form](./images/import-step-1.png)
 
-## Step 2 — Configure the job
+## Step 2 - Configure the job
 
 Set the following fields in the job form:
 
-- **Type** — choose **XLSX Products**
-- **Update Strategy** — choose whether to create, update, or delete products on import
-- **XLSX Template** — pick the template whose import mapping matches the columns in your file; only enabled templates appear here
+- **Type** - choose **XLSX Products**
+- **Update Strategy** - choose whether to create, update, or delete products on import
+- **XLSX Template** - pick the template whose import mapping matches the columns in your file; only enabled templates appear here
 
 ![Import Job Configuration](./images/import-step-2.png)
 
-## Step 3 — Upload the XLSX file
+## Step 3 - Upload the file
 
-Attach the `.xlsx` file you want to import. Click **Download Sample** to get a reference workbook if you need to verify the expected structure before uploading.
+Attach a `.xlsx`, `.xls`, or `.csv` file whose headers match the selected template's import mapping.
 
-## Step 4 — Save and run
+## Step 4 - Save and run
 
 Save the job, then click **Run**. The job is dispatched to the queue:
 
@@ -46,7 +46,7 @@ Products are created or updated; results recorded in job history
 Super-attribute axes are synced for configurable products
 ```
 
-## Step 5 — Monitor progress
+## Step 5 - Monitor progress
 
 Open the job from **Data Transfer → Imports**. You will see:
 
@@ -97,13 +97,13 @@ If no worker is running, jobs stay in **Pending** and never produce results.
 
 ### Template not visible in the job form
 
-- The template's status is **Disabled** — enable it from **Custom XLSX Connector → Templates**.
-- The template may only have an export mapping (not visible in import jobs).
+- The template's status is **Disabled** - enable it from **Custom XLSX Connector → Templates**.
+- Confirm that the template is enabled. The picker does not filter templates by whether their import or export mapping has field rows.
 - Confirm your role includes view access to the Custom XLSX Connector (contact your administrator).
 
 ### Validation errors on import
 
-Open the job's row-level error panel — each error names the failing column and the reason. Common causes:
+Open the job's row-level error panel - each error names the failing column and the reason. Common causes:
 
 - A required attribute (such as `sku`) is not mapped in the template.
 - A column in the file is not listed in the template mapping and not recognized as a standard UnoPim column.
@@ -116,9 +116,9 @@ Always validate a small file (5–10 rows) first before running large imports.
 
 ### Import skips rows unexpectedly
 
-- **Category scope** — the template has categories selected; rows whose categories do not overlap are skipped.
-- **Product-status filter** — the template is set to Enabled or Disabled only; rows with the opposite status are skipped.
-- **Channel/locale mismatch** — the row's locale is not enabled on the row's channel.
+- **Category scope** - the template has categories selected; rows whose categories do not overlap are skipped.
+- **Product-status filter** - the template is set to Enabled or Disabled only; rows with the opposite status are skipped.
+- **Channel/locale mismatch** - the row's locale is not enabled on the row's channel.
 
 ### Configurable products are missing variant axes after import
 
@@ -132,13 +132,13 @@ The connector syncs super-attribute axes after each import batch. If axes are st
 
 - Confirm a queue worker is running: `php artisan queue:work`.
 - Check `storage/logs/laravel.log` for queue exceptions.
-- Restart the worker after any code change — workers cache class definitions until restart.
+- Restart the worker after any code change - workers cache class definitions until restart.
 
 ---
 
 ## Best practices
 
-1. **Run a sample file first** — 5–10 rows through an import job catches template mismatches cheaply before committing the full catalog.
-2. **Keep the same template across recurring runs** — consistent templates make job-history comparison straightforward.
-3. **Watch logs on the first run after a template change** — `storage/logs/laravel.log` and the queue worker output show any mapping errors early.
-4. **Do not cancel a queued job externally** — once dispatched, the job runs to completion or until the worker is stopped; stopping the worker mid-job leaves the database in a partial state.
+1. **Run a sample file first** - 5–10 rows through an import job catches template mismatches cheaply before committing the full catalog.
+2. **Keep the same template across recurring runs** - consistent templates make job-history comparison straightforward.
+3. **Watch logs on the first run after a template change** - `storage/logs/laravel.log` and the queue worker output show any mapping errors early.
+4. **Do not cancel a queued job externally** - once dispatched, the job runs to completion or until the worker is stopped; stopping the worker mid-job leaves the database in a partial state.
