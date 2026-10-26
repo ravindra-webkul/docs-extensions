@@ -42,7 +42,7 @@ These filters are the same for the simple, configurable, and variant product exp
 
 | Field | What it does |
 |---|---|
-| **Prestashop Credential** | Your PrestaShop connection — required. Only enabled credentials are listed |
+| **Prestashop Credential** | Your PrestaShop connection - required. Only enabled credentials are listed |
 | **Skip inventory update** | Leaves the stock of products already in PrestaShop unchanged. New products still get their quantity |
 | **Skip price update** | Leaves the price and ecotax of products already in PrestaShop unchanged. New products still get their price |
 
@@ -50,8 +50,8 @@ These filters are the same for the simple, configurable, and variant product exp
 
 | Field | What it does |
 |---|---|
-| **Channel** | One or more channels mapped in the credential's Shop Mapping — required. The product is sent to every shop mapped to these channels |
-| **Locales** | Locales to export, from those mapped for the selected channel — required |
+| **Channel** | One or more channels mapped in the credential's Shop Mapping - required. The product is sent to every shop mapped to these channels |
+| **Locales** | Locales to export, from those mapped for the selected channel - required |
 | **Currencies** | Optional. Lists the currencies of the shops mapped to the selected channels; shops whose currency is not selected are skipped |
 | **Attributes** | Optional. Export only these mapped attributes. Price is always sent (unless **Skip price update** is on), and Name, Link Rewrite, and Reference are also sent for new products. Features already on the product are kept |
 
@@ -66,7 +66,7 @@ These filters are the same for the simple, configurable, and variant product exp
 | **Categories** | Only products in the selected categories |
 | **Identifiers** | Paste one SKU per line to export only those products |
 
-**Attribute Conditions** — optional rules on attribute values; only products matching every condition are exported.
+**Attribute Conditions** - optional rules on attribute values; only products matching every condition are exported.
 
 ### Output
 
@@ -83,19 +83,19 @@ These filters are the same for the simple, configurable, and variant product exp
 |---|---|
 | **Name, Description, Short Description** | Localized per mapped language. Short Description is cut to 779 characters |
 | **Meta Title, Meta Description, Link Rewrite** | Localized; Link Rewrite is generated from the name if not mapped. Meta Description has HTML removed and is cut to 512 characters |
-| **Price** | Required — the product is skipped if it has no price. Sent in the currency of each shop |
-| **Ecotax** | If mapped — see [Attribute Mapping](./attribute-mapping.md#notes-on-specific-fields) |
+| **Price** | Required - the product is skipped if it has no price. Sent in the currency of each shop |
+| **Ecotax** | If mapped - see [Attribute Mapping](./attribute-mapping.md#notes-on-specific-fields) |
 | **Reference** | The product SKU, unless **Reference** is mapped |
 | **Ean13, Upc** | If mapped. Ean13 is cut to 13 characters; Upc keeps digits only and is skipped if longer than 12 digits |
 | **Width, Height, Depth, Weight** | If mapped |
-| **Brand (Id Manufacturer)** | If mapped — the brand is found by name in PrestaShop, or created |
+| **Brand (Id Manufacturer)** | If mapped - the brand is found by name in PrestaShop, or created |
 | **Active, Visibility** | Active and visible everywhere unless mapped |
 | **Tax rules group** | Always sent; `0` (no tax) when not mapped |
 | **Quantity** | Set as the product's stock after the product is saved |
 | **Categories** | Linked to categories already exported to PrestaShop. The default category is the first exported category; if none are found, the PrestaShop shop's root category (usually Home) is used |
-| **Features** | Values of the feature attributes from the Other Mapping tab — predefined values for select attributes, a custom value for text attributes |
-| **Images and attachments** | With **With Media** on — the main and additional images from Images Mapping. Image files from DAM asset attributes become images; other DAM files become PrestaShop attachments |
-| **Accessories** | With **With Associations** on — related, up-sell, and cross-sell products |
+| **Features** | Values of the feature attributes from the Other Mapping tab - predefined values for select attributes, a custom value for text attributes |
+| **Images and attachments** | With **With Media** on - the main and additional images from Images Mapping. Image files from DAM asset attributes become images; other DAM files become PrestaShop attachments |
+| **Accessories** | With **With Associations** on - related, up-sell, and cross-sell products |
 
 Only mapped fields and default values are sent; no other attributes are exported. See [Attribute Mapping](./attribute-mapping.md) for the list of fields sent.
 
@@ -136,12 +136,12 @@ With **With Media** on, images are uploaded after the product is saved:
 
 | Issue | Fix |
 |---|---|
-| Job cannot be saved — *"The Attribute Mappings are not set…"* | Map **Name** and **Price** in Attribute Mapping |
-| Product skipped — *"Product price is required field."* | Give the product a price, or set a Price default value |
-| Product skipped — *"none of its categories belong to the root category of a selected shop"* | Assign a category under the shop's Root Category, or check the Root Category in Shop Mapping |
+| Job cannot be saved - *"The Attribute Mappings are not set…"* | Map **Name** and **Price** in Attribute Mapping |
+| Product skipped - *"Product price is required field."* | Give the product a price, or set a Price default value |
+| Product skipped - *"none of its categories belong to the root category of a selected shop"* | Assign a category under the shop's Root Category, or check the Root Category in Shop Mapping |
 | Categories not linked | Run **Category Export** first |
 | Features missing | Run **Attribute Export** first so the feature exists in PrestaShop |
-| Tax rule removed in PrestaShop | Map **Id Tax Rules Group** — without it the product is sent with no tax rule |
+| Tax rule removed in PrestaShop | Map **Id Tax Rules Group** - without it the product is sent with no tax rule |
 | Ecotax not visible in PrestaShop | Turn on **Use ecotax** under **International → Taxes** for that shop |
 | Images not uploading | Turn on **With Media** and add an image attribute in Images Mapping |
 | Names blank in PrestaShop | Make sure the selected locales have values in UnoPim |

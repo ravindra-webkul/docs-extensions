@@ -1,6 +1,6 @@
 # Simple Product Import
 
-The simple product import job pulls simple (non-variant) products from PrestaShop into UnoPim. Products with combinations are automatically skipped — those are handled by the configurable product import.
+The simple product import job pulls simple (non-variant) products from PrestaShop into UnoPim. Products with combinations are automatically skipped - those are handled by the configurable product import.
 
 ---
 
@@ -20,10 +20,10 @@ The simple product import job pulls simple (non-variant) products from PrestaSho
 
 | Filter | What to pick |
 |---|---|
-| **Prestashop Credential** | Your PrestaShop connection (only enabled credentials are listed) — required |
-| **Channel** | The UnoPim channel mapped to the shop you import from — required |
-| **Locales** | The locales to import, from those mapped for the channel — required |
-| **Family** | The attribute family assigned to imported products — required |
+| **Prestashop Credential** | Your PrestaShop connection (only enabled credentials are listed) - required |
+| **Channel** | The UnoPim channel mapped to the shop you import from - required |
+| **Locales** | The locales to import, from those mapped for the channel - required |
+| **Family** | The attribute family assigned to imported products - required |
 
 4. Save and run the job.
 
@@ -42,9 +42,9 @@ The simple product import job pulls simple (non-variant) products from PrestaSho
 | **Meta title / description** | Localized |
 | **EAN13 / UPC / MPN / Ecotax** | If mapped in Attribute Mapping |
 | **Width / Height / Depth / Weight** | If mapped. Values for attributes with decimal or number validation are rounded to 4 decimal places |
-| **Brand (Id Manufacturer)** | If mapped — the PrestaShop brand name. For a select attribute, a matching option is used or created |
-| **Quantity** | If mapped — the product's quantity in PrestaShop |
-| **Features** | Feature values filled into the feature attributes selected in the Other Mapping tab — see below |
+| **Brand (Id Manufacturer)** | If mapped - the PrestaShop brand name. For a select attribute, a matching option is used or created |
+| **Quantity** | If mapped - the product's quantity in PrestaShop |
+| **Features** | Feature values filled into the feature attributes selected in the Other Mapping tab - see below |
 | **Categories** | Linked using category import mappings |
 | **Images** | Downloaded from PrestaShop and stored in UnoPim |
 | **Attachments** | Imported as DAM assets into the first asset-type attribute in Images Mapping |
@@ -79,7 +79,7 @@ Those products should be imported with the **Configurable Product Import** job i
 | Situation | What happens |
 |---|---|
 | Product SKU not in UnoPim | **Created** in the family selected in the **Family** filter |
-| Product SKU already exists | **Updated** — existing values are merged |
+| Product SKU already exists | **Updated** - existing values are merged |
 
 ---
 
@@ -111,9 +111,9 @@ Localized fields (name, description, meta fields) are imported for each selected
 
 | Issue | Fix |
 |---|---|
-| Product fields missing | Check Attribute Mapping — only mapped fields are imported |
+| Product fields missing | Check Attribute Mapping - only mapped fields are imported |
 | *"Default attribute family '…' not found. Cannot create products."* | Select an existing family in the **Family** filter |
-| *"Skipped attribute mapping for … (attribute not found)."* | The mapped attribute is not in the selected family — add it to the family. When no attribute code is shown, the field has no attribute mapped and the line can be ignored |
+| *"Skipped attribute mapping for … (attribute not found)."* | The mapped attribute is not in the selected family - add it to the family. When no attribute code is shown, the field has no attribute mapped and the line can be ignored |
 | Care instruction or other text feature empty | Add the text attribute to the feature attributes in Other Mapping and run Attribute Export once |
 | *"Skipped attachments for … : no asset attribute is selected in the image mapping."* | Add an asset-type attribute in Images Mapping |
 | Categories not linked | Run **Category Import** first |

@@ -1,4 +1,4 @@
-# Installation Guide — UnoPim PrestaShop Connector
+# Installation Guide - UnoPim PrestaShop Connector
 
 ---
 
@@ -28,7 +28,7 @@ It allows businesses to centrally manage their product catalog in UnoPim, export
 
 Follow the steps below to install the PrestaShop Connector in UnoPim.
 
-### Step 1 — Extract the Extension
+### Step 1 - Extract the Extension
 
 Unzip the extension package and merge the `packages` folder into your project root directory:
 
@@ -39,7 +39,7 @@ Unzip the extension package and merge the `packages` folder into your project ro
 
 ---
 
-### Step 2 — Register the Service Provider
+### Step 2 - Register the Service Provider
 
 Open `bootstrap/providers.php` and add the following under the providers array:
 
@@ -54,7 +54,7 @@ return [
 
 ---
 
-### Step 3 — Register PSR-4 Autoload
+### Step 3 - Register PSR-4 Autoload
 
 Open `composer.json` and add the following entry under the `psr-4` section:
 
@@ -64,7 +64,7 @@ Open `composer.json` and add the following entry under the `psr-4` section:
 
 ---
 
-### Step 4 — Run Setup Commands
+### Step 4 - Run Setup Commands
 
 Run the following commands from the project root directory.
 
@@ -99,7 +99,7 @@ php artisan queue:restart
 After successful installation:
 
 1. Open **Prestashop** in the UnoPim admin sidebar.
-2. Create a credential for your PrestaShop store — see [Setup Credentials](./setup-credentials.md).
+2. Create a credential for your PrestaShop store - see [Setup Credentials](./setup-credentials.md).
 3. Complete the **Shop Mapping**, **Attribute Mapping**, and **Category Mapping** tabs of the credential.
 4. Create export or import jobs under **Data Transfer**.
 

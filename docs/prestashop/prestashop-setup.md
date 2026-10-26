@@ -55,6 +55,6 @@ The connector communicates with PrestaShop through its built-in WebService (REST
 ![PrestaShop API Key Permissions](./assets/prestashop-setup/permissions.png)
 
 4. Set **Status** to **Enabled**.
-5. Save the key and copy the generated API key — you will need it when you [create the credential](./setup-credentials.md) in UnoPim.
+5. Save the key and copy the generated API key - you will need it when you [create the credential](./setup-credentials.md) in UnoPim.
 
 > **Note:** For an import-only setup, GET permission on each resource is enough. Without GET on `shop_urls`, UnoPim rejects the key with *"Check PrestaShop API key permissions, get(view) shop access is not given."*

@@ -25,9 +25,9 @@ Each row has three columns: **Prestashop Field**, **Unopim Category Field**, and
 | **Meta Title** `[meta_title]` | text, textarea | ✓ | |
 | **Meta Description** `[meta_description]` | text, textarea | ✓ | |
 | **Active** `[active]` | boolean | ✓ | |
-| **Image** `[image]` | image | — | |
+| **Image** `[image]` | image | - | |
 
-As with attribute mapping, select **either** a category field **or** a default value — each disables the other. The default value is used only when no category field is mapped. **Image** has no default value.
+As with attribute mapping, select **either** a category field **or** a default value - each disables the other. The default value is used only when no category field is mapped. **Image** has no default value.
 
 **Name** needs a category field or a default value. Saving without one fails with *"Required mappings are missing for: Name."*
 
@@ -42,7 +42,7 @@ As with attribute mapping, select **either** a category field **or** a default v
 
 ## How It Works During Import
 
-- Each mapped PrestaShop field is written into its UnoPim category field — localized fields per mapped locale, others once.
+- Each mapped PrestaShop field is written into its UnoPim category field - localized fields per mapped locale, others once.
 - Default values are not used on import.
 - If **Image** is mapped, the PrestaShop category image is downloaded into that field. Unchanged images are not downloaded again.
 

@@ -29,11 +29,11 @@ The connector exports and imports categories, attributes (features and combinati
 
 Every connection is configured on one credential page, with tabs for:
 
-- **Shop Mapping** — links each PrestaShop shop to a UnoPim channel, currency, and locales.
-- **Attribute Mapping** — links PrestaShop product fields to UnoPim attributes or fixed default values.
-- **Other Mapping** — image attributes, feature attributes, and variant attributes.
-- **Category Mapping** — links PrestaShop category fields to UnoPim category fields.
-- **History** — a version log of every change made to the credential and its mappings.
+- **Shop Mapping** - links each PrestaShop shop to a UnoPim channel, currency, and locales.
+- **Attribute Mapping** - links PrestaShop product fields to UnoPim attributes or fixed default values.
+- **Other Mapping** - image attributes, feature attributes, and variant attributes.
+- **Category Mapping** - links PrestaShop category fields to UnoPim category fields.
+- **History** - a version log of every change made to the credential and its mappings.
 
 ---
 
@@ -48,7 +48,7 @@ Every connection is configured on one credential page, with tabs for:
 ### Export Capabilities
 
 - Exports categories with their full parent-child hierarchy, localized fields, and category images.
-- Exports feature attributes as PrestaShop product features — select attributes with predefined values, text attributes as custom values per product — and variant attributes as PrestaShop product options.
+- Exports feature attributes as PrestaShop product features - select attributes with predefined values, text attributes as custom values per product - and variant attributes as PrestaShop product options.
 - Exports simple products with mapped fields, prices, ecotax, dimensions, brand, stock, categories, features, images, attachments, and related products.
 - Keeps the PrestaShop image order and cover image in line with UnoPim on every export.
 - Exports configurable products as PrestaShop products with combinations, including all of their variants and their images.

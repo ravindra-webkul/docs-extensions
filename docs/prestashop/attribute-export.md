@@ -20,8 +20,8 @@ The attribute export job pushes UnoPim attributes to PrestaShop. Depending on ho
 
 | Filter | What to pick |
 |---|---|
-| **Prestashop Credential** | Your PrestaShop connection — required |
-| **Locales** | The locales to export, from those mapped in the credential — required |
+| **Prestashop Credential** | Your PrestaShop connection - required |
+| **Locales** | The locales to export, from those mapped in the credential - required |
 | **Filter By Code** | Optional. Export only the mapped attributes whose code is listed here; leave empty to export all mapped attributes |
 
 4. Save and run the job.
@@ -48,8 +48,8 @@ Only attributes selected in one of these two lists are exported. If neither list
 
 For each attribute:
 
-- **Attribute name** — localized per mapped PrestaShop language
-- **All attribute options** — each option's label is also localized (select attributes only)
+- **Attribute name** - localized per mapped PrestaShop language
+- **All attribute options** - each option's label is also localized (select attributes only)
 
 Each attribute is sent once, to the shop where it was first exported, or to the first mapped shop. Features and options already in PrestaShop that were not exported from UnoPim are not matched by name, so a new one is created.
 

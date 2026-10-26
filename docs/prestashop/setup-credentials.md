@@ -1,4 +1,4 @@
-# Configuration Guide — UnoPim PrestaShop Connector
+# Configuration Guide - UnoPim PrestaShop Connector
 
 ---
 
@@ -34,19 +34,19 @@ The **Edit Credential** page is split into tabs:
 | Tab | What you configure | Permission needed |
 |---|---|---|
 | **General** | Webservice key and status | Credentials → Edit |
-| **Shop Mapping** | PrestaShop shop → UnoPim channel, currency, and locales — see [Shop & Channel Mapping](./shop-channel-mapping.md) | Credentials → Edit |
-| **Attribute Mapping** | PrestaShop product fields → UnoPim attributes — see [Attribute & Other Mapping](./attribute-mapping.md) | Attribute Mapping |
-| **Other Mapping** | Images, feature attributes, and variant attributes — see [Attribute & Other Mapping](./attribute-mapping.md) | Attribute Mapping |
-| **Category Mapping** | PrestaShop category fields → UnoPim category fields — see [Category Mapping](./category-mapping.md) | Category Mapping |
+| **Shop Mapping** | PrestaShop shop → UnoPim channel, currency, and locales - see [Shop & Channel Mapping](./shop-channel-mapping.md) | Credentials → Edit |
+| **Attribute Mapping** | PrestaShop product fields → UnoPim attributes - see [Attribute & Other Mapping](./attribute-mapping.md) | Attribute Mapping |
+| **Other Mapping** | Images, feature attributes, and variant attributes - see [Attribute & Other Mapping](./attribute-mapping.md) | Attribute Mapping |
+| **Category Mapping** | PrestaShop category fields → UnoPim category fields - see [Category Mapping](./category-mapping.md) | Category Mapping |
 | **History** | Version log of changes | History |
 
 > Attribute Mapping, Other Mapping, and Category Mapping are shared by all credentials. Changing them on one credential changes them for every credential.
 
 ### General
 
-**General Settings** — The **Host name (URL of Prestashop)** cannot be changed after creation. The **Webservice Account Key** is shown masked; leave it masked to keep the current key, or type a new one.
+**General Settings** - The **Host name (URL of Prestashop)** cannot be changed after creation. The **Webservice Account Key** is shown masked; leave it masked to keep the current key, or type a new one.
 
-**Settings** — The **Status** switch enables or disables the credential.
+**Settings** - The **Status** switch enables or disables the credential.
 
 ![PrestaShop Edit Credential](./assets/setup-credential/edit-cred.png)
 

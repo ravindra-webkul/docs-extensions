@@ -59,9 +59,9 @@ For **number** and **decimal** fields the list shows attributes whose validation
 
 ### Notes on Specific Fields
 
-- **Id Manufacturer** — map a select or text attribute that holds the brand. The connector looks up a PrestaShop brand with the same name (the option label for select attributes) and creates it if it does not exist. The job log shows *"Created brand … in PrestaShop with ID …"*.
-- **Ecotax** — sent to the product and to each combination, in the currency of the shop. PrestaShop only shows and charges ecotax when **International → Taxes → Use ecotax** is turned on for that shop; the value is still saved when it is off.
-- **Width, Height, Depth, Weight** — sent as decimal numbers. On import, decimal values are rounded to 4 decimal places so they pass the attribute's decimal validation.
+- **Id Manufacturer** - map a select or text attribute that holds the brand. The connector looks up a PrestaShop brand with the same name (the option label for select attributes) and creates it if it does not exist. The job log shows *"Created brand … in PrestaShop with ID …"*.
+- **Ecotax** - sent to the product and to each combination, in the currency of the shop. PrestaShop only shows and charges ecotax when **International → Taxes → Use ecotax** is turned on for that shop; the value is still saved when it is off.
+- **Width, Height, Depth, Weight** - sent as decimal numbers. On import, decimal values are rounded to 4 decimal places so they pass the attribute's decimal validation.
 
 ### Extra Mappings
 
@@ -77,11 +77,11 @@ Product export sends these extra fields: `mpn` (manufacturer part number, up to 
 
 ### Images Mapping
 
-Click **+ Add Image Mapping** to add a row, and select an **Image Attribute** (attributes of type image, gallery, or asset). Turn on **Attribute As Main Image** for the row that holds the cover image — only one row can be the main image. The other rows become additional images. Drag rows to change their order.
+Click **+ Add Image Mapping** to add a row, and select an **Image Attribute** (attributes of type image, gallery, or asset). Turn on **Attribute As Main Image** for the row that holds the cover image - only one row can be the main image. The other rows become additional images. Drag rows to change their order.
 
 ### Feature Attributes
 
-**Attributes to be used as feature attribute (For Export)** — select attributes that should export as **PrestaShop Features**. Select and text attributes are listed:
+**Attributes to be used as feature attribute (For Export)** - select attributes that should export as **PrestaShop Features**. Select and text attributes are listed:
 
 | Attribute type | What PrestaShop receives |
 |---|---|
@@ -92,13 +92,13 @@ For text attributes, HTML tags and the characters `< > = { }` are removed and th
 
 ### Variant Attributes
 
-**Attributes to be used for variant (For Export)** — select attributes that should export as **PrestaShop product options**, used to build combinations (e.g. Color, Size). Only select-type attributes are listed.
+**Attributes to be used for variant (For Export)** - select attributes that should export as **PrestaShop product options**, used to build combinations (e.g. Color, Size). Only select-type attributes are listed.
 
 Feature and variant attributes are exported by the [Attribute Export](./attribute-export.md) job, which must run before products that use them.
 
 ### Default Configuration
 
-**Default product identifier** — choose **Reference** or **UPC barcode**. The field is marked as required; select a value when you set up the tab.
+**Default product identifier** - choose **Reference** or **UPC barcode**. The field is marked as required; select a value when you set up the tab.
 
 ---
 
@@ -108,9 +108,9 @@ When a product export job runs:
 
 1. The connector loads the attribute mapping.
 2. For each field, it reads the mapped attribute's value for the job's channel and locales, or uses the default value if no attribute is mapped.
-3. Fields with neither an attribute nor a default are not sent — no other attributes are exported automatically.
+3. Fields with neither an attribute nor a default are not sent - no other attributes are exported automatically.
 4. Localized fields (name, descriptions, meta fields, link rewrite) are sent per mapped PrestaShop language.
-5. Feature attribute values are attached to the product as PrestaShop features — predefined values for select attributes, custom values for text attributes.
+5. Feature attribute values are attached to the product as PrestaShop features - predefined values for select attributes, custom values for text attributes.
 
 ---
 
@@ -127,7 +127,7 @@ For each product the connector sends `sale_price` as the PrestaShop price, and e
 | Issue | Fix |
 |---|---|
 | *"The Attribute Mappings are not set…"* when saving a product export job | Map an attribute or default value for **Name** and **Price** |
-| Product skipped with *"Product price is required field."* | The product has no value for the mapped price attribute — fill it, or use a default value |
+| Product skipped with *"Product price is required field."* | The product has no value for the mapped price attribute - fill it, or use a default value |
 | Attribute missing from a field's dropdown | Its type does not match the field's supported types. For number and decimal fields, also set the attribute's validation to number or decimal |
 | Ecotax saved but not visible in PrestaShop | Turn on **Use ecotax** under **International → Taxes** for that shop |
 | A mapped field is not updated in PrestaShop | Check that it is in the list of fields sent by product export above |

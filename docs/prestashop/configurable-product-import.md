@@ -1,6 +1,6 @@
 # Configurable Product Import
 
-The configurable product import job pulls products with combinations from PrestaShop into UnoPim as configurable products. It imports the parent product only — variants are imported separately by the **Product Variant Import** job.
+The configurable product import job pulls products with combinations from PrestaShop into UnoPim as configurable products. It imports the parent product only - variants are imported separately by the **Product Variant Import** job.
 
 ---
 
@@ -19,10 +19,10 @@ The configurable product import job pulls products with combinations from Presta
 
 | Filter | What to pick |
 |---|---|
-| **Prestashop Credential** | Your PrestaShop connection (only enabled credentials are listed) — required |
-| **Channel** | The UnoPim channel mapped to the shop you import from — required |
-| **Locales** | The locales to import, from those mapped for the channel — required |
-| **Family** | The attribute family assigned to imported products — required |
+| **Prestashop Credential** | Your PrestaShop connection (only enabled credentials are listed) - required |
+| **Channel** | The UnoPim channel mapped to the shop you import from - required |
+| **Locales** | The locales to import, from those mapped for the channel - required |
+| **Family** | The attribute family assigned to imported products - required |
 
 4. Save and run the job.
 
@@ -35,7 +35,7 @@ The configurable product import job pulls products with combinations from Presta
 Same fields as simple product import (name, price, description, categories, features, images, etc.), plus:
 
 - **Product type** is set to `configurable` in UnoPim
-- **Variant attributes** (super attributes) are assigned — these define which attributes create combinations
+- **Variant attributes** (super attributes) are assigned - these define which attributes create combinations
 
 ---
 
@@ -43,8 +43,8 @@ Same fields as simple product import (name, price, description, categories, feat
 
 The connector picks super attributes in this order:
 
-1. **Option groups imported by Attribute Import** — all attributes recorded when PrestaShop product options were imported
-2. **Variant attributes for export** — the *Attributes to be used for variant (For Export)* list in the Other Mapping tab, used if no import record exists
+1. **Option groups imported by Attribute Import** - all attributes recorded when PrestaShop product options were imported
+2. **Variant attributes for export** - the *Attributes to be used for variant (For Export)* list in the Other Mapping tab, used if no import record exists
 
 Variant attributes are only added, never removed. If a variant attribute is not part of the selected attribute family, it is skipped with the warning *"Product model … : family … is missing variant attribute(s): … Importing without them."* The [Product Variant Import](./product-variant-import.md) narrows the variant attributes to the ones the combinations actually use.
 
@@ -68,7 +68,7 @@ If an existing UnoPim product with the same SKU is not a configurable product, i
 |---|---|---|
 | **Imports** | Parent product only | Child variants (combinations) |
 | **Creates in UnoPim** | Configurable product with super attributes | Configurable product and its variant products |
-| **Use when** | You only need the parent product data | You need the parent and all variants — the configurable import is not required first |
+| **Use when** | You only need the parent product data | You need the parent and all variants - the configurable import is not required first |
 
 ---
 
@@ -77,14 +77,14 @@ If an existing UnoPim product with the same SKU is not a configurable product, i
 | Situation | What happens |
 |---|---|
 | Product not in UnoPim | **Created** as configurable type |
-| Product already exists (configurable) | **Updated** — values merged, super attributes synced |
+| Product already exists (configurable) | **Updated** - values merged, super attributes synced |
 | Product exists with another type (e.g. `simple`) | **Skipped** with a warning |
 
 ---
 
 ## Images
 
-Handled the same as simple product import — downloaded from PrestaShop and stored in UnoPim's file storage using the image attributes set in **Other Mapping → Images Mapping**. This job puts all PrestaShop images on the parent, including images used by combinations; use Product Variant Import to place combination images on the variants.
+Handled the same as simple product import - downloaded from PrestaShop and stored in UnoPim's file storage using the image attributes set in **Other Mapping → Images Mapping**. This job puts all PrestaShop images on the parent, including images used by combinations; use Product Variant Import to place combination images on the variants.
 
 ---
 
@@ -92,7 +92,7 @@ Handled the same as simple product import — downloaded from PrestaShop and sto
 
 1. Attribute Import
 2. Category Import
-3. **Configurable Product Import** — or Product Variant Import to bring in the variants as well
+3. **Configurable Product Import** - or Product Variant Import to bring in the variants as well
 
 ---
 
@@ -103,5 +103,5 @@ Handled the same as simple product import — downloaded from PrestaShop and sto
 | No configurable products found | Verify PrestaShop products have combinations set |
 | Variant attributes missing | Run **Attribute Import** first, or set the variant attributes in the Other Mapping tab |
 | Variant attributes not assigned to product | Ensure the attributes exist in the selected attribute family |
-| *"Skipping product model … : existing UnoPim product is type …"* | The SKU exists in UnoPim as another type — resolve the conflict manually |
+| *"Skipping product model … : existing UnoPim product is type …"* | The SKU exists in UnoPim as another type - resolve the conflict manually |
 | Categories not linked | Run **Category Import** first |

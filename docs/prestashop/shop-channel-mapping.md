@@ -13,7 +13,7 @@ PrestaShop can run multiple shops from one installation. UnoPim organizes produc
 
 ![PrestaShop Shop Mapping](./assets/setup-credential/shop-mapping.png)
 
-If no shops are returned, the tab shows *"No Prestashop Shops Found / Waiting for API..."* — check the host URL and that the key has GET permission on `shop_urls`, `shops`, and `languages`.
+If no shops are returned, the tab shows *"No Prestashop Shops Found / Waiting for API..."* - check the host URL and that the key has GET permission on `shop_urls`, `shops`, and `languages`.
 
 ---
 
@@ -24,9 +24,9 @@ If no shops are returned, the tab shows *"No Prestashop Shops Found / Waiting fo
 | Field | What it means |
 |---|---|
 | **UnoPim Channel** | Which UnoPim channel feeds this shop |
-| **Currency** | The currency for this shop — only the selected channel's currencies are listed |
-| **Default Locale** | The primary language for this shop — only the selected channel's locales are listed |
-| **Root Category** | The UnoPim category tree for this shop — the channel's root category is selected by default |
+| **Currency** | The currency for this shop - only the selected channel's currencies are listed |
+| **Default Locale** | The primary language for this shop - only the selected channel's locales are listed |
+| **Root Category** | The UnoPim category tree for this shop - the channel's root category is selected by default |
 
 **Currency**, **Default Locale**, and **Root Category** stay disabled until a channel is selected. Changing the channel clears Currency, Default Locale, and every locale row for that shop, so they must be selected again.
 

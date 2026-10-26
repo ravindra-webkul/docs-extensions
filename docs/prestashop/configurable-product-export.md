@@ -1,12 +1,12 @@
 # Configurable Product Export
 
-The configurable product export job pushes UnoPim configurable products to PrestaShop. In PrestaShop these become **products with combinations** — a parent product that holds the shared data, with each UnoPim variant as a combination underneath it. The parent and all of its variants are exported in the same job.
+The configurable product export job pushes UnoPim configurable products to PrestaShop. In PrestaShop these become **products with combinations** - a parent product that holds the shared data, with each UnoPim variant as a combination underneath it. The parent and all of its variants are exported in the same job.
 
 ---
 
 ## Before You Start
 
-- Map **Name** and **Price** in the [Attribute Mapping](./attribute-mapping.md) tab — the job cannot be saved without them.
+- Map **Name** and **Price** in the [Attribute Mapping](./attribute-mapping.md) tab - the job cannot be saved without them.
 - Make sure each configurable product has its variant attributes (e.g. Color, Size) set in UnoPim. The combinations are built from these attributes.
 - Run [Category Export](./category-export.md) first, and [Attribute Export](./attribute-export.md) for feature attributes and translated option names.
 
@@ -37,7 +37,7 @@ The configurable product export job pushes UnoPim configurable products to Prest
 
 ### Parent Product
 
-The parent receives the same mapped fields as a simple product — name, descriptions, meta fields, price, reference, categories, features, and images. See [Simple Product Export](./simple-product-export.md#what-gets-exported).
+The parent receives the same mapped fields as a simple product - name, descriptions, meta fields, price, reference, categories, features, and images. See [Simple Product Export](./simple-product-export.md#what-gets-exported).
 
 ### Variants (Combinations)
 
@@ -78,7 +78,7 @@ The connector always saves the **parent product first**, then its combinations. 
 2. Category Export
 3. Configurable Product Export
 
-To update only variants later — for example after price or stock changes — use [Product Variant Export](./product-variant-export.md).
+To update only variants later - for example after price or stock changes - use [Product Variant Export](./product-variant-export.md).
 
 ---
 

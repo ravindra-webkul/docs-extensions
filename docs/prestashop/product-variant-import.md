@@ -20,10 +20,10 @@ The product variant import job pulls combinations (variants) from PrestaShop int
 
 | Filter | What to pick |
 |---|---|
-| **Prestashop Credential** | Your PrestaShop connection (only enabled credentials are listed) — required |
-| **Channel** | The UnoPim channel mapped to the shop you import from — required |
-| **Locales** | The locales to import, from those mapped for the channel — required |
-| **Family** | The attribute family assigned to imported products — required |
+| **Prestashop Credential** | Your PrestaShop connection (only enabled credentials are listed) - required |
+| **Channel** | The UnoPim channel mapped to the shop you import from - required |
+| **Locales** | The locales to import, from those mapped for the channel - required |
+| **Family** | The attribute family assigned to imported products - required |
 
 4. Save and run the job.
 
@@ -54,8 +54,8 @@ Both jobs import configurable products, but:
 | **Ecotax** | The combination's ecotax, if Ecotax is mapped and the value is above 0 |
 | **Stock / Quantity** | Combination quantity, if Quantity is mapped |
 | **Reference** | The variant SKU, if Reference is mapped |
-| **Option values** | e.g. Color: Red, Size: M — resolved from PrestaShop option value IDs |
-| **Images** | The images selected for the combination in PrestaShop — see below |
+| **Option values** | e.g. Color: Red, Size: M - resolved from PrestaShop option value IDs |
+| **Images** | The images selected for the combination in PrestaShop - see below |
 
 Other fields (name, description, weight, etc.) are not written on variants; they belong to the parent.
 
@@ -133,6 +133,6 @@ If the parent has no variant structure, the import assigns one in the selected f
 | Variant has no images | Select images for the combination in PrestaShop's **Combinations** tab |
 | *"Skipped variant structure assignment … : none of the imported variant attributes are eligible axes"* | Make the variant attributes select type and not per locale or per channel |
 | Variant SKUs generated as fallback names | Add a `reference` to combinations in PrestaShop before importing |
-| Variant not linked to parent | Check the job log — usually a missing family attribute |
+| Variant not linked to parent | Check the job log - usually a missing family attribute |
 | Categories not linked | Run **Category Import** first |
-| Option created but wrong name | Attribute Import populates the correct labels — run it first |
+| Option created but wrong name | Attribute Import populates the correct labels - run it first |

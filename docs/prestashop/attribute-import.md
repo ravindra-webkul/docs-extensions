@@ -20,9 +20,9 @@ The attribute import job pulls attributes from PrestaShop into UnoPim. It import
 
 | Filter | What to pick |
 |---|---|
-| **Prestashop Credential** | Your PrestaShop connection (only enabled credentials are listed) — required |
-| **Channel** | The UnoPim channel mapped to the shop you import from — required |
-| **Locales** | The locales to import, from those mapped for the channel — required |
+| **Prestashop Credential** | Your PrestaShop connection (only enabled credentials are listed) - required |
+| **Channel** | The UnoPim channel mapped to the shop you import from - required |
+| **Locales** | The locales to import, from those mapped for the channel - required |
 
 4. Save and run the job.
 
@@ -39,15 +39,15 @@ The attribute import job pulls attributes from PrestaShop into UnoPim. It import
 
 Both types import their options/values along with the parent attribute.
 
-> Custom feature values (entered per product in PrestaShop) are not imported by this job — only predefined values become options. To bring custom values into UnoPim, create a **text** attribute, add it to *Attributes to be used as feature attribute (For Export)* in the Other Mapping tab, and run [Attribute Export](./attribute-export.md) once so the attribute is linked to the PrestaShop feature. Product imports then write each product's custom value into that text attribute.
+> Custom feature values (entered per product in PrestaShop) are not imported by this job - only predefined values become options. To bring custom values into UnoPim, create a **text** attribute, add it to *Attributes to be used as feature attribute (For Export)* in the Other Mapping tab, and run [Attribute Export](./attribute-export.md) once so the attribute is linked to the PrestaShop feature. Product imports then write each product's custom value into that text attribute.
 
 ---
 
 ## What Gets Imported Per Attribute
 
-- **Attribute code** — slugified from the name (e.g. "Material" → `material`)
-- **Attribute name** — localized per language
-- **All options** — each with its own code and localized labels
+- **Attribute code** - slugified from the name (e.g. "Material" → `material`)
+- **Attribute name** - localized per language
+- **All options** - each with its own code and localized labels
 
 If the attribute already exists in UnoPim (same code), it is **updated** as a select attribute. Otherwise it is **created**:
 
@@ -89,9 +89,9 @@ If the default locale has no name, the name from another locale is used for it.
 | Issue | Fix |
 |---|---|
 | Attributes not appearing in UnoPim | Check the job log for API errors; verify the credential has permission to read features |
-| Wrong attribute code generated | Codes come from the PrestaShop name — rename it in PrestaShop before the first import |
+| Wrong attribute code generated | Codes come from the PrestaShop name - rename it in PrestaShop before the first import |
 | Option labels missing | Make sure the selected locales are mapped in the credential's Shop Mapping |
-| Duplicate attributes created | Re-imports match by PrestaShop ID — check the data mapping table for stale records |
+| Duplicate attributes created | Re-imports match by PrestaShop ID - check the data mapping table for stale records |
 | *"No features (attributes) found in PrestaShop."* | The store has no features, or the key has no GET permission on `product_features` |
 | *"No product option groups (variant attributes) found in PrestaShop."* | The store has no product options, or the key has no GET permission on `product_options` |
 | *"Variant attribute '…' is scoped per-locale/channel and can't be used as a variant axis."* | Recreate the attribute as global (not per locale, not per channel) |
