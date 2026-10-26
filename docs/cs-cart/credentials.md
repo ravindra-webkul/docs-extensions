@@ -1,94 +1,81 @@
 # Add CS-Cart credentials
 
-This is where you store the connection details for your CS-Cart store. Add at least one credential before you can import or export anything.
+A credential stores the connection to one CS-Cart store. Add at least one before you import or export anything.
 
 **Open it from:** *CS-Cart → Credentials*
 
-![CS-Cart credentials list](./assets/cs-cart.png)
-
----
-
-## The credentials page
-
-<!-- TODO: capture screenshot - cscart-credentials-list.png - CS-Cart Credentials list grid -->
-
-Each row in the list shows one credential:
-
-- **Name** - the label you gave it.
-- **Shop URL** - the CS-Cart store URL.
-- **Active** - whether the credential is on or off.
+## The credentials list
 
 ![CS-Cart credentials list](./assets/cred-page/cred-page.png)
 
-You can search by name, sort columns, or click **Filter** to narrow the list. The pencil icon edits a row, the trash icon deletes it. Mass-update and mass-delete are available from the **Selected actions** menu.
+Each row shows one credential:
 
----
+| Column | Meaning |
+|--|--|
+| **Name** | The label you gave it. |
+| **Shop URL** | The CS-Cart store URL. |
+| **Active** | Whether jobs can use this credential. |
+| **Default for quick Export** | Whether [Quick export](./quick-export) uses this credential. |
+
+Search by name, sort a column, or click **Filter** to narrow the list. The pencil icon edits a row and the trash icon deletes it. Tick several rows to **Update Status** or **Delete** them at once.
 
 ## Add a credential
 
-Click **+ Create Credential** in the top-right corner.
-
-<!-- TODO: capture screenshot - cscart-add-credential.png - Create CS-Cart credential form -->
-
-Fill in:
+Click **Create Credential** in the top-right corner and fill in:
 
 | Field | What goes here |
 |--|--|
-| **Name** | Any label you want, e.g. *Production Store*. Must be unique. |
+| **Name** | Any label, e.g. *Production Store*. |
 | **Shop URL** | Your CS-Cart store URL, including `https://`. |
-| **Admin Email** | The email of a CS-Cart admin with API access. |
-| **API Key** | Paste the API key from CS-Cart *User Profile → API* tab. |
+| **Admin Email** | The email of the CS-Cart admin who has API access. |
+| **API Key** | The key from *Customers → Administrators → (user) → API access* in CS-Cart. |
 
-![Create credential form filled](./assets/cred-page/cred-fields.png)
+![Create credential form](./assets/cred-page/cred-fields.png)
 
 Click **Save Credential**.
 
-> The extension calls the CS-Cart API with the credentials before saving. If anything is wrong you'll see *Unable to connect to CS-Cart. Please verify your Shop URL, Admin Email, and API Key are correct.* and nothing is stored.
+The connector calls the CS-Cart API before it saves. If the store does not answer, you see *Unable to connect to CS-Cart. Please verify your Shop URL, Admin Email, and API Key are correct.* and nothing is stored.
 
-After saving, you land on the edit page where you can map locales and attributes.
+> [!NOTE]
+> The Shop URL must be a public address. A URL that points to `localhost` or a private network is refused with *The shop URL must point to a publicly reachable host.* For a local test store, set `CSCART_ALLOW_LOOPBACK=true` in UnoPim's `.env`. Never turn it on in production. The API key is stored encrypted.
 
----
+After saving, you land on the edit page.
 
 ## Edit a credential
 
-Click the pencil icon on any row.
-
-<!-- TODO: capture screenshot - cscart-credential-edit.png - Edit CS-Cart credential page with tabs -->
-
-The edit page has four tabs at the top:
+Click the pencil icon on a row. The edit page has these tabs:
 
 | Tab | What it does |
 |--|--|
-| **Credential Settings** | Edit name / URL / API key, switch the credential on or off, set it as the default for quick export. |
-| **Locale Mapping** | Map every UnoPim locale to a CS-Cart `lang_code` - see [Map locales](./locale-mapping). |
+| **Credential Settings** | Change the connection details and switches. |
 | **Attribute Mapping** | Map UnoPim attributes to CS-Cart product fields - see [Map attributes](./attribute-mapping). |
-| **History** | Every change made to this credential is logged here. |
+| **Category Mapping** | Map UnoPim category fields to CS-Cart category fields - see [Map categories](./category-mapping). |
+| **Locale Mapping** | Map each UnoPim locale to a CS-Cart language - see [Map locales](./locale-mapping). |
+| **History** | Every change made to this credential. |
 
-![Credential edit page tabs](./assets/cred-page/edit-cred.png)
+![Credential edit page](./assets/cred-page/edit-cred.png)
 
 ### Credential Settings
 
 | Field | What it does |
 |--|--|
-| **Name / Shop URL / Admin Email / Company ID** | Edit any of the values you set when creating. |
-| **API Key** | Leave blank to keep the current key. Type a new one to replace it. |
-| **Active** | Turn the credential on or off. Inactive credentials are hidden from import / export profile dropdowns. |
-| **Default for quick Export** | When on, this credential is used by **Quick Export** from the product list. Only one credential can be default. |
+| **Name / Shop URL / Admin Email** | Edit the values you set when creating. |
+| **API Key** | Shown masked. Leave the mask to keep the current key, or type a new key to replace it. |
+| **Active** | Turn the credential on or off. Inactive credentials do not appear in import and export profiles. |
+| **Default for quick Export** | Use this credential for [Quick export](./quick-export). Only one credential is the default. |
 
-Click **Save Changes**.
+![Credential settings tab](./assets/cred-page/cred-settings.png)
 
----
+Click **Save changes** in the bar at the bottom.
 
 ## Delete a credential
 
-Click the trash icon on a row and confirm. Or tick several rows and use **Selected actions → Delete**.
+Click the trash icon on a row and confirm, or tick several rows and pick **Delete**.
 
-> Deleting a credential does **not** delete the data already pushed to CS-Cart. It only stops future imports / exports from running through it.
-
----
+Deleting a credential does **not** remove anything already sent to CS-Cart. It only stops future jobs from using it.
 
 ## See change history
 
-The **History** tab on the edit page lists every change made to this credential - name edits, URL changes, active flips, locale and attribute mapping changes. Your API key itself is never shown there.
+The **History** tab lists every change to the credential: name, URL, status, and mapping edits. The API key itself is never shown.
 
 ![Credential history tab](./assets/cred-page/history.png)

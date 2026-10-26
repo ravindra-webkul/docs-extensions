@@ -41,4 +41,6 @@ For each app, click **Install** if it isn't already installed. Wait for each ins
 
 > **Tip:** If an app is already installed, it will show an **Installed** badge - you can skip it and move on to the next one.
 
-Once all four apps are installed, your Odoo store is ready to connect with UnoPim. Head over to [Installation](./installation.md) to continue.
+Once all four apps are installed, your Odoo store is ready to connect with UnoPim. Head over to [Installation](./installation) to continue.
+
+> **Tip:** Accessory and alternative product links need the **eCommerce** app, and optional products need the **Sales** app. If you plan to sync [product associations](./associations-mapping), keep both installed.

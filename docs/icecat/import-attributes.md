@@ -41,11 +41,11 @@ In the **Type** dropdown, select **Icecat Attribute Import**.
 
 ### Step 5 — Save
 
-Click **Save** to store the import job.
+Click **Save changes** in the unsaved-changes bar at the bottom of the page to store the import job. Icecat jobs read data from the Icecat API, so no import file is needed.
 
 ### Step 6 — Import Now
 
-Click **Import Now** (or **Run**) to start the job.
+Click **Import Now** to start the job. It is added to the queue and runs in the background.
 
 ![Attribute Import Now](./images/import/attribute-import-now.png)
 

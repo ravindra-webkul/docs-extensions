@@ -1,12 +1,47 @@
 [
   {
-    "text": "Google Shopping",
+    "text": "Getting Started",
     "items": [
-      { "text": "Overview",       "link": "/google-shopping/" },
-      { "text": "Installation",   "link": "/google-shopping/installation" },
-      { "text": "Configuration",  "link": "/google-shopping/configuration" },
-      { "text": "Author Guide",   "link": "/google-shopping/author-guide" },
-      { "text": "Operator Guide", "link": "/google-shopping/operator-guide" }
+      { "text": "Overview",            "link": "/google-shopping/" },
+      { "text": "Installation",        "link": "/google-shopping/installation" }
+    ]
+  },
+  {
+    "text": "Configuration",
+    "items": [
+      { "text": "Google Prerequisites",  "link": "/google-shopping/prerequisites" },
+      { "text": "Package Configuration", "link": "/google-shopping/package-configuration" },
+      { "text": "Permissions",           "link": "/google-shopping/permissions" },
+      { "text": "Queue Worker",          "link": "/google-shopping/queue-worker" }
+    ]
+  },
+  {
+    "text": "Connections",
+    "items": [
+      { "text": "Create & Authorize",   "link": "/google-shopping/connection-setup" },
+      { "text": "Manage Connections",   "link": "/google-shopping/manage-connections" }
+    ]
+  },
+  {
+    "text": "Mapping",
+    "items": [
+      { "text": "Required Settings",    "link": "/google-shopping/required-settings" },
+      { "text": "Attribute Mapping",    "link": "/google-shopping/attribute-mapping" },
+      { "text": "Category Mapping",     "link": "/google-shopping/category-mapping" }
+    ]
+  },
+  {
+    "text": "Exporting",
+    "items": [
+      { "text": "Wizard Export",        "link": "/google-shopping/wizard-export" },
+      { "text": "Quick Export",         "link": "/google-shopping/quick-export" },
+      { "text": "Troubleshooting",      "link": "/google-shopping/troubleshooting" }
+    ]
+  },
+  {
+    "text": "Support",
+    "items": [
+      { "text": "Contact Support",      "link": "/google-shopping/contact-support" }
     ]
   }
 ]

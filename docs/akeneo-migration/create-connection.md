@@ -4,7 +4,7 @@ A **connection** holds the Akeneo REST API credentials the plugin uses to read y
 
 ## Open the Connections List
 
-In the admin sidebar, open **Akeneo Migration → Connections**. This lists every connection you have created, with its name, base URL, username, and status (**Enabled** / **Disabled**).
+In the admin sidebar, click **Akeneo Migration**. It opens the connections list straight away — there is no sub-menu. The list shows every connection you have created, with its name, base URL, username, and status (**Enabled** / **Disabled**).
 
 <br>
 
@@ -48,6 +48,8 @@ Fill in your Akeneo REST API (Connection) credentials:
 
 When you save, the plugin tests the credentials against Akeneo. If they are valid, the connection is created and you land straight on its **edit page**.
 
+A missing or invalid field is reported by its label — for example, *"The Akeneo Base URL field is required."*
+
 If the test fails, the connection is **not** saved and a clear reason is shown so you can fix it:
 
 | Message | What it means |
@@ -61,11 +63,20 @@ If the test fails, the connection is **not** saved and a clear reason is shown s
 
 ## Edit a Connection
 
-From a connection's edit page you can rename it, update its details, enable or disable it, and choose which entities to migrate. The page has three tabs:
+From a connection's edit page you can rename it, update its details, enable or disable it, test it, and choose which entities to migrate. The page has four tabs:
 
-- **Connection** — the connection details and the **Run a Migration** controls.
-- **History** — field-level changes made to this connection over time.
+- **Connection** — the connection details and the **Migration** controls.
+- **Import Filters** — which Akeneo records the next migration imports. See [Import Filters](./import-filters).
 - **Migration History** — every migration run started from this connection.
+- **History** — versioned changes to this connection, its import filters, and its entity selection.
+
+The **Connection** tab has three panels:
+
+| Panel | What it holds |
+|---|---|
+| **Connection Details** | Akeneo Base URL, Client ID, Secret, Username, and Password. |
+| **General** | The **Connection Name** and the **Status** toggle (enabled / disabled). |
+| **Test Connection** | A **Test Connection** button that checks the details on the form against Akeneo without saving them. |
 
 <br>
 
@@ -94,6 +105,9 @@ If you try to navigate away with unsaved changes, UnoPim asks before letting the
 
 > [!NOTE]
 > For security, the stored **Secret** and **Password** are never shown in plain text — on edit they appear as a masked length. Leave them as they are to keep the stored value, or type a new value to replace it. Both, along with the Client ID, are also **encrypted in the database**.
+
+> [!WARNING]
+> Credentials are encrypted with your application's `APP_KEY`. If `APP_KEY` changes — or a queue worker is still running with the old key — the stored credentials can no longer be decrypted, and the migration fails with a message naming the connection. Restart the queue workers, then re-enter the **Secret** and **Password** on the connection and save.
 
 ## Delete a Connection
 

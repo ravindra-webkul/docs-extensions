@@ -1,112 +1,50 @@
-# UnoPim - Odoo Import Product Model
+# Import Product Models
 
-Importing Product Models from Odoo
-
+Import Odoo product templates with variants into UnoPim as configurable products.
 
 ## Overview
 
-This import job will import all the product models from Odoo to UnoPim.
-
+The **Odoo Product Model** import job reads product templates that have variants in Odoo and creates them as configurable products (product models) in UnoPim, with one variant for each Odoo variant.
 
 ## Prerequisites
 
-Before importing product models from Odoo, ensure that you have configured your Odoo credentials in UnoPim.
+- Set up an [Odoo credential](./setup-credentials).
+- Import [attributes](./attribute-import) and [categories](./category-import) from Odoo first. The variant attributes must exist in UnoPim and belong to the selected family.
 
+## Step 1 - Open Imports
 
-## Step 1: Go to Data Transfer
+In the sidebar, go to **Data Transfer → Imports** and click **Create Import**.
 
-Navigate to the **Data Transfer** section from the main menu in UnoPim.
+![Imports list](./assets/import-jobs/imports-list.webp)
 
-![Data Transfer Menu](./assets/import-jobs/data-transfer.png)
+## Step 2 - Enter a Code and Select the Type
 
+Enter a unique **Code**, e.g. `odoo_product_model_import`. Open the **Type** dropdown and choose **Odoo Product Model**.
 
-## Step 2: Go to Imports
+![Choose an Odoo import type](./assets/import-jobs/import-type.webp)
 
-Click on **Imports** to view the available import options.
+## Step 3 - Configure the Settings
 
-![Imports Menu](./assets/import-jobs/import.png)
+![Odoo Product Model import settings](./assets/import-jobs/product-model-import-settings.webp)
 
+| Field | What it does |
+|---|---|
+| **Odoo credentials** | The Odoo store to import from. Required. |
+| **Channel** | The UnoPim channel to import into. Required. |
+| **Locale** | One or more UnoPim locales for the imported labels. Required. |
+| **Family** | The UnoPim attribute family the imported product models are created in. Required. |
+| **With Media** | Turn on to import product images as well. |
 
-## Step 3: Create Import
+## Step 4 - Save the Import
 
-Click on **Create Import** to create a new import profile.
+Click **Save changes** in the bar at the bottom of the page. The import job page opens.
 
-![Create Import Button](./assets/import-jobs/create-import.png)
+## Step 5 - Run the Import
 
+Click **Import Now** to start the job.
 
-## Step 4: Enter Code and Select Type
+![Import Now](./assets/import-jobs/import-now.webp)
 
-In the **General** section, configure the following:
+## Step 6 - Monitor Progress
 
-### Code
-
-Enter a unique code for your import profile. This code will help you identify the import profile.
-
-**Example:** odoo_product_model_import
-
-### Type
-
-In the **Type** field, select **Odoo Product Model** from the dropdown menu.
-
-![General Section](./assets/import-jobs/odoo-product-model.png)
-
-## Step 5: Configure Settings
-
-In the **Settings** section, select the appropriate channel, locale, and currency for importing Odoo products to UnoPim.
-
-### Odoo Credentials
-
-Click on the **Odoo credentials** dropdown and select the specific Odoo credentials or connection you want to import from. This is a required field.
-
-### Channel
-
-Click on the **Channel** dropdown and select the appropriate channel or store view from your Odoo setup. This is a required field.
-
-### Locale
-
-Click on the **Locale** dropdown and select the language or regional settings for imported product data (e.g., English, Spanish). This is a required field.
-
-### Family
-
-Click on the **Family** dropdown and select the product family where you want to import product models. This is a required field.
-
-### With Media
-
-Toggle the **With Media** option to choose whether to import product models along with their images and media files.
-
-- **ON** - Import product models with all associated images and media files
-- **OFF** - Import product models without media files
-
-![Settings Section](./assets/import-jobs/odoo-product-model-settings.png)
-
-
-## Step 6: Save Import
-
-Click the **Save Import** button to save your import profile configuration.
-
-![Save Import Button](./assets/import-jobs/product-model-save-import.png)
-
-
-## Step 7: Import Now
-
-Once the import profile is saved, click the **Import Now** button to execute the import process and import all product models from Odoo to UnoPim.
-
-![Import Now Button](./assets/import-jobs/product-model-import-now.png)
-
-
-## Step 8: Monitor Progress
-
-In the execution process, you can check the progress of the import job and view any errors in the log.
-
-![Import Progress](./assets/import-jobs/product-model-import-progress.png)
-
-
-## Benefits of Using Filters
-
-These filters give you fine-grained control over your imports, making it easier to:
-
-- Manage localized catalogs
-- Handle multi-channel data
-- Organize media-rich content
-- Avoid overloading your UnoPim workspace
-
+UnoPim opens the **Job Tracker**, where you can follow the progress of the job. When it finishes, it shows how many records were created and updated. Click **Download log** to see warnings or errors for individual records.

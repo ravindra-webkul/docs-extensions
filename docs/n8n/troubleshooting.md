@@ -35,9 +35,9 @@ A subscription is created when you switch the workflow **Active** in n8n. Saving
 
 ### Check the workflow is Listening
 
-If the row exists but shows **Unreachable**, five consecutive deliveries failed and it has been paused.
+If the row exists but shows **Unreachable**, five consecutive deliveries failed, or n8n answered 404 or 410, and it has been paused.
 
-Switch the workflow off and on again in n8n. That re registers the webhook and clears the failure count.
+A subscription paused by failures comes back on by itself after `N8N_REVIVE_AFTER` minutes, 15 by default, as long as the Laravel scheduler is running. If you do not want to wait, or n8n said the webhook is gone, switch the workflow off and on again in n8n. That re registers the webhook and clears the failure count.
 
 ### Check UnoPim can reach n8n
 
@@ -100,6 +100,14 @@ If the field is in the payload but empty in your workflow, the expression is loo
 
 ---
 
+## Deliveries return 401
+
+The trigger has a **Signing Secret** and the signature did not match. The secret on the trigger and the one UnoPim holds for the subscription differ, which usually means the secret was changed while the workflow stayed active.
+
+Switch the workflow off and on again in n8n so UnoPim stores the current secret.
+
+---
+
 ## The workflow runs twice for one new product
 
 This is expected.
@@ -150,7 +158,7 @@ Some managed plans do not allow them. If the **Community nodes** section is miss
 
 ## The trigger registers but deliveries return 404
 
-The webhook URL n8n gave UnoPim is not one n8n serves.
+The webhook URL n8n gave UnoPim is not one n8n serves. UnoPim pauses the subscription on the first 404 and does not revive it.
 
 This happens when a workflow was imported from a JSON file whose trigger node has no `webhookId`. n8n then builds a test style path that is not registered in production.
 

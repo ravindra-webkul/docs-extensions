@@ -35,15 +35,15 @@ In the **Type** dropdown, select **Icecat Feature Mapping**.
 | Filter | Required | Notes |
 |---|---|---|
 | **Icecat Credentials** | Yes | Select the active credential to download features for. |
-| **Locale** | Yes | Select the UnoPim locale whose Icecat feature list to download. |
+| **Locale** | Yes | Select the UnoPim locale whose Icecat feature list to download. Feature labels are taken in the Icecat locale mapped to it on the credential's [Locale Mapping](./locale-mapping) tab, falling back to English. |
 
 ### Step 5 - Save
 
-Click **Save** to store the import job.
+Click **Save changes** in the unsaved-changes bar at the bottom of the page to store the import job. Icecat jobs read data from the Icecat API, so no import file is needed.
 
 ### Step 6 - Import Now
 
-Click **Import Now** (or **Run**) to start the job.
+Click **Import Now** to start the job. It is added to the queue and runs in the background.
 
 ![Feature Mapping Import Now](./images/import/feature-mapping-import-now.png)
 

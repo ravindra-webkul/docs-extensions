@@ -8,11 +8,9 @@ To create a category export job, go to:
 
 `Data Transfer > Exports`
 
-![Exports Navigation](assets/jobs/Data-trnsfer.png)
-
 From the Exports page, click **Create Export** in the top-right corner.
 
-![Create Export Job](assets/jobs/create-export.png)
+![Exports Navigation](assets/jobs/create-Exports.png)
 
 ## Create a Category Export Job
 
@@ -21,26 +19,30 @@ While creating the export job, the user needs to:
 - Enter the **Export Job Code**.
 - Select **WooCommerce Category Export** as the export job type.
 
-![Category Export Job](assets/jobs/category-export.png)
+![Category Export Job](assets/jobs/Create-category-Export.png)
 
 ## Category Export Filters
 
-After selecting the category export job type, configure the available filters as required for your store and catalog data.
-
-Typically, the user needs to select:
+After selecting the category export job type, configure the following options:
 
 - **WooCommerce Store URL**: Select the required WooCommerce store credentials.
-- **Channel**: Select the channel to use for the export.
-- **Locale**: Select the required locale.
+- **With Media**: Enable this option if category images should also be exported to WooCommerce.
 
-![Category Export Filters](assets/jobs/category-filter.png)
+![Category Export Output](assets/jobs/category-filter-1.png)
+
+Under **Data to export** and **Data Filters**, select:
+
+- **Locales**: Select the locale to export.
+- **Categories**: Select the categories to export from the category tree. You can search by name or code.
+
+![Category Export Filters](assets/jobs/category-filter-2.png)
 
 ## Save and Run the Export Job
 
-After filling in the required details, click **Save Export** to create and save the export job.
+After filling in the required details, click **Save changes** to create and save the export job.
 
 Once the job is run, the export progress can be viewed from the **Job Tracker**.
 
-![Job Tracker](assets/jobs/category-complete.png)
+![Job Tracker](assets/jobs/after-category-export.png)
 
 After the export completes successfully, the categories will be available in the connected WooCommerce store.

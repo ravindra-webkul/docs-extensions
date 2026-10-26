@@ -52,6 +52,10 @@ features:
     details: Offload product and category media to Cloudflare R2 storage with CDN delivery.
     link: /cloudflare-r2-integration/
     linkText: Read docs
+  - title: Cloudinary Connector
+    details: Store, manage, and optimize product media on Cloudinary with automatic sync and CDN delivery.
+    link: /cloudinary/
+    linkText: Read docs
   - title: Commercetools
     details: Export products, categories and families to commercetools, and import them back into UnoPim.
     link: /commercetools/

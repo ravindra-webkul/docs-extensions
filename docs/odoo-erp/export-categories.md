@@ -1,56 +1,38 @@
-# UnoPim - Odoo Export Category
+# Export Categories
 
-Exporting Categories to Odoo
+Export your UnoPim category tree to Odoo.
 
 ## Overview
 
-Using this job, you can export all the categories to Odoo.
+The **Odoo Category** export job creates or updates categories in Odoo, keeping the parent/child structure. Which Odoo fields are filled depends on the credential's [Category Field Mapping](./category-mapping).
 
+If **Categories export as E-Commerce categories** is turned on in the [credential](./setup-credentials#step-4-configure-the-store), categories are exported as **Odoo eCommerce categories**; otherwise they are exported as internal product categories.
 
-## How to Export Categories to Odoo
+## Step 1 - Create the Export
 
-The steps to export categories are similar to attribute export:
+Go to **Data Transfer → Exports** and click **Create Export**. Enter a unique **Code**, e.g. `odoo_category_export`, and choose **Odoo Category** as the **Type**.
 
-### Step 1: Go to Data Transfer
+![Choose an Odoo export type](./assets/export-jobs/export-type.webp)
 
-Navigate to the **Data Transfer** section from the main menu.
+## Step 2 - Set the Filters
 
-![Data Transfer](./assets/export-jobs/export-attribute.png)
+![Odoo Category export filters](./assets/export-jobs/category-filters.webp)
 
-### Step 2: Select Exports
+| Filter | What it does |
+|---|---|
+| **Odoo credentials** | The Odoo store to export to. Required. |
+| **Channel** | The UnoPim channel to export from. Required. |
+| **Locale** | One or more locales for the category names. Required. |
+| **Filter By Code** | Optional. Enter category codes to export only those categories. Leave empty to export all of them. |
 
-Click on **Exports** to view the available export options.
+## Step 3 - Save and Run
 
-![Exports](./assets/export-jobs/export-1.png)
+Click **Save changes** in the bar at the bottom of the page, then **Export Now** on the export job page that opens.
 
-### Step 3: Select Type
+![Export Now](./assets/export-jobs/export-now.webp)
 
-Select **Odoo Category** as the export type to export all UnoPim categories to Odoo.
+## Step 4 - Check the Result
 
-![Select Type](./assets/export-jobs/category-type.png)
+The **Job Tracker** shows how many categories were **created** and **updated** in Odoo. Use **Download log** to see any warnings.
 
-### Step 4: Filter Fields
-
-Apply the desired filters to specify which categories to export:
-
-- **Odoo Credentials** - Choose the specific Odoo instance or credentials you're exporting to
-- **Channel** - Export categories associated with a specific sales or eCommerce channel
-- **Locales** - Select the language/localized data you want to include
-- **Filter by Code** - Export only specific categories using their unique codes
-
-![Filter Fields](./assets/export-jobs/category-filter.png)
-
-### Step 5: Save Export
-
-Click the **Save** button to save your export configuration with the selected filters and settings.
-
-![Save Export](./assets/export-jobs/save-category-export.png)
-
-### Step 6: Export Now
-
-Click the **Export Now** button to execute the export job and transfer the filtered categories to Odoo.
-
-![Export Now](./assets/export-jobs/category-export-now.png)
-
-![Export Confirmation](./assets/export-jobs/category-export-completed.png)
-
+![Category export completed](./assets/export-jobs/category-export-completed.webp)

@@ -12,11 +12,13 @@ The Nextcloud clients ask the server for a login-flow URL, open it in the user's
 
 ### Step 1 — Login
 
+![Nextcloud Login Flow Step 1](./images/nc-flow-login.webp)
 
-The browser opens UnoPim's login page. The user signs in with their UnoPim admin credentials.
+The browser opens UnoPim's login page. The user signs in with their WebDAV username and password.
 
 ### Step 2 — Grant access
 
+![Nextcloud Login Flow Step 2 Grant Access](./images/nc-flow-grant.webp)
 
 After signing in, UnoPim shows the app name and asks for confirmation. Click **Grant access**. The desktop / mobile client receives an app-password and starts syncing.
 

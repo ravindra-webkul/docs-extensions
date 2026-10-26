@@ -6,6 +6,8 @@ Each credential belongs to the admin user who created it. Non-super-admin users 
 
 ## List
 
+![WebDAV Credentials List](./images/credentials-list.webp)
+
 Columns:
 
 - **Label** — human-readable name (e.g., "Studio iMac").
@@ -20,6 +22,8 @@ Columns:
 
 ## Generate
 
+![Generate Credentials Modal](./images/credentials-create.webp)
+
 Click **Generate** to open the creation modal. Fields:
 
 - **Label** — display name. Required.
@@ -29,6 +33,8 @@ Click **Generate** to open the creation modal. Fields:
 On save, UnoPim generates a unique username and a 32-character app-password, then redirects to the **Edit** page where both are shown **once**.
 
 ## Edit page — connection info
+
+![Credential Details and Connection Info](./images/credentials-edit.webp)
 
 The edit page has two sections: the **Connection Info** panel on the left and the **settings** panel on the right.
 

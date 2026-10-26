@@ -9,7 +9,7 @@ The plugin ships one install command and three repair commands. Run them from yo
 | [`akeneo-migration:fix-attribute-types`](#akeneo-migration-fix-attribute-types) | Restores measurement attributes whose type was rewritten |
 | [`akeneo-migration:fix-product-values`](#akeneo-migration-fix-product-values) | Normalises stored multiselect and date values |
 
-The three repair commands exist for catalogs migrated by **earlier versions** of the plugin. On a fresh 1.1.0 migration they will report that there is nothing to do — which is a perfectly good way to confirm your data is in the current shape.
+The three repair commands exist for catalogs migrated by **earlier versions** of the plugin. On a fresh 1.2.0 migration they will report that there is nothing to do — which is a perfectly good way to confirm your data is in the current shape.
 
 ---
 
@@ -23,7 +23,7 @@ php artisan akeneo-migration:install
 
 It performs three steps:
 
-1. **Migrations** — creates `akeneo_credentials`, `akeneo_mappings`, and `akeneo_migration_runs`.
+1. **Migrations** — creates `akeneo_credentials`, `akeneo_mappings`, and `akeneo_migration_runs`, and applies later schema changes such as the `filters` column on runs.
 2. **Publishing** — publishes the sidebar-icon webfont.
 3. **Cache refresh** — clears the config, route, view, and application caches so the menu, ACL, and routes load.
 

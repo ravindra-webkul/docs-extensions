@@ -2,6 +2,8 @@
 
 When a client deletes a file inside a mounted folder and the credential's Sync Profile uses **Delete Mode = trash**, the DAM does **not** hard-delete. The asset moves to Trash and is retained for `trash_retention_days` (default 30) before automatic purge.
 
+![Trashed Items](./images/trash.webp)
+
 ## Columns
 
 - **Asset** — file name and thumbnail.

@@ -9,6 +9,7 @@ Everything lives in `config/n8n.php` and every setting can be overridden with an
 | `N8N_QUEUE` | `n8n` | The queue deliveries run on |
 | `N8N_TIMEOUT` | `15` | How long a single delivery may take, in seconds |
 | `N8N_FAILURE_THRESHOLD` | `5` | Consecutive failures before a subscription is paused |
+| `N8N_REVIVE_AFTER` | `15` | Minutes before a paused subscription is switched back on. `0` turns this off |
 | `N8N_MAX_PAYLOAD_KEYS` | `1000` | Cap on a flattened payload |
 | `N8N_SAMPLE_SIZE` | `3` | Example records offered to the workflow editor |
 | `N8N_LOGGING` | `true` | Delivery logging on or off |
@@ -43,11 +44,21 @@ Nothing is queued at all when no workflow is listening, so an installation with 
 
 ## The failure threshold
 
-A failed delivery is counted, not acted on. After `N8N_FAILURE_THRESHOLD` consecutive failures the subscription stops being delivered to, but the row and its history stay.
+A failed delivery is counted, not acted on. Each delivery is tried three times, straight away, after 10 seconds and after 60 seconds, and only counts as one failure if all three fail. After `N8N_FAILURE_THRESHOLD` consecutive failures the subscription stops being delivered to, but the row and its history stay.
 
 Raise it if your n8n is often briefly unavailable. Lower it if you would rather stop trying sooner.
 
 Re registering the workflow, which happens whenever you switch it on in n8n, clears the count.
+
+A **404** or **410** from n8n means the webhook no longer exists there, so the subscription is paused at once instead of waiting for the threshold.
+
+## Reviving paused subscriptions
+
+A subscription paused by failures is switched back on after `N8N_REVIVE_AFTER` minutes. If its next delivery fails too, it is paused again straight away, so a dead n8n is tried at most once per cool down.
+
+A subscription paused by a 404 or 410 is never revived, because the workflow is gone. Switch the workflow on again in n8n to reconnect it.
+
+This runs as `php artisan n8n:subscriptions:revive`, scheduled every five minutes, so the Laravel scheduler has to be running. Set the value to `0` to turn reviving off.
 
 ## The timeout
 

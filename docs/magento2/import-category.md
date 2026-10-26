@@ -1,119 +1,96 @@
-# Import Magento Category & Category Attribute
+# Import Magento Category and Category Attribute
 
-The Magento 2 connector provides two import jobs for bringing category-related data from your Magento 2 store into UnoPim:
+Two jobs bring category data from Magento into UnoPim.
 
-- **Magento Category Import** - imports categories from Magento 2 into UnoPim.
-- **Magento Category Attribute Import** - imports category attributes from Magento 2 into UnoPim.
+- **Magento Category** imports the category tree.
+- **Magento Category Attribute** imports Magento category attributes as UnoPim category fields.
 
-These jobs are useful when you already have a well-structured category catalog in Magento and want to bring it into UnoPim without manual re-entry.
+Run the attribute job first, so the category job has fields to fill.
 
----
+## Create a Job
 
-## Part 1: Import Magento Categories
-
-### What This Job Does
-
-This job reads the category tree from your Magento 2 store and creates the corresponding categories in UnoPim. It preserves the category hierarchy, localized names, and category attributes.
-
-### How to Create the Import Job
-
-Go to **Data Transfer > Imports > Create Import Profile**.
+Go to **Data Transfer > Imports > Create Import**. Enter a unique **Code** and choose the **Type**.
 
 ![Create Import Profile](./assets/import/data-transfer.png)
 
-![Select Import Type](./assets/import/create-imports.png)
-
-Select **Magento Category Import** as the import type.
-
-Enter a unique code and a recognizable name for this job, then save it.
-
-![Select Import Type](./assets/import/category-import.png)
-
-### Available Filters
-
-| Filter | Required | Description |
-|---|---|---|
-| **Credential** | Yes | Select the Magento 2 store credential to import categories from. |
-| **Store Views** | No | Select a Magento store view. This controls which locale-specific category names and data are imported. |
-
-### What Gets Imported
-
-- **Category name** - pulled from the selected store view.
-- **Category hierarchy** - parent-child relationships are preserved in UnoPim.
-- **URL key** - imported from Magento where available.
-- **Enabled status** - active and inactive categories are imported.
-- **Locale-specific values** - category names are imported using the store view mapping configured in your credentials.
-- **Category attributes** - common and locale-specific category field values are imported.
-
-### Running the Import
-
-Click **Import Now** to start the category import process.
-
-![Import Categories](./assets/import/category-import-now.png)
-
-After the job completes, check the import summary to see:
-- How many categories were created or updated.
-- Any categories that were skipped or had errors.
-
-### After the Import
-
-Log in to UnoPim and go to the **Catalog > Categories** section.
-
-You should see the Magento categories now available in UnoPim with their correct hierarchy and names.
+![Choose the import type](./assets/import/create-imports.png)
 
 ---
 
-## Part 2: Import Magento Category Attributes
+## Part 1: Magento Category Attribute
 
-### What This Job Does
+### What It Does
 
-This job imports the category attributes defined in your Magento 2 store into UnoPim as category fields. This allows UnoPim to store the same category-level data that Magento uses.
+The job reads the category attributes from Magento and creates or updates UnoPim category fields. Labels and options are saved in the locale of the store view you choose.
 
-### How to Create the Import Job
+![Magento Category Attribute import](./assets/import/category-attribute.png)
 
-Go to **Data Transfer > Imports > Create Import Profile**.
-
-![Create Import Profile](./assets/import/data-transfer.png)
-
-![Select Import Type](./assets/import/create-imports.png)
-
-Select **Magento Category Attribute Import** as the import type.
-
-Enter a unique code and a name for the job, then save it.
-
-![Select Import Type](./assets/import/category-attribute.png)
-
-### Available Filters
+### Filters
 
 | Filter | Required | Description |
 |---|---|---|
-| **Credential** | Yes | Select the Magento 2 store credential to import category attributes from. |
-| **Store Views** | No | Select a Magento store view to determine which locale-specific labels are imported with the attributes. |
+| **Credential** | Yes | The Magento store to read from. |
+| **Magento Store Views** | No | One store view. It sets the locale of the imported labels. Empty means the "All Store View". |
 
-### What Gets Imported
+### Type Conversion
 
-- **Attribute code** - the unique code for each category attribute.
-- **Attribute label** - the display name from the selected store view.
-- **Attribute type** - resolved to the closest matching UnoPim field type.
-- **Attribute options** - for select-type attributes, available options are also imported.
+| Magento input | UnoPim field type |
+|---|---|
+| Text | Text |
+| Textarea | Textarea |
+| Select | Select |
+| Select with a Yes/No source | Boolean |
+| Multiselect | Multiselect |
+| Boolean | Boolean |
+| Date | Date |
+| Datetime | Datetime |
+| Image | Image |
+| Anything else | Text |
 
-### Running the Import
+The job also copies the required, unique, rich text, status, position, and per-locale settings. Text fields get a number or decimal check when Magento stores them as numbers.
 
-Click **Import Now** to start the process.
-
-![Import Category Attributes](./assets/import/category-attribute-import-now.png)
-
-Once complete, review the import summary for the number of category attributes created or updated.
-
-### After the Import
-
-Go to **Catalog > Category Fields** in UnoPim. You should see the category attributes from Magento available in UnoPim and ready to be used on your categories.
+An existing field is only filled in, not overwritten. Options that Magento no longer sends are removed only when the field is overwritten.
 
 ---
 
-## Recommended Import Order
+## Part 2: Magento Category
 
-For the best results when setting up your UnoPim catalog from Magento:
+### What It Does
 
-1. Import **Category Attributes** first so UnoPim knows about the available category fields.
-2. Import **Categories** second so category data can be stored against those fields correctly.
+The job reads the category tree and creates or updates UnoPim categories. It keeps the parent and child order and saves the names per locale.
+
+![Magento Category import](./assets/import/category-import.png)
+
+### Filters
+
+| Filter | Required | Description |
+|---|---|---|
+| **Credential** | Yes | The Magento store to read from. |
+| **Magento Store Views** | No | One or more store views. Each adds its translated names. |
+| **When the record already exists** | No | **Create only**, **Fill empty values** (default), or **Overwrite**. |
+
+### How Store Views Work
+
+The job always imports the **All Store View** first, which creates the categories. Then it goes through each store view you selected and adds the names in that view's locale.
+
+Every selected view needs a channel, locale, and currency on the credential. If one is missing, the job stops before it starts and names the incomplete view.
+
+### What Is Imported
+
+- The **name** per locale, and the **enabled** status.
+- The **hierarchy**. Magento's hidden root (ID 1) is skipped. "Default Category" (ID 2) becomes a top-level category.
+- The **category code**, made from the name. If the code is taken, the Magento ID is added.
+- Values for the fields on the [Category Fields](./category-mapping) tab, such as URL key, description, and image. Select values match by option code first and by label second. Images are downloaded.
+- A missing parent is created first so the tree stays whole.
+
+### The Three Existing-Record Choices
+
+| Choice | Result |
+|---|---|
+| **Create only** | Existing categories stay untouched. They are counted as skipped. |
+| **Fill empty values** | Only blank values and new items are written. |
+| **Overwrite** | Magento data replaces what UnoPim has. |
+
+## After the Import
+
+Open **Catalog > Category Fields** and **Catalog > Categories** in UnoPim to check the result. Use **Download log** on the job page for any skipped rows.

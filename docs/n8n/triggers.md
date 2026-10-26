@@ -100,6 +100,8 @@ n8n webhook URLs contain a random id, so they are already hard to guess. If you 
 
 UnoPim then signs the request body with HMAC SHA256 and sends the result in an `X-Unopim-Signature` header. The trigger verifies it and rejects anything that does not match.
 
+The signature is checked against the raw request body exactly as UnoPim sent it, so characters such as accents, slashes or emoji in a value never cause a false mismatch. A delivery with a wrong or missing signature is answered with **HTTP 401** and the workflow does not run.
+
 Use the same secret on both sides. The value lives only in your workflow and in the UnoPim subscription row.
 
 ## Delivery headers
@@ -119,6 +121,12 @@ UnoPim writes the product row first, then saves its values. Both `product.create
 
 If that matters, listen on `product.created` only, or add an IF node that checks whether the values you care about are present.
 
+### Imports fire triggers too
+
+A CSV or XLSX product import fires `product.created` for every new product and `product.updated` for every changed one, the same as a save in the admin. A large import therefore starts a large number of runs.
+
+Deletes made through the REST API fire `product.deleted` as well.
+
 ### Deletions carry the whole record
 
 A delete event carries the full record as it was before removal, not just an id. You can log what was deleted or recreate it elsewhere.
@@ -131,7 +139,9 @@ Deliveries are queued. Without a worker on the `n8n` queue nothing is delivered,
 
 n8n runs on your own infrastructure, so an unreachable webhook usually means the instance is down rather than that the workflow is gone.
 
-A failed delivery is counted, not acted on. The subscription survives, and only stops being delivered to after five consecutive failures. Switching the workflow on again clears the count, so a subscription that an outage disabled comes back by itself.
+A failed delivery is counted, not acted on. Each delivery is retried twice before it counts, and the subscription only stops being delivered to after five consecutive failures. It is switched back on by itself after a cool down, 15 minutes by default, so a subscription that an outage disabled comes back without you doing anything. Switching the workflow on again in n8n also clears the count.
+
+If n8n answers **404** or **410**, the webhook no longer exists there, and the subscription is paused at once and not revived. See [Configuration](./configuration).
 
 ## If UnoPim cannot reach your n8n
 

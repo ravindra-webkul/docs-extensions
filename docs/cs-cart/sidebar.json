@@ -2,34 +2,81 @@
   {
     "text": "Setup",
     "items": [
-      { "text": "Overview",                  "link": "/cs-cart/" },
-      { "text": "Installation",              "link": "/cs-cart/installation" },
-      { "text": "Add CS-Cart credentials",   "link": "/cs-cart/credentials" },
-      { "text": "Map locales",               "link": "/cs-cart/locale-mapping" },
-      { "text": "Map attributes",            "link": "/cs-cart/attribute-mapping" }
+      {
+        "text": "Overview",
+        "link": "/cs-cart/"
+      },
+      {
+        "text": "Installation",
+        "link": "/cs-cart/installation"
+      },
+      {
+        "text": "Add CS-Cart credentials",
+        "link": "/cs-cart/credentials"
+      },
+      {
+        "text": "Map locales",
+        "link": "/cs-cart/locale-mapping"
+      },
+      {
+        "text": "Map attributes",
+        "link": "/cs-cart/attribute-mapping"
+      },
+      {
+        "text": "Map categories",
+        "link": "/cs-cart/category-mapping"
+      },
+      {
+        "text": "Data transfer mappings",
+        "link": "/cs-cart/data-transfer-mappings"
+      }
     ]
   },
   {
     "text": "Export to CS-Cart",
     "items": [
-      { "text": "Export attributes",         "link": "/cs-cart/export-attributes" },
-      { "text": "Export categories",         "link": "/cs-cart/export-categories" },
-      { "text": "Export products",           "link": "/cs-cart/export-products" },
-      { "text": "Quick export",              "link": "/cs-cart/quick-export" }
+      {
+        "text": "Export attributes",
+        "link": "/cs-cart/export-attributes"
+      },
+      {
+        "text": "Export categories",
+        "link": "/cs-cart/export-categories"
+      },
+      {
+        "text": "Export products",
+        "link": "/cs-cart/export-products"
+      },
+      {
+        "text": "Quick export",
+        "link": "/cs-cart/quick-export"
+      }
     ]
   },
   {
     "text": "Import from CS-Cart",
     "items": [
-      { "text": "Import attributes",         "link": "/cs-cart/import-attributes" },
-      { "text": "Import categories",         "link": "/cs-cart/import-categories" },
-      { "text": "Import products",           "link": "/cs-cart/import-products" }
+      {
+        "text": "Import attributes",
+        "link": "/cs-cart/import-attributes"
+      },
+      {
+        "text": "Import categories",
+        "link": "/cs-cart/import-categories"
+      },
+      {
+        "text": "Import products",
+        "link": "/cs-cart/import-products"
+      }
     ]
   },
   {
     "text": "Support",
     "items": [
-      { "text": "Contact Support",           "link": "/cs-cart/contact-support" }
+      {
+        "text": "Contact Support",
+        "link": "/cs-cart/contact-support"
+      }
     ]
   }
 ]

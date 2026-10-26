@@ -105,6 +105,12 @@ php artisan queue:work --queue=n8n
 > [!NOTE]
 > A queue worker loads your code once at startup. After you upgrade this package, restart the worker or it keeps running the previous version.
 
+The package also schedules `n8n:subscriptions:revive` every five minutes, which switches a subscription paused by failures back on. It only runs if the Laravel scheduler does, so make sure your crontab has the usual entry:
+
+```
+* * * * * cd /path/to/unopim && php artisan schedule:run >> /dev/null 2>&1
+```
+
 ### 7. Check the admin
 
 Log in and look for **n8n** in the sidebar. You should see two pages:
@@ -162,7 +168,7 @@ Copy the resulting `.tgz` onto the n8n host, then:
 
 ```bash
 cd ~/.n8n/nodes
-npm install /path/to/n8n-nodes-unopim-1.0.0.tgz --omit=dev
+npm install /path/to/n8n-nodes-unopim-1.0.5.tgz --omit=dev
 ```
 
 Restart n8n afterwards. Node types are only loaded at startup.

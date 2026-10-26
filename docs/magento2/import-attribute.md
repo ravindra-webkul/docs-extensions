@@ -1,152 +1,153 @@
 # Import Magento Attributes
 
-The Magento 2 connector provides several import jobs for bringing attribute-related data from Magento 2 into UnoPim:
+Four jobs bring the attribute structure from Magento into UnoPim.
 
-- **Magento Attribute Import** - imports product attributes from Magento into UnoPim.
-- **Magento Attribute Set Import** - imports Magento attribute sets into UnoPim as attribute families.
-- **Magento Attribute Group Import** - imports attribute groups from Magento attribute sets into UnoPim.
-- **Magento Attribute Mapping Import** - imports the attribute mapping configuration from Magento into UnoPim.
+| Job | What it creates |
+|---|---|
+| **Magento Attribute** | Attributes, labels, and options. |
+| **Magento Attribute Set** | Attribute families. |
+| **Magento Attribute Group** | Attribute groups, linked to their families. |
+| **Magento Product Attribute Mapping** | Puts attributes into the right group of each family. |
 
-These jobs help you avoid manually re-creating your entire Magento attribute structure inside UnoPim.
+Run them in this order: **Attribute**, **Attribute Set**, **Attribute Group**, then **Product Attribute Mapping**. Each step needs the one before it.
 
----
+## Create a Job
 
-## Part 1: Import Magento Attributes
-
-### What This Job Does
-
-This job reads all product attributes from your Magento 2 store and creates the corresponding attributes in UnoPim. Attribute types are automatically resolved and attribute options are also imported for select and multiselect attributes.
-
-### How to Create the Import Job
-
-Go to **Data Transfer > Imports > Create Import Profile**.
+Go to **Data Transfer > Imports > Create Import**. Enter a unique **Code** and choose the **Type**.
 
 ![Create Import Profile](./assets/import/data-transfer.png)
 
-![Select Import Type](./assets/import/create-imports.png)
+![Choose the import type](./assets/import/create-imports.png)
 
-Select **Magento Attribute Import** as the import type.
+---
 
-Enter a unique code and a recognizable name, then save.
+## Part 1: Magento Attribute
 
-![Select Import Type](./assets/import/attribute-import.png)
+### What It Does
 
-### Available Filters
+The job creates UnoPim attributes from Magento product attributes. It also saves the labels for each store view and the option list of select and multiselect attributes.
+
+![Magento Attribute import](./assets/import/attribute-import.png)
+
+### Filters
 
 | Filter | Required | Description |
 |---|---|---|
-| **Credential** | Yes | Select the Magento 2 credential to import attributes from. |
-| **Store Views** | No | Select a store view to import localized attribute labels. |
+| **Credential** | Yes | The Magento store to read from. |
+| **Magento Store Views** | No | One or more store views for translated labels. |
+| **Include standard select and multiselect attributes** | No | Off by default. See below. |
+| **When the record already exists** | No | **Create only**, **Fill empty values** (default), or **Overwrite**. |
 
-### What Gets Imported
+### Type Conversion
 
-- **Attribute code** - unique identifier.
-- **Attribute type** - mapped to the closest UnoPim attribute type.
-- **Attribute labels** - localized labels from the selected store view.
-- **Attribute options** - all available options for select and multiselect attributes.
-
-### Attribute Type Mapping
-
-| Magento Type | UnoPim Type |
+| Magento input | UnoPim type |
 |---|---|
-| `text` | Text |
-| `textarea` | Textarea |
-| `select` | Select |
-| `multiselect` | Multiselect |
-| `boolean` | Boolean |
-| `price` | Price |
-| `date` | Date |
-| `media_image` | Image |
+| Text, weight, weee | Text |
+| Textarea | Textarea |
+| Boolean | Boolean |
+| Price | Price |
+| Select, text swatch, visual swatch | Select |
+| Multiselect | Multiselect |
+| Date | Date |
+| Datetime | Datetime |
+| Image, media image | Image |
+| Gallery | Gallery |
+| Anything else | Text |
+
+A Magento attribute set to the **store view** scope becomes locale-based. One set to the **website** scope becomes channel-based.
+
+### Which Attributes Are Skipped
+
+Magento system attributes such as `name`, `sku`, `price`, `status`, `visibility`, `tax_class_id`, and `url_key` are skipped. The connector maps those on the [Attributes](./attribute-mapping) tab instead.
+
+Switch on **Include standard select and multiselect attributes** to also import the standard attributes that have an option list, such as tax class or country of manufacture. The attributes `custom_design` and `custom_layout_update_file` are never imported.
+
+### Options
+
+Option codes come from the label. If two labels give the same code, the Magento ID is added. UnoPim remembers which Magento option matches which UnoPim option, and the product import uses that match.
+
+### Existing Attributes
+
+An existing attribute never changes its type or scope. The log shows a warning instead.
+
+- **Create only**: nothing changes, including options.
+- **Fill empty values**: adds missing labels and options.
+- **Overwrite**: also updates attribute properties and labels.
 
 ---
 
-## Part 2: Import Magento Attribute Sets
+## Part 2: Magento Attribute Set
 
-### What This Job Does
+### What It Does
 
-This job imports Magento 2 attribute sets into UnoPim as **attribute families**. Each attribute set from Magento becomes a family in UnoPim, complete with its groups and attribute assignments.
+The job creates one UnoPim **attribute family** for each Magento attribute set. It sets the family name in the locale of the chosen store view. The Magento set "Default" updates the built-in UnoPim family `default`.
 
-### How to Create the Import Job
+This job does not create groups or assign attributes. The next two jobs do that.
 
-Select **Magento Attribute Set Import** as the import type when creating the job profile.
+![Magento Attribute Set import](./assets/import/attribute-set.png)
 
-![Select Import Type](./assets/import/attribute-set.png)
-
-### Available Filters
+### Filters
 
 | Filter | Required | Description |
 |---|---|---|
-| **Credential** | Yes | Select the Magento 2 credential. |
-| **Store Views** | No | Select a store view to import localized group labels. |
-
-### What Gets Imported
-
-- **Attribute family name** - created in UnoPim from the Magento attribute set name.
-- **Attribute groups** - each group inside the Magento attribute set is created as a group in the UnoPim family.
-- **Attribute assignments** - attributes are assigned to their correct groups inside the family.
-- If no matching attribute group is found for an attribute, it is automatically placed in an **Others** group.
+| **Credential** | Yes | The Magento store to read from. |
+| **Magento Store Views** | No | One store view. It sets the locale of the family name. Empty means the "All Store View". |
 
 ---
 
-## Part 3: Import Magento Attribute Groups
+## Part 3: Magento Attribute Group
 
-### What This Job Does
+### What It Does
 
-This job imports attribute groups from Magento 2 attribute sets into UnoPim. You can use this to sync attribute group structure separately from a full attribute set import.
+The job creates UnoPim attribute groups with names in the chosen locale. It links a group to its family only when the family already exists from the attribute set import. Without that, the group is created but not linked.
 
-### How to Create the Import Job
+![Magento Attribute Group import](./assets/import/attribute-group.png)
 
-Select **Magento Attribute Group Import** as the import type when creating the job profile.
-
-![Select Import Type](./assets/import/attribute-group.png)
-
-### Available Filters
+### Filters
 
 | Filter | Required | Description |
 |---|---|---|
-| **Credential** | Yes | Select the Magento 2 credential. |
-| **Store Views** | No | Select a store view for localized group names. |
-
-### What Gets Imported
-
-- **Group name** - the name of each attribute group.
-- **Group assignments** - which attributes belong to each group.
+| **Credential** | Yes | The Magento store to read from. |
+| **Magento Store Views** | No | One store view for the group names. |
 
 ---
 
-## Part 4: Import Product Attribute Mapping
+## Part 4: Magento Product Attribute Mapping
 
-### What This Job Does
+### What It Does
 
-This job imports the attribute mapping configuration that links Magento product fields to UnoPim attributes. Running this job helps pre-populate the attribute mapping in UnoPim so you don't need to configure it manually from scratch.
+This job copies Magento's layout into UnoPim. For each attribute set, it puts every attribute into the same group that Magento uses.
 
-### How to Create the Import Job
+It does not fill the connector's [Attributes](./attribute-mapping) tab.
 
-Select **Magento Product Attribute Mapping Import** as the import type when creating the job profile.
+![Magento Product Attribute Mapping import](./assets/import/product-attribute.png)
 
-![Select Import Type](./assets/import/product-attribute.png)
-
-### Available Filters
+### Filters
 
 | Filter | Required | Description |
 |---|---|---|
-| **Credential** | Yes | Select the Magento 2 credential. |
-| **Store Views** | No | Select a store view. |
+| **Credential** | Yes | The Magento store to read from. |
+| **Magento Store Views** | No | One store view. |
+| **Rearrange attributes within groups** | No | Off by default. |
 
-### What Gets Imported
+### The Rearrange Switch
 
-- Mapping between Magento field codes and UnoPim attribute codes.
-- This is used to pre-configure the **Attribute Mapping** tab in the connector.
+- **Off**: attributes already in a family stay in their group. Only missing attributes are added to the group Magento chooses.
+- **On**: attributes already in the family also move to the group Magento chooses.
+
+If a set has no imported group, the job skips it and logs a warning. It needs the results of the attribute, attribute set, and attribute group jobs.
 
 ---
 
-## Recommended Import Order
+## Store Views for These Jobs
 
-For the best results when importing attribute structure from Magento into UnoPim:
+Single-select jobs read one store view. If you leave it empty, the job uses the **All Store View**. A selected view must be fully mapped on the credential. Otherwise the job fails with "StoreView mapping not found".
 
-1. **Import Attributes** first.
-2. **Import Attribute Groups** second.
-3. **Import Attribute Sets** third.
-4. **Import Attribute Mapping** last (optional, to pre-populate mappings).
+## Recommended Order
 
-Following this order ensures that attributes exist before they are assigned to groups and families.
+1. **Magento Attribute**
+2. **Magento Attribute Set**
+3. **Magento Attribute Group**
+4. **Magento Product Attribute Mapping**
+
+Then continue with the [product import](./import-product).

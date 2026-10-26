@@ -1,42 +1,46 @@
 # Export categories
 
-Push your UnoPim category tree to CS-Cart, keeping the parent / child hierarchy intact.
+Send your UnoPim category tree to CS-Cart with its parent and child links, and optionally its images.
 
-> **Before you start.** Add a [CS-Cart credential](./credentials), [map your locales](./locale-mapping), and ideally run [Export attributes](./export-attributes) first if any of your categories carry custom attributes.
+> **Before you start.** Add a [credential](./credentials), [map your locales](./locale-mapping), and [map category fields](./category-mapping).
 
-**Open it from:** *Data Transfer → Export*
+**Open it from:** *Data Transfer → Exports*
 
-![Create export profile page](./assets/export/data-transfer.png)
+## 1. Create the profile
 
-## Steps
+1. Open **Data Transfer → Exports** and click **Create Export**.
 
-### 1. Create the profile
+![Create export page](./assets/export/create_export.png)
 
-1. Open **Data Transfer → Export → + Create Export**.
+2. **Type** - pick **CS-Cart Category Export**.
+3. **Code** - a short identifier, e.g. `cscart_categories`.
 
-![Create export profile form](./assets/export/create_export.png)
+![CS-Cart Category Export profile](./assets/export/category-export.png)
 
-2. **Type** - pick **CsCart Categories Export**, **Code** - any short identifier, e.g. `cscart_categories`.
-
-![Export profile form filled](./assets/export/category-export.png)
-
-3. **Fill the filter**
+## 2. Fill the filters
 
 | Filter | Required | What it does |
 |--|--|--|
-| **Credential** | ✓ | Which CS-Cart store to export to. |
-| **Store** | ✓ | The target CS-Cart storefront. |
-| **Channel** | ✓ | The UnoPim channel whose category tree you are exporting. |
-| **Locale** | ✓ | One or more UnoPim locales to push category names and descriptions for. |
+| **CS-Cart Credential** | ✓ | The CS-Cart store to export to. |
+| **Store Name** | ✓ | The CS-Cart storefront (company). The list is read live from the store. |
+| **Channel** | ✓ | The UnoPim channel whose values are exported. |
+| **Locale** | ✓ | One or more locales. Each must be [mapped](./locale-mapping). |
+| **With Media** | - | Also send the category image from the field set in [Category Media](./category-mapping#category-media). |
 
-Click **Save**.
+![Category export filters](./assets/export/category-filter.png)
 
-4. **Run it**
+## 3. Run it
 
-Open the profile and click **Start Export**.
+Click **Save changes** in the bar at the bottom. UnoPim opens the profile page. Click **Export Now**.
 
-![Start export button](./assets/export/category-export-now.png)
+![Export Now button](./assets/export/category-export-now.png)
 
-The job is queued. Watch progress in the Data Transfer Tracker.
+The job runs in the queue. Follow it on **Data Transfer → Job Tracker**, where each batch shows how many records were created, updated, or skipped.
 
-![Tracker export progress](./assets/export/category-export-progress.png)
+![Job Tracker progress](./assets/export/category-export-progress.png)
+
+## What happens
+
+- Every category under the channel's **root category** is exported. The root itself is not, so its direct children become top-level categories in CS-Cart.
+- Parents are always sent before their children, so the tree keeps its shape.
+- A category that was exported before is updated in place. The link is kept in [Data Transfer Mappings](./data-transfer-mappings).

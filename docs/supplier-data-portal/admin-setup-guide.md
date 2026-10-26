@@ -1,119 +1,127 @@
 # Admin Guide
 
-This guide covers everything your team needs to do to set up and manage the Supplier Data Portal — from creating roles and users, to reviewing and approving supplier products.
+This guide covers what your team does to set up and run the Supplier Data Portal: creating a handler role and user, adding supplier accounts, and reviewing the products suppliers submit.
+
+After installation, the UnoPim admin sidebar has a **Supplier** menu with three entries:
+
+| Menu entry | What it opens |
+|---|---|
+| **Accounts** | The list of supplier accounts, where you create, edit and delete suppliers |
+| **Product Approval** | The products waiting for review |
+| **Portal** | The supplier sign-in page, in a new tab |
+
+![Supplier menu in the UnoPim admin sidebar](./assets/admin/supplier-menu.png)
 
 ---
 
-## Step 1 — Create a Supplier Handler Role
+## Step 1: Create a supplier handler role
 
-Before anything else, you need a role that grants the right permissions for managing suppliers and reviewing their products.
+A **Super Admin** (a role with the **All** permission) already has every supplier permission and can skip to [Step 4](#step-4-create-supplier-accounts). To let other team members manage suppliers, create a dedicated role.
 
+Go to **Settings → Roles → Create Role**, keep **Permissions** set to **Custom**, and expand **Supplier** in the permission tree.
 
-Go to **Settings → Roles → Create Role** and set up a new role. Assign the following permissions:
-
-![alt text](./assets/admin/roles.png)
-
-![alt text](./assets/admin/create-role.png)
-
+![Supplier permissions in the Create Role form](./assets/admin/create-role.png)
 
 | Permission | What it allows |
 |---|---|
-| Create, edit, and delete supplier accounts | Full supplier account management |
-| Access the Supplier Portal Management | View and manage the supplier portal |
-| Approve, Mass Approve, or Reject supplier products | Product review and approval actions |
-| Access the Product Approval Page | View products awaiting review |
-| Access the main UnoPim Dashboard | General dashboard access |
-| Access the Catalog | View the product catalog |
+| **Supplier → Accounts** (Create, Edit, Delete) | View the supplier list and manage supplier accounts |
+| **Supplier → Product Approve** | Open the **Product Approval** page and review products |
+| **Product Approve → Approve** / **Reject** | Approve or reject a single product |
+| **Product Approve → Mass Approve** / **Mass Reject** | Approve or reject several products at once |
+| **Supplier → Portal** | Show the **Portal** link in the sidebar |
 
-Click **Save** once the permissions are assigned.
-
-> **Note:** A Super Admin automatically has access to all supplier management features and does not need a custom role.
+Also grant **Dashboard** and **Catalog** if the handler should see the UnoPim dashboard and the products that end up in the catalog. Enter a **Name**, then click **Save Role**.
 
 ---
 
-## Step 2 — Assign the Role to a Handler User
+## Step 2: Assign the role to a handler user
 
-Create a new UnoPim user or update an existing one, and assign the role you just created. This user becomes your **Supplier Handler** — responsible for managing supplier accounts and reviewing submitted products.
+Go to **Settings → Users → Create User** (or edit an existing user), fill in the user's details, select the role from Step 1 in **Role**, turn **Status** on and click **Save User**. This user is your **supplier handler**.
 
-Go to **Settings → Users → Create User** (or edit an existing user) and select the Supplier Handler role from the role dropdown.
-
-![alt text](./assets/admin/create-user.png)
+![Create User form with the Role field](./assets/admin/create-user.png)
 
 ---
 
-## Step 3 — Log In as the Supplier Handler
+## Step 3: Sign in as the supplier handler
 
-Log in to UnoPim using the Supplier Handler's credentials. Once logged in, the handler will have access to:
-
-- Supplier management
-- Product approval page
-- Dashboard views relevant to their role
-
-![alt text](./assets/admin/login-supplier.png)
-
-![alt text](./assets/admin/account.png)
-
+Sign in to the UnoPim admin panel with the handler's email and password. The sidebar shows only the menus the role allows, including the **Supplier** menu.
 
 ---
 
-## Step 4 — Create Supplier Accounts
+## Step 4: Create supplier accounts
 
-Now you can start adding your suppliers. Go to **Supplier → Accounts → Create Supplier** and fill in the required details:
+Go to **Supplier → Accounts** and click **Create Supplier**.
 
-- **Supplier details** — name, contact information, and other required fields
-- **Attribute Family** — assign the product family this supplier will use when submitting products
-- **Status** — set to **Enabled** so the supplier can log in
+![Supplier accounts list](./assets/admin/supplier-accounts.png)
 
-![alt text](./assets/admin/create-supplier.png)
+Fill in the form:
 
-Repeat this process for each supplier you want to onboard. All created accounts will appear in the **Supplier Accounts** listing.
+| Field | What to enter |
+|---|---|
+| **Name** | The supplier's company or contact name |
+| **Email** | The email address the supplier signs in with |
+| **Password** / **Confirm Password** | The supplier's first password. They can change it later from **My Account**. |
+| **UI Locale** | The language of the supplier portal for this supplier |
+| **Timezone** | The supplier's timezone |
+| **Attribute Families** | One or more families the supplier can create products in |
+| **Status** | Turn on to let the supplier sign in. A disabled supplier cannot sign in. |
 
-![alt text](./assets/admin/person.png)
+![Create Supplier form](./assets/admin/create-supplier.png)
 
----
+Click **Save Supplier**. To change a supplier later, click the edit icon in the list. Leave the password fields empty to keep the current password.
 
-## Step 5 — Share Login Credentials with the Supplier
-
-Once a supplier account is created, share the following with your supplier:
-
-- **Supplier Portal URL** — the link to their dedicated login page
-- **Username** — their account username
-- **Password** — their account password
-
-![alt text](./assets/admin/portal.png)
-
-The supplier will use these to access the portal and start submitting products.
+![Edit Supplier form with two assigned attribute families](./assets/admin/edit-supplier.png)
 
 ---
 
-## Step 6 — Review and Approve Products
+## Step 5: Share the sign-in details with the supplier
 
-When a supplier submits products, they appear on the **Product Approval Page** for your review. Navigate there to see all products awaiting action.
+Send each supplier:
 
-![alt text](./assets/admin/product-approval.png)
+- **Portal URL**: `https://your-domain.com/supplier/login` (also opened by **Supplier → Portal**)
+- **Email**: the email you entered for the account
+- **Password**: the password you set
 
-
-You have three options for each product:
-
-### Approve One by One
-Open the product's edit view, verify the details, and click **Approve**.
-
-### Mass Approve
-Select multiple products from the list and use the **Mass Approve** action to approve them all at once — useful when reviewing large batches from a supplier.
-
-![alt text](./assets/admin/Screenshot%20from%202026-05-26%2016-55-03.png)
-
-
-
-### Reject with Comments
-If a product doesn't meet your requirements, select **Reject** and leave a comment explaining what needs to be changed. The supplier will see the rejection and your comments directly on their product edit page, so they know exactly what to fix before resubmitting.
-
-![alt text](./assets/admin/reject.png)
+Suppliers who forget their password can reset it with **Forget Password?** on the sign-in page.
 
 ---
 
-## Step 7 — Final Approval and Catalog
+## Step 6: Review submitted products
 
-Once a product is approved, it automatically appears on the **UnoPim Catalog Product Page** and becomes part of your official catalog. The supplier's dashboard updates to reflect the new status as well.
+Go to **Supplier → Product Approval**. The page lists every product with the **Pending** status, with its supplier, image, attribute family and type.
 
-> **Tip:** You can recheck a product at any time by navigating back to the Product Approval Page — rejected and resubmitted products will reappear there for a second review.
+![Product Approval page with pending products](./assets/admin/product-approval.png)
+
+Each row has three actions: **edit** (pencil), **reject** (cross) and **approve** (tick).
+
+### Review and approve one product
+
+Click the edit icon to open the product. You can check every attribute, switch channel and locale, look at the **History** tab, and correct values before you decide. Click **Approve** to accept the product, or **Reject** to send it back.
+
+![Reviewing a supplier product with Approve and Reject buttons](./assets/admin/review-product.png)
+
+When you approve a product, it is copied into the UnoPim catalog (**Catalog → Products**). For a configurable product, its variants are copied too.
+
+### Reject with a message
+
+Click **Reject**, write what the supplier needs to change, and confirm. The product's status changes to **Rejected**, and the supplier gets a notification and sees your message on the product's edit page.
+
+![Reject Product dialog with a message for the supplier](./assets/admin/reject.png)
+
+Write the message as an instruction the supplier can act on, for example "Add the lens focal length and aperture to the product name".
+
+### Mass approve or mass reject
+
+Select several products with the checkboxes, open **Select Action**, and choose **Mass Approve** or **Mass Reject**. This is useful for large batches from one supplier, such as after an import.
+
+![Mass Approve and Mass Reject actions on the Product Approval page](./assets/admin/mass-approve.png)
+
+---
+
+## Step 7: After the review
+
+- **Approved** products are in the UnoPim catalog and leave the **Product Approval** list.
+- **Rejected** products also leave the list until the supplier fixes and saves them.
+- When a supplier saves any change, including a fix to a rejected product or an update to an approved one, the product returns to **Pending** and appears on **Product Approval** again. An approved product's catalog copy is updated when you approve it again.
+
+> **Tip:** Check **Product Approval** regularly, or after a supplier tells you an import has finished.

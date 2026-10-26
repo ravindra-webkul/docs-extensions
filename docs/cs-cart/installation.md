@@ -1,12 +1,27 @@
 # Installation
 
-This page is for installing the extension. Once it's installed, see [Add CS-Cart credentials](./credentials) to start using it.
+The connector has two parts: a **CS-Cart add-on** that adds the API endpoints UnoPim needs, and the **UnoPim package**. Install both. Once done, see [Add CS-Cart credentials](./credentials).
 
+## 1. Install the CS-Cart add-on
 
+CS-Cart does not expose features, options, or product variations through its REST API on its own. The `cscart_unopim` add-on adds them.
 
-## Steps
+| Endpoint | Used for |
+|---|---|
+| `/api/features` | Attributes, and the connection check when you save a credential |
+| `/api/options` | Select and multiselect option values |
+| `/api/product_variations`, `/api/product_variations_groups` | Configurable products |
 
-### 1. Drop the package in place
+1. Find `cscart_unopim.zip` in the connector package, under `CsCartModule/`.
+2. In the CS-Cart admin, open **Add-ons → Manage add-ons**, click **+**, choose **Local**, upload the zip, and install it.
+3. Open **Customers → Administrators**, edit the admin user UnoPim will use, switch on **API access**, and copy the **API key**.
+
+![UnoPim APIs add-on in CS-Cart](./assets/installation/cscart-addon.png)
+
+> [!TIP]
+> Upgrading from the older `cscart_akeneo` add-on? CS-Cart treats the new one as a separate add-on. Uninstall **Akeneo API's** first, install `cscart_unopim.zip`, then clear the CS-Cart cache by adding `?cc` to any admin URL.
+
+## 2. Add the package to UnoPim
 
 Unzip the extension and move the package folder into your UnoPim project:
 
@@ -14,9 +29,7 @@ Unzip the extension and move the package folder into your UnoPim project:
 packages/Webkul/CsCartConnector/
 ```
 
-### 2. Add it to composer.json
-
-In your project's root `composer.json`:
+In your project's root `composer.json`, add the namespace:
 
 ```json
 "autoload": {
@@ -26,9 +39,9 @@ In your project's root `composer.json`:
 }
 ```
 
-### 3. Register the provider
+## 3. Register the provider
 
-In `bootstrap/providers.php` (UnoPim 2.0+):
+In `bootstrap/providers.php`:
 
 ```php
 use Webkul\CsCartConnector\Providers\CsCartConnectorServiceProvider;
@@ -39,19 +52,7 @@ return [
 ];
 ```
 
-> [!NOTE]
-> This registers `CsCartConnectorServiceProvider` in Laravel so the connector can bootstrap its services, routes, and package configuration during application startup.
-
-> [!TIP]
-> **For UnoPim < 2.0**, add the provider to the `providers` array in `config/app.php` instead:
-> ```php
-> 'providers' => [
->     // ...
->     Webkul\CsCartConnector\Providers\CsCartConnectorServiceProvider::class,
-> ],
-> ```
-
-### 4. Run the install command
+## 4. Run the install command
 
 ```bash
 composer dump-autoload
@@ -62,43 +63,42 @@ php artisan queue:restart
 
 | Command | Purpose |
 |---|---|
-| `composer dump-autoload` | Regenerates Composer's autoloader mapping to include the newly added namespace. |
-| `php artisan cscart-package:install` | Runs the CS-Cart package installer, including migrations and publish steps. |
-| `php artisan optimize:clear` | Clears all cached files (bootstrap, configuration, routes, and views) to load the new changes. |
-| `php artisan queue:restart` | Sends a safe restart signal to queue workers so they reload the latest code. |
+| `composer dump-autoload` | Loads the new `Webkul\CsCartConnector` namespace. |
+| `php artisan cscart-package:install` | Asks to run the migrations (default yes), then publishes the connector assets. |
+| `php artisan optimize:clear` | Clears cached config, routes, and views so UnoPim sees the connector. |
+| `php artisan queue:restart` | Tells running queue workers to reload the new code. |
 
-### 5. Keep a queue worker running
+## 5. Keep a queue worker running
 
 ```bash
 php artisan queue:work
 ```
 
-| Command | Purpose |
+Every import and export runs as a queued job. Without a worker, jobs stay pending. In production, keep the worker alive with Supervisor, systemd, or Horizon.
+
+## 6. Give your role permission
+
+Open **Settings → Roles**, edit the role, and tick what it may do under **CS-Cart Connector**:
+
+| Permission | Covers |
 |---|---|
-| `php artisan queue:work` | Starts a queue worker to process CS-Cart import/export jobs in the background. |
+| **Credentials** | Create, Edit, Update, Delete, Mass Update, and Mass Delete credentials. |
+| **Credentials → Attribute Mapping** | Update the attribute and category mapping, and add or remove additional attributes. |
+| **Credentials → Locale Mapping** | Update the locale mapping. |
+| **Credentials → History View** | See the change history of a credential. |
+| **Data Transfer Mappings** | Create, Delete, and Mass Delete [data transfer mappings](./data-transfer-mappings). |
+| **Export to CS-Cart** | Run export profiles and quick export. |
+| **Import from CS-Cart** | Run import profiles and quick import. |
 
-In production use Supervisor, systemd, or Horizon - every export and import runs as a background job, so without a worker nothing actually moves.
+![CS-Cart Connector permissions in Settings → Roles](./assets/installation/cscart-acl.png)
 
-### 6. Give your role permission
-
-Open **Settings → Roles**, edit the role, and tick the CS-Cart permissions you want them to have:
-
-- **Credentials** - Create / Edit / Delete / Update / Mass Update / Mass Delete CS-Cart credentials.
-- **Attribute Mapping** - open and update the attribute mapping.
-- **Data Transfer Mappings** - create and delete data transfer mappings.
-- **Import from CS-Cart** - run import profiles.
-- **Export to CS-Cart** - run export profiles and quick exports.
-- **History View** - see the change history for credentials.
-
-<!-- TODO: capture screenshot - cscart-acl.png - CS-Cart permissions in Settings → Roles -->
-
-Without these the menu and buttons stay hidden.
+Without these, the menu and buttons stay hidden.
 
 ## Check it worked
 
-1. **Menu shows up.** Open the admin panel - a **CS-Cart** menu appears in the sidebar with **Credentials** and **Data Transfer Mappings** under it.
-2. **Add a credential works.** Open **CS-Cart → Credentials → Create Credential**, fill the form, and save. If the API key is wrong, you see a clear error.
-3. **Export profile shows up.** Open **Data Transfer → Export → Create Export Profile** - **CsCart Categories Export**, **CsCart Attributes Export**, and **CsCart Product Export** appear in the type dropdown.
-4. **Import profile shows up.** Open **Data Transfer → Import → Create Import Profile** - **CsCart Attributes Import**, **CsCart Categories Import**, and **CsCart Product Import** appear in the type dropdown.
+1. **Menu.** A **CS-Cart** menu appears in the sidebar with **Credentials** and **Data Transfer Mappings**.
+2. **Credential.** **CS-Cart → Credentials → Create Credential** saves only when the store answers. A wrong URL or key shows an error.
+3. **Export types.** **Data Transfer → Exports → Create Export** lists **CS-Cart Attribute Export**, **CS-Cart Category Export**, and **CS-Cart Product Export**.
+4. **Import types.** **Data Transfer → Imports → Create Import** lists **CS-Cart Attribute Import**, **CS-Cart Category Import**, and **CS-Cart Product Import**.
 
-If any of these don't work, check your credential, queue worker, and CS-Cart configuration again.
+If a check fails, confirm the add-on is installed in CS-Cart, the queue worker is running, and you ran `php artisan optimize:clear`.

@@ -1,169 +1,148 @@
 # Setup Credentials in UnoPim
 
-Once the UnoPim Magento 2 Connector is installed successfully, the next step is to configure your Magento 2 credentials in UnoPim.
+A credential tells UnoPim how to reach one Magento 2 store. Every import and export job asks you to pick a credential, so this is the first thing to set up after installation.
 
-This connection allows UnoPim to communicate with your Magento 2 store for both import and export operations.
+You manage credentials under **Magento2 > Credentials** in the UnoPim sidebar. Each credential has its own tabs for mappings, so one UnoPim instance can serve several Magento stores with different rules.
 
-After the credentials are added correctly, UnoPim can use them to send catalog data to Magento 2 and, where supported, fetch data back from Magento into UnoPim.
+![Magento2 > Credentials in the UnoPim sidebar](./assets/sidebar-menu.png)
 
-## Important Note About Attribute Families
+Credentials is the only Magento2 entry in the sidebar. All mappings now live as tabs inside each credential.
 
-In Magento 2, new attribute sets are created based on existing attribute sets.
+![Credentials list](./assets/cred.png)
 
-Because of this, if you plan to export UnoPim attribute families to Magento 2, you must select a Magento 2 attribute set while editing the credential.
+## Before You Start
 
-This selected attribute set acts as the base reference when UnoPim creates or maps attribute families in Magento. If no custom value is selected, Magento’s default behavior will apply.
+Check these points first. They cause most failed connections.
 
-You can update this mapping later by clicking the **Edit Credential** option and selecting the Magento attribute set that best matches your export setup.
+- The Store URL must be public. UnoPim rejects private, internal, and localhost addresses with the message "The Store URL must point to a public host, not a private or internal address."
+- Each Store URL can be saved only once. A second credential for the same URL shows "This Store URL is already in use".
+- When you save, UnoPim calls Magento to test the login. A wrong URL, token, or password stops the save and shows the reason.
 
-## Credential Types
+> [!NOTE]
+> On a development machine you can allow private hosts by setting `MAGENTO2_ALLOW_PRIVATE_HOSTS=true` in the UnoPim `.env` file. Leave it off in production.
 
-UnoPim supports two ways to create Magento 2 credentials:
+## Choose an Authentication Method
 
-- **Token-Based Credentials**
-- **Login-Based Credentials**
+Click **Add Credentials** and pick one of two options.
+
+![Add Credentials menu](./assets/login.png)
+
+| Method | Use it when | Limit |
+|---|---|---|
+| **Token Based** | You want a dedicated API connection. This is the recommended choice. | Needs an integration in Magento. |
+| **Login Based** | You want to connect with a Magento admin account. | Does not work when Magento two-factor authentication (2FA) is on. |
 
 ## Token-Based Credentials
 
-Before creating token-based credentials in UnoPim, you first need to create and activate an integration in Magento 2.
+### Step 1: Create an Integration in Magento
 
-This is the recommended method when you want a more secure and API-focused connection between Magento 2 and UnoPim.
+In the Magento admin, go to **System > Integrations > Add New Integration**.
 
-### Step 1: Create an Integration in Magento 2
+Enter a **Name** and your admin **Password**. Then open the **API** tab and give the integration access, either **All** or **Custom** resources. Click **Save**.
 
-In the Magento admin panel, go to:
+### Step 2: Check the Magento Permissions
 
-`System > Integrations > Add New Integration`
+If you choose **Custom** resources, turn on every area the connector reads or writes:
 
-Click **Add Integration** to open the configuration page.
-
-Enter the required details such as:
-
-- **Name**
-- **Password**
-
-Use a name that helps you identify the connection easily, for example a name related to UnoPim or your store environment.
-
-Then open the **API** section and choose the required resource access, either:
-
-- **Custom**
-- **All**
-
-After that, click **Save** to create the integration record.
-
-## Required Magento Permissions
-
-If you are assigning integration access based on user roles, make sure the required Magento permissions are enabled.
-
-Go to:
-
-`Admin > System > User Roles > Edit User > Role Resources`
-
-Enable the required permissions for the user, including:
-
-- Catalog
-- Inventory
-- Products
-- Categories
+- Catalog, Inventory, Products, Categories
 - Product Attachment
-- Management
-- Customers
-- Stores
-- Settings
-- Currency
+- Stores, Settings, Currency
 - Attributes
-- Other Settings
 
-These permissions are important because the connector may need access to products, categories, attributes, store configuration, and related catalog settings during synchronization.
+If a job later fails with an access error, a missing permission here is the usual cause.
 
-## Activate the Integration
+### Step 3: Activate the Integration
 
-After saving, Magento shows a confirmation message that the integration has been saved.
+Back on the **Integrations** page, click **Activate** on your integration. Then click **Allow**.
 
-Go back to the **Integrations** page, find the newly created integration, and click **Activate**.
+Magento now shows four values: Consumer Key, Consumer Secret, Access Token, and Access Token Secret. UnoPim needs only the **Access Token**. Copy it and keep it safe.
 
-Once activated, Magento redirects you to the integration page. Click **Allow** to confirm API access.
+### Step 4: Allow Bearer Tokens (Magento 2.4.4 and Later)
 
-After this step, Magento generates the integration details, including:
-
-- **Consumer Key**
-- **Consumer Secret**
-- **Access Token**
-- **Access Token Secret**
-
-Out of these values, the **Access Token** is the main value required in UnoPim for token-based credentials.
-
-It is a good practice to copy and store the generated integration values safely before leaving the page.
-
-## Important Command for Magento 2.4.4 and Above
-
-If your Magento version is **2.4.4 or above**, run the following command in the Magento root directory before using token-based credentials:
+From Magento 2.4.4, integration tokens work as bearer tokens only after you switch this on. Run this in the Magento root folder:
 
 ```bash
 bin/magento config:set oauth/consumer/enable_integration_as_bearer 1
 ```
 
-If this has already been done, you can skip this step.
+You can skip this step if it was done before.
 
-## Create Token-Based Credentials in UnoPim
+### Step 5: Save the Credential in UnoPim
 
-After generating the integration token in Magento, log in to UnoPim and go to:
+Go to **Magento2 > Credentials**, click **Add Credentials**, and choose **Token Based**.
 
-`Magento 2 Connector > Credentials`
+![Add Credential via Token](./assets/token-cred.png)
 
-Then:
-
-1. Click **Create Token-Based Credentials**.
-2. Enter the **Magento Shop URL**.
-3. Enter the **Access Token**.
-4. Click **Save**.
-
-Once saved, the credential will be available for further connector configuration, job setup, and store view mapping.
+1. Enter the **Store URL**, for example `https://store.example.com`.
+2. Paste the **Access Token**.
+3. Click **Save**.
 
 ## Login-Based Credentials
 
-UnoPim also supports login-based credentials for Magento 2.
+Go to **Magento2 > Credentials**, click **Add Credentials**, and choose **Login Based**.
 
-> **Note:** Login-based credentials do not work when Magento 2FA is enabled. In that case, either disable 2FA or use token-based credentials instead.
+![Add Credential via Login](./assets/add-cred.png)
 
-This method is useful when you want to connect UnoPim directly with an admin account instead of using an integration token.
+1. Enter the **Store URL**.
+2. Enter the Magento admin **Username**.
+3. Enter the admin **Password**.
+4. Click **Save**.
 
-## Create Login-Based Credentials in UnoPim
+> [!NOTE]
+> Login-based credentials fail when Magento 2FA is enabled. Use a token-based credential in that case.
 
-Go to:
+## Edit a Credential
 
-`Magento 2 Connector > Credentials`
+Click any row in the list, or its pencil icon, to open the credential. The page has nine tabs.
 
-![UnoPim Magento 2 Connector Credentials](./assets/cred.png)
+![Edit Credential page with all tabs](./assets/credential-edit.png)
 
-Then:
+| Tab | What it holds |
+|---|---|
+| **Credential** | Login details, base attribute set, and the status switch. |
+| **Store Views** | Magento store view to UnoPim channel, locale, and currency. |
+| **Attributes** | Standard product field mapping. See [Attribute Mapping](./attribute-mapping). |
+| **Custom Mapping** | Attributes sent as Magento custom attributes. See [Custom Mapping](./custom-mapping). |
+| **Images** | Image roles, alt text, and visibility. See [Image Mapping](./image-mapping). |
+| **Videos** | Video title, preview, and description. See [Video Mapping](./video-mapping). |
+| **Category Fields** | Category field mapping. See [Category Mapping](./category-mapping). |
+| **Associations** | Related, up-sell, and cross-sell links. See [Association Mapping](./association-mapping). |
+| **History** | Who changed this credential and its mappings, and when. |
 
-1. Click **Create Login-Based Credentials**.
+### Settings on the Credential Tab
 
-![Login-Based Credentials](./assets/login.png)
+- **Export Attribute Families Based on**: Magento builds a new attribute set from an existing one. Pick the Magento set that UnoPim should copy when it exports a family. It is required, and the default is the Magento set with ID 4.
+- **Status**: when you switch it off, export jobs for this credential fail and the credential disappears from the job forms. Use it to pause a store without deleting the credential.
 
-2. Enter the following details:
-   - **Magento Shop URL**
-   - **Admin Username**
-   - **Admin Password**
-3. Click **Save**.
+### Refresh from Magento
 
-![add-login-credentials](./assets/add-cred.png)
+UnoPim keeps a saved copy of your Magento store views and attribute sets. If that copy is empty, the **Refresh from Magento** button appears. Click it to load both lists again.
 
-This creates login-based authentication for the connector and makes the credential available for the next configuration steps.
+Saving the credential also reloads the store views.
+
+### Secrets Stay Hidden
+
+UnoPim stores the password and access token encrypted. The edit page shows them as dots. Leave the dots as they are to keep the saved value, or type a new value to replace it.
 
 ## Store View Mapping
 
-If your Magento 2 store uses multiple store views, you also need to map them correctly inside UnoPim.
+The **Store Views** tab links each Magento store view to a UnoPim channel, locale, and currency. Without it, UnoPim cannot tell which language or price belongs to which storefront.
 
-In the **Store View** section, map each Magento store view to the correct:
+Details and an example are on the [Store View Mapping](./shopview-mapping) page.
 
-- **UnoPim Channel**
-- **Locale**
-- **Currency**
+## History
 
-This mapping ensures that product data is sent to or read from the correct store view with the right channel, language, and currency setup.
+The **History** tab lists every saved version of the credential and its mappings. Each row shows the date, a version number, and the user. Click the eye icon to see what changed.
 
-It is especially important when you manage multiple Magento storefronts, multiple locales, or different currencies for different regions.
+![Credential history](./assets/history.png)
 
-Once the store views are mapped correctly, the connector can use those mappings during export and import runs without requiring the same configuration again each time.
+Passwords and tokens never appear in the history.
+
+## Permissions
+
+Admins need the right roles to see these screens. Set them under **Settings > Roles**.
+
+- **Credentials**: view, create, edit, delete.
+- **Mappings**: attribute, custom mapping, image, video, category field, and association.
+
+A user with the credential **Edit** permission can open every mapping tab and save it.

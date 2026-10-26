@@ -1,12 +1,92 @@
 # What's New & Upgrading
 
-Version **1.1.0** of the Akeneo to UnoPim Migration plugin is a release for **UnoPim 3.0.0**. Nothing was removed and no feature changed shape — but the module now runs on UnoPim 3.0's single-page admin, maps Akeneo product models onto real **variant structures**, and carries product **associations** across.
+Version **1.2.0** of the Akeneo to UnoPim Migration plugin adds **Import Filters**, records the filters each run used, versions every change to a connection in its History tab, and stores migrated media on AWS S3 when UnoPim uses it. It runs on **UnoPim 3.0.0**, like 1.1.0.
+
+Coming from a build for UnoPim 2.1? Read [Upgrading from 1.0.x to 1.1.0](#upgrading-from-1-0-x-to-1-1-0) first.
 
 ---
 
-## Requirements Changed
+## Upgrading from 1.1.0 to 1.2.0
 
-| | Previous | 1.1.0 |
+The requirements are unchanged: **UnoPim 3.0.0**, **PHP 8.4.1+**, **Laravel 13**, and `akeneo/api-php-client` `^11.4`.
+
+Run these from your **UnoPim project root**:
+
+```bash
+# 1. Replace the package code at packages/Webkul/AkeneoMigration
+
+# 2. Re-run the install command — it is safe to run again
+php artisan akeneo-migration:install
+```
+
+`akeneo-migration:install` runs three new migrations:
+
+| Migration | What it does |
+|---|---|
+| `add_filters_to_akeneo_migration_runs_table` | Adds a nullable `filters` column to `akeneo_migration_runs`. Earlier runs keep an empty value and show `-` in the Filters column. |
+| `convert_akeneo_migration_jobs_to_system_type` | Converts existing Akeneo migration jobs and their Job Tracker entries from `import` to `system` jobs. It is reversible. |
+| `add_import_filters_permission_to_roles` | Grants the new **Import Filters** permission to every custom role that already has **Connections → Edit**. It is reversible. |
+
+Your connections, mappings, and migration history are preserved. One permission was added — **Connections → Import Filters** — and roles that can edit connections receive it automatically. See [Permissions](./permissions).
+
+---
+
+## What's New in 1.2.0
+
+### Import Filters
+
+A new **Import Filters** tab on every connection narrows what a migration imports: channel, locales, families, categories, attributes, status, completeness, updated date (last N days, since last import, or between dates), and identifiers — plus a **With media** switch to skip media downloads. Filters are sent to the Akeneo API, so only matching records are downloaded. See [Import Filters](./import-filters).
+
+<br>
+
+<div align="center">
+  <img src="./assets/connection/import-filters.png" alt="Import Filters tab" width="100%" style="border-radius:8px;" />
+</div>
+
+<br>
+
+### A permission for Import Filters
+
+The tab has its own permission, **Connections → Import Filters**, so you can let a role edit connections without changing what they import. Roles that already had **Connections → Edit** are granted it during the upgrade.
+
+### Filters in the Migration History
+
+Each run records the filters it used. They appear in a new **Filters** column on the Migration History tab and in the run's details view. See [Migration History](./migration-history).
+
+### Every change is versioned in History
+
+Saving import filters, or changing the entities selected for migration, adds a version to the connection's **History** tab. Each changed field is listed by its label with its old and new value; saving without changes adds no version.
+
+### A simpler sidebar
+
+**Akeneo Migration** is now a single sidebar item that opens the connections list — the **Connections** sub-menu is gone.
+
+### Migration jobs are system jobs
+
+Migration jobs run as UnoPim **system** jobs instead of imports, so the Job Tracker shows them with a View action and no Edit button. Starting a migration takes you straight to the Job Tracker again.
+
+---
+
+## Fixes in 1.2.0
+
+- **Media works with AWS S3.** Product images and files are stored on UnoPim's default disk, so they go to S3 when the AWS integration is enabled instead of showing as broken.
+- **Community Edition no longer fails on assets.** Asset Manager is Enterprise / Serenity only; on Community Edition the DAM Assets step is skipped with a warning.
+- **No duplicate DAM assets.** Re-running a migration updates an asset imported before instead of adding a second copy.
+- **Filtered variants keep their parent.** When a filter matches a variant but not its product model, the model and its ancestors are still imported.
+- **Product model codes in Identifiers** import the model's variants and sub-models.
+- **Works without DAM.** Akeneo asset-collection attributes are skipped with a warning when the DAM extension is not installed.
+- **Clearer errors.** A connection whose credentials cannot be decrypted (for example after `APP_KEY` changed) names the cause and the fix; form and filter errors name the field by its label.
+- **Translated everywhere.** Every message, job-log line, and console output is translated into all 33 UnoPim locales.
+
+---
+
+## Upgrading from 1.0.x to 1.1.0
+
+Version **1.1.0** was the release for **UnoPim 3.0.0**. Nothing was removed and no feature changed shape — but the module moved onto UnoPim 3.0's single-page admin, mapped Akeneo product models onto real **variant structures**, and carried product **associations** across.
+
+### Requirements Changed
+
+| | 1.0.x | 1.1.0 |
 |---|---|---|
 | **UnoPim** | 2.1.0 | **3.0.0** |
 | **PHP** | 8.3+ | **8.4.1+** |
@@ -20,7 +100,7 @@ Version **1.1.0** of the Akeneo to UnoPim Migration plugin is a release for **Un
 
 ---
 
-## Upgrade Steps
+### Upgrade Steps
 
 Run these from your **UnoPim project root**, after your instance is on UnoPim 3.0.0:
 
@@ -41,9 +121,9 @@ Your existing connections, mappings, and migration history are preserved. **ACL 
 
 ---
 
-## What's New
+### What's New in 1.1.0
 
-### The whole module runs on the single-page admin
+#### The whole module runs on the single-page admin
 
 UnoPim 3.0's admin behaves like a **single-page application**, and every Akeneo Migration screen is built on it.
 
@@ -53,7 +133,7 @@ Clicking a link no longer reloads the browser — UnoPim fetches the destination
 - Saving a connection or changing the entity selection posts over AJAX and confirms with a flash message. No reload, nothing else on the page lost.
 - The **Job Tracker** listing refreshes itself while a migration job is pending or processing, so progress updates without you pressing reload.
 
-### A global save bar with Discard and Save
+#### A global save bar with Discard and Save
 
 Editing a connection — or ticking a different set of entities to migrate — raises UnoPim's global save bar. It tells you how many fields changed and offers **Discard** and **Save changes**.
 
@@ -67,13 +147,13 @@ Editing a connection — or ticking a different set of entities to migrate — r
 
 Navigating away with unsaved work asks for confirmation first, so a half-finished edit is never silently thrown away.
 
-### Connection screens use core components
+#### Connection screens use core components
 
 The connection listing and editor were rebuilt on UnoPim's own page header, breadcrumbs, and shared datagrid, and on the `primary-*` design tokens. They now follow your theme, including **dark mode**, and behave like every other listing in UnoPim — search, filters, pagination, and mass delete included.
 
 Creating a connection is now a **modal** on the listing rather than a separate page.
 
-### Akeneo product models become UnoPim variant structures
+#### Akeneo product models become UnoPim variant structures
 
 This is the largest functional addition. An Akeneo **family variant** is now translated into a UnoPim **variant structure**:
 
@@ -83,17 +163,17 @@ This is the largest functional addition. An Akeneo **family variant** is now tra
 
 Because the configurable points at a structure, it opens in UnoPim 3.0's variant editor rather than the pre-structure fallback. See [Entity Mapping](./entity-mapping#configurable-products-akeneo-product-models) for the full detail, including what happens when an axis is not usable in UnoPim.
 
-### Product associations come across
+#### Product associations come across
 
 Akeneo product associations are mapped onto UnoPim relations — **related products**, **up-sells**, and **cross-sells** — for both products and product models.
 
-### Entity selection is remembered
+#### Entity selection is remembered
 
 The entities you tick on a connection are stored on that connection. Reopen it a week later and your selection is still there, ready to run again.
 
 ---
 
-## Fixes in 1.1.0
+### Fixes in 1.1.0
 
 - **Migrations run again on 3.0.** UnoPim 3.0 refuses an import with no source file; an Akeneo job now streams straight from the REST API instead.
 - **Long runs are no longer reaped as stalled.** The importer writes UnoPim 3.0's job heartbeat while it works.
@@ -104,7 +184,7 @@ The entities you tick on a connection are stored on that connection. Reopen it a
 
 ---
 
-## Route Changes
+### Route Changes
 
 Connection routes were renamed. If you link to the module from your own code or bookmarks, update them:
 

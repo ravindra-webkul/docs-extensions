@@ -1,12 +1,27 @@
 # Mapping Templates
 
-A **Mapping Template** tells the XML Connector how to read your XML file — which tag represents a product, and how each XML field maps to a UnoPim attribute. You create a template once and reuse it across multiple import jobs.
+A **Mapping Template** tells the XML Connector how to read your XML file - which tag represents a record, and how each XML field maps to a UnoPim field. You create a template once and reuse it across multiple import jobs.
+
+The connector maps four entity types, each with its own template:
+
+| Entity Type | Imports |
+|---|---|
+| **XML Products** | Products into your catalog |
+| **XML Categories** | The category tree |
+| **XML Attributes** | Attribute definitions |
+| **XML Attribute Options** | Options for select / multiselect attributes |
+
+A template belongs to one entity type (chosen at creation) and only appears in the matching import job's dropdown.
 
 Navigate to **XML Connector → Mapping Templates** in the sidebar to manage your templates.
 
 ## Create a New Template
 
-Click the **Create Template** button in the top-right corner. A dialog will open asking for three things:
+Click the **Create Template** button in the top-right corner. A dialog will open asking for the following:
+
+### Entity Type
+
+Select what this template imports: **XML Products**, **XML Categories**, **XML Attributes**, or **XML Attribute Options**. This controls which UnoPim fields are available in the mapping editor. The default is **XML Products**.
 
 ### Template Name
 
@@ -17,7 +32,7 @@ A human-readable name to identify this template (max 50 characters, must be uniq
 Upload a sample XML file that represents the structure of your product data. The connector reads one product record from this file to extract the available fields.
 
 > [!NOTE]
-> Only `.xml` files are accepted. The file must be well-formed XML — malformed files will be rejected with an error message.
+> Only `.xml` files are accepted. The file must be well-formed XML - malformed files will be rejected with an error message.
 
 ### Product Tag Name
 
@@ -35,19 +50,24 @@ Enter the XML tag that wraps a single product record. For example, if your XML l
 
 Enter `product` as the product tag name.
 
-The connector also infers the parent (wrapper) tag automatically — in this example it would be `products`. You can override it if your wrapper tag differs.
+The connector also infers the parent (wrapper) tag automatically - in this example it would be `products`. You can override it if your wrapper tag differs. The same product-tag / wrapper-tag concept applies to every entity type (e.g. `<category>` inside `<categories>`).
 
-After filling in the details, click **Upload**. The connector parses one product record from the file, extracts all the XML fields, and redirects you to the mapping editor.
+> [!TIP]
+> A sample XML file for the selected entity type can be downloaded from the create dialog, so you can see the expected structure before uploading your own.
+
+After filling in the details, click **Upload**. The connector parses one record from the file, extracts all the XML fields, and redirects you to the mapping editor.
 
 ## Edit the Mapping
 
-The mapping editor shows every XML field found in your sample file alongside a dropdown to select the matching UnoPim attribute.
+The mapping editor shows every XML field found in your sample file on the left, alongside a dropdown to select the matching UnoPim field on the right. The connector auto-suggests a mapping where an XML field name matches a UnoPim field name or code.
 
-### Attribute Mapping
+Required fields must be mapped before you can save - the connector displays an error listing any required fields that are still unmapped.
 
-For each XML field on the left, select the UnoPim attribute it corresponds to. Required UnoPim attributes (marked as required in your catalog) must be mapped before you can save — the connector will display an error listing any required attributes that are still unmapped.
+The available UnoPim fields depend on the template's entity type.
 
-Example:
+### XML Products
+
+Map XML fields to any UnoPim attribute (SKU, name, price, description, etc.). Required attributes (those marked required in your catalog) must be mapped.
 
 | XML Field | UnoPim Attribute |
 |---|---|
@@ -56,9 +76,54 @@ Example:
 | `price` | Price |
 | `description` | Description |
 
-### Other Mappings
+### XML Categories
 
-Below the attribute mapping table you'll find the **Other Mappings** section:
+Target fields are the UnoPim category fields plus:
+
+| Field | Required | Description |
+|---|---|---|
+| `code` | Yes | Unique category code |
+| `parent` | Yes | Code of the parent category (empty for a root category) |
+| `locale` | Yes | Locale for localizable category field values |
+
+Any active category field defined in your UnoPim installation is also available to map.
+
+### XML Attributes
+
+Target fields:
+
+| Field | Required | Description |
+|---|---|---|
+| `code` | Yes | Unique attribute code |
+| `locale` | Yes | Locale for the attribute label |
+| `type` | | Attribute type (text, select, boolean, price, etc.) |
+| `name` | | Attribute label |
+| `enable_wysiwyg`, `position`, `swatch_type`, `is_required`, `is_unique`, `validation`, `regex_pattern`, `value_per_locale`, `value_per_channel`, `is_filterable`, `ai_translate` | | Attribute configuration flags |
+
+### XML Attribute Options
+
+Target fields:
+
+| Field | Required | Description |
+|---|---|---|
+| `attribute_code` | Yes | Code of the attribute this option belongs to |
+| `code` | Yes | Unique option code |
+| `locale` | Yes | Locale for the option label |
+| `label` | | Display label |
+| `sort_order` | | Option position |
+| `swatch_value` | | Swatch color / image value |
+
+### Default Attribute Value
+
+When a field should be the same for every record, you can set a fixed value instead of reading it from the XML. Each mapping row has a third column, **Default Attribute Value**.
+
+The column is enabled once you select a UnoPim attribute for that row. Type a value there and it is applied to that attribute for every record, and the row's XML field is ignored. Leave it empty to read the value from the XML as usual.
+
+A required field is considered satisfied when it is either mapped to an XML field **or** given a default value, so the connector lets you save once every required field has one or the other.
+
+### Other Mappings (XML Products only)
+
+For **XML Products** templates, an **Other Mappings** section appears below the attribute table. It is not shown for the other entity types.
 
 **Categories**
 
@@ -74,6 +139,7 @@ Choose the character used to separate multiple values within a single XML field 
 | Semicolon | `;` |
 | Pipe | `\|` |
 | Tab | `\t` |
+| Colon | `:` |
 
 The default is comma (`,`).
 

@@ -2,6 +2,8 @@
 
 Follow the steps below to install the UnoPim Odoo Connector on your UnoPim instance. Make sure you have terminal access to your server before getting started.
 
+> **Before you start:** the connector needs **UnoPim 3.0 or later** (this guide uses UnoPim **3.1.3**) and **PHP 8.4**. Set up the required apps in Odoo first - see [Odoo Setup](./odoo-setup).
+
 
 ## Step 1 - Add the Package Files
 
@@ -74,9 +76,23 @@ php artisan optimize:clear
 
 ## Verify the Installation
 
-Once all commands have run successfully, log in to your UnoPim dashboard. You should see an **Odoo icon** in the left sidebar - this confirms the connector has been installed correctly.
+Once all commands have run successfully, log in to your UnoPim dashboard. You should see an **Odoo** menu in the left sidebar - this confirms the connector has been installed correctly.
 
-![Odoo Icon](./assets/installation/odoo-icon.png)
+![Odoo menu in the UnoPim sidebar](./assets/installation/odoo-menu.webp)
 
 If the icon doesn't appear, try running `php artisan optimize:clear` again and refresh the page.
 
+
+
+## Upgrading from an Older Version
+
+Replace the `packages/Webkul/Odoo` folder with the new one, then run:
+
+```bash
+composer dump-autoload
+php artisan migrate
+php artisan vendor:publish --tag=unopim-odoo-connector --force
+php artisan optimize:clear
+```
+
+`php artisan migrate` moves your existing attribute and category mappings into each credential and updates saved export filters to the new filter names. If an export job shows an *"old filter names"* error, the migration has not run yet.

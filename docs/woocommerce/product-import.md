@@ -6,13 +6,11 @@ The UnoPim WooCommerce Connector allows users to import WooCommerce products int
 
 To create an import job, go to:
 
-`Import > Create Import Profile`
+`Data Transfer > Imports`
 
-![Import Navigation](assets/jobs/data-transfer-import.png)
+From there, click **Create Import** in the top-right corner to open the import setup form.
 
-From there, click **Create Import** to open the import setup form.
-
-![Create Import Job](assets/jobs/create-import.png)
+![Imports Navigation](assets/jobs/create-Imports.png)
 
 ## Create a Product Import Job
 
@@ -20,8 +18,6 @@ While creating the import job, the user needs to:
 
 - Enter the **Code**.
 - Select **WooCommerce Product Import** as the import type.
-
-![Product Import Job](assets/jobs/product-import.png)
 
 ## Product Import Settings
 
@@ -33,11 +29,12 @@ Under **Settings**, configure the following:
 - **Currency**: Select the currency to be used during import.
 - **Family**: Select the family to which the imported products should belong.
 - **With Media**: Enable this option if product media should also be imported.
+- **WooCommerce Product SKUs (comma separated)**: Optionally enter the SKUs of specific products to import.
 
-![Product Import Settings](assets/jobs/product-fields.png)
+![Product Import Settings](assets/jobs/product-import-profile.png)
 
-After entering the required values, click **Save Import** to save the import profile.
+After entering the required values, click **Save changes** to save the import profile.
 
 Once the job is executed, the imported products will be available in UnoPim.
 
-![Product Import Complete](assets/jobs/product-import-complete.png)
+![Product Import Complete](assets/jobs/prodcut-import-competition.png)

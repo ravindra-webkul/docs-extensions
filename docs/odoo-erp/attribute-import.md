@@ -1,88 +1,47 @@
-# UnoPim - Odoo Import Attribute
+# Import Attributes
 
-Importing Attributes from Odoo
-
+Import Odoo product attributes and their values into UnoPim.
 
 ## Overview
 
-This import job will import all the attributes and attribute options from Odoo to UnoPim.
-
+The **Odoo Attribute** import job reads the product attributes and attribute values from Odoo and creates them as UnoPim attributes and options. Attributes that already exist in UnoPim are updated.
 
 ## Prerequisites
 
-Before importing attributes from Odoo, ensure that you have configured your Odoo credentials in UnoPim.
+Set up an [Odoo credential](./setup-credentials) first.
 
+## Step 1 - Open Imports
 
-## Step 1: Go to Data Transfer
+In the sidebar, go to **Data Transfer → Imports** and click **Create Import**.
 
-Navigate to the **Data Transfer** section from the main menu in UnoPim.
+![Imports list](./assets/import-jobs/imports-list.webp)
 
-![Data Transfer](./assets/export-jobs/export-attribute.png)
+## Step 2 - Enter a Code and Select the Type
 
+Enter a unique **Code**, e.g. `odoo_attribute_import`. Open the **Type** dropdown and choose **Odoo Attribute**.
 
-## Step 2: Go to Imports
+![Choose an Odoo import type](./assets/import-jobs/import-type.webp)
 
-Click on **Imports** to view the available import options.
+## Step 3 - Configure the Settings
 
-![Imports](./assets/import-jobs/import.png)
+![Odoo Attribute import settings](./assets/import-jobs/attribute-import-settings.webp)
 
+| Field | What it does |
+|---|---|
+| **Odoo credentials** | The Odoo store to import from. Required. |
+| **Channel** | The UnoPim channel to import into. Required. |
+| **Locale** | One or more UnoPim locales for the imported labels. Required. |
 
-## Step 3: Create Import
+## Step 4 - Save the Import
 
-Click on **Create Import** to create a new import profile.
+Click **Save changes** in the bar at the bottom of the page. The import job page opens.
 
-![Create Import](./assets/import-jobs/create-import.png)
+## Step 5 - Run the Import
 
+Click **Import Now** to start the job.
 
-## Step 4: Enter Code & select type
+![Import Now](./assets/import-jobs/import-now.webp)
 
-In the **General** section, enter a unique code for your import profile. This code will help you identify the import profile.
+## Step 6 - Monitor Progress
 
-**Example:** attribute_import_odoo_001
-
-Next, select **Odoo Attribute** as the import type to import all attributes and attribute options from Odoo to UnoPim.
-
-![Select Type](./assets/import-jobs/attribute-import-type.png)
-
-
-
-## Step 6: Configure Settings
-
-In the **Settings** section, configure the following required fields:
-
-### Odoo Credentials
-
-Click on the **Odoo credentials** dropdown and select the specific Odoo credentials or connection you want to import from. This is a required field.
-
-### Channel
-
-Click on the **Channel** dropdown and select the appropriate channel or store view from your Odoo setup. This is a required field.
-
-### Locale
-
-Click on the **Locale** dropdown and select the language or regional settings for importing attribute data. This is a required field.
-
-![Import Settings](./assets/import-jobs/attribute-import-setting.png)
-
-
-## Step 7: Save Import
-
-Click the **Save Import** button to save your import profile configuration.
-
-![Save Import](./assets/import-jobs/attribute-save-import.png)
-
-
-## Step 8: Import Now
-
-Once the import profile is saved, click the **Import Now** button to start the import process and import all Odoo attributes and attribute options to UnoPim.
-
-![Import Now](./assets/import-jobs/attribute-import-now.png)
-
-
-## Step 9: Monitor Progress
-
-In the execution process, you can check the progress of the import job and view any errors in the log.
-
-![Import Progress](./assets/import-jobs/attribute-import-progress.png)
-
-
+UnoPim opens the **Job Tracker**, where you can follow the progress of the job. When it finishes, it shows how many records were created and updated. Click **Download log** to see warnings or errors for individual records.

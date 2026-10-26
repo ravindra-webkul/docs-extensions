@@ -4,68 +4,73 @@ Map UnoPim product attributes to Odoo product fields before exporting products.
 
 ## Overview
 
-When you export products to Odoo, UnoPim uses your attribute mapping to decide which product data is sent to each Odoo field. Configure these mappings once so every export uses the same field alignment.
+When you export products to Odoo, the connector uses the attribute mapping of the selected credential to decide which UnoPim value goes into each Odoo field.
 
-![Attribute Mapping](./assets/attribute-mapping/attribute-mapping.png)
+Since version 1.3.0, the mapping belongs to the **credential**. If you connect more than one Odoo store, each store has its own attribute mapping.
+
+## Open the Attribute Mapping
+
+1. Go to **Odoo → Credentials**.
+2. Click the **edit** icon of the credential you want to configure.
+3. Open the **Attribute Mapping** tab.
+
+![Attribute Mapping](./assets/attribute-mapping/attribute-mapping.webp)
 
 ## How the mapping screen works
 
-The attribute mapping screen has three columns:
-
 | Column | Purpose |
 | --- | --- |
-| **Odoo Fields** | Destination fields in Odoo where UnoPim data is written during export. |
-| **UnoPim Attributes** | Source attributes in UnoPim. Choose the attribute that should populate each Odoo field. |
-| **Fixed Value** | Optional default value applied to an Odoo field for every exported product, regardless of UnoPim data. |
+| **Odoo Fields** | Destination fields in Odoo. The technical field name is shown in brackets, e.g. `[default_code]`. Required fields are marked with `*`. |
+| **UnoPim Attributes** | The UnoPim attribute whose value is written to the Odoo field. Only attributes of a matching type are listed. |
+| **Fixed Value** | A value written to the Odoo field for every exported product, regardless of UnoPim data. |
 
-Use **Fixed Value** when all exported products should share the same value for a specific Odoo field (for example, a default route or tax setting).
+Use **Fixed Value** when all exported products should share the same value for a field (for example, a default product type or route). Each field takes either an attribute or a fixed value - selecting one disables the other.
 
 ## Default mappable product fields
 
-The following Odoo product fields can be mapped to UnoPim attributes out of the box:
+Fields marked **Yes** must be mapped (or given a fixed value) before products can be exported.
 
-| Odoo field | Type | Notes |
-| --- | --- | --- |
-| **Internal Reference** | Text | Unique, required identifier for the product. |
-| **Barcode** | Text | Optional unique barcode. |
-| **Name** | Text | Required product name. |
-| **Weight** | Number | Product weight. |
-| **Volume** | Number | Product volume. |
-| **Description for Internal** | Textarea | Required internal description. |
-| **Description for Customers / Quotations** | Textarea | Optional customer or quotation description. |
-| **Ecommerce Description** | Textarea | Optional e-commerce description. |
-| **Description for Vendors** | Textarea | Optional vendor description. |
-| **Description for Delivery Orders** | Text | Optional delivery order notes. |
-| **Description for Receptions** | Text | Optional reception notes. |
-| **Description for Internal Transfers / Pickings** | Text | Optional internal transfer or picking notes. |
-| **Cost** | Price | Required cost price. |
-| **Sale Price** | Price | Required retail or sale price. |
-| **Can be Sold** | Boolean | Required flag for sellable products. |
-| **Routes** | Multi-select | Stock movement routes for the product. |
-| **Taxes** | Multi-select | Customer or sales taxes applied to the product. |
-| **Purchase Taxes** | Multi-select | Supplier or purchase taxes applied to the product. |
-| **Product Type** | Selection | Defines the product category or type in Odoo. |
-| **Can be Purchased** | Boolean | Required flag for purchasable products. |
-| **Images** | Images | One or more product images. |
+| Odoo field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| **Internal Reference** `[default_code]` | Text | Yes | Unique product identifier. |
+| **Barcode** `[barcode]` | Text | Yes | Unique barcode. |
+| **Name** `[name]` | Text | Yes | Product name. |
+| **Weight** `[weight]` | Number / Measurement | Yes | Measurement attributes are converted to Odoo's weight unit. |
+| **Volume** `[volume]` | Number / Measurement | Yes | Measurement attributes are converted to Odoo's volume unit. |
+| **Description for Internal** `[description]` | Textarea | Yes | Internal description. |
+| **Description for Customers / Quotations** `[description_sale]` | Textarea | No | Customer or quotation description. |
+| **Ecommerce Description** `[description_ecommerce]` | Textarea | No | eCommerce description. |
+| **Description for Vendors** `[description_purchase]` | Textarea | No | Vendor description. |
+| **Description for Delivery Orders** `[description_pickingout]` | Text | No | Delivery order notes. |
+| **Description for Receptions** `[description_pickingin]` | Text | No | Reception notes. |
+| **Description for Internal Transfers** `[description_picking]` | Text | No | Internal transfer notes. |
+| **Cost** `[standard_price]` | Price | No | Cost price. |
+| **Sale Price** `[list_price]` | Price | No | Retail or sale price. |
+| **Can be Sold** `[sale_ok]` | Boolean | No | Flag for sellable products. |
+| **Routes** `[route_ids]` | Multi-select | No | Stock movement routes. |
+| **Taxes** `[taxes_id]` | Multi-select | No | Customer or sales taxes. |
+| **Purchase Taxes** `[supplier_taxes_id]` | Multi-select | No | Supplier or purchase taxes. |
+| **Product Type** `[type]` | Selection | No | The product type in Odoo. |
+| **Can be Purchased** `[purchase_ok]` | Boolean | No | Flag for purchasable products. |
+| **Images** `[images]` | Image | No | The main product image. |
+| **Gallery Images** `[gallery_images]` | Gallery | No | Extra product images. |
 
-## Configure attribute mapping
+## Images and gallery
 
-### Step 1 - Open attribute mapping
+Two fields control product media:
 
-In the Odoo connector settings, open the **Attribute Mapping** section.
+![Images and Gallery Images mapping](./assets/attribute-mapping/image-gallery-mapping.webp)
 
-### Step 2 - Map Odoo fields to UnoPim attributes
+1. **Images** - map a single **image** attribute. Its value becomes the main product image in Odoo. Leave it empty to use the first gallery image as the main image instead.
+2. **Gallery Images** - map a **gallery** attribute. Its images are exported to Odoo's **Extra Product Media**, which needs the Odoo **eCommerce** (`website_sale`) app.
 
-For each Odoo field you want to export:
+> **Note:** Media is only sent when **With Media** is turned on in the product export job.
 
-1. Select the **Odoo field** (or confirm it is already listed).
-2. Choose the matching **UnoPim attribute** from the dropdown.
-3. Optionally enter a **Fixed Value** if every exported product should use the same value for that field.
+## Configure the mapping
 
-### Step 3 - Add more mappings
+1. For each Odoo field you want to export, choose the matching **UnoPim attribute**.
+2. Optionally enter a **Fixed Value**.
+3. To send a field that is not in the list, add it under [Additional Attribute Mappings](./additional-mapping).
+4. Click **Save changes** in the unsaved changes bar at the bottom of the page.
 
-Repeat Step 2 for all required and optional fields you need in Odoo.
-
-### Step 4 - Save configuration
-
-Click **Save** to store your mapping. New product exports will use this configuration.
+New product exports for this credential use the saved mapping. Every save is recorded in the credential's [History](./mapping-history).

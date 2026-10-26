@@ -1,84 +1,55 @@
-# Magento Shop View Mapping
+# Store View Mapping
 
-The **Magento Shop View Mapping** import job pulls store view configuration data from your Magento 2 store and saves it as part of your credential in UnoPim.
+The **Store Views** tab links each Magento store view to a UnoPim channel, locale, and currency. Every export and import job reads this table, so fill it in before you run a job.
 
-This is a one-time setup step that makes it easier to map Magento store views to UnoPim channels, locales, and currencies - which is required for accurate product data export and import.
+Open it from **Magento2 > Credentials**, click a credential, then choose the **Store Views** tab.
 
-## What Is a Store View in Magento?
+![Store Views tab](./assets/store-views.png)
 
-In Magento 2, a **store view** defines a specific language, currency, and storefront configuration within a store. A single Magento store can have multiple store views - for example:
+## Why It Matters
 
-- `en_US` for English (United States)
-- `fr_FR` for French (France)
-- `de_DE` for German (Germany)
+A Magento store view is one language and price setup of a store. A shop with an English, a French, and a German view needs UnoPim to know which locale feeds which view.
 
-Each store view can show a different language and currency to shoppers. When exporting from UnoPim, product data is sent to the correct store view based on the mapping you set up.
+Without the mapping, UnoPim cannot pick the right translation or price for a view. Jobs that need it stop with a message such as "The store view mapping for `eu_fr` is incomplete".
 
-## Why This Matters
+## The Columns
 
-Without store view mapping, UnoPim cannot know which Magento store view corresponds to which UnoPim channel, locale, or currency.
+| Column | What to choose |
+|---|---|
+| **Magento Store Views** | Read-only. Shows the store view name and its code, for example `French [eu_fr]`. |
+| **UnoPim Channel** | The channel whose products and categories this view uses. |
+| **UnoPim Locale** | The language UnoPim reads or writes for this view. |
+| **UnoPim Currency** | The currency used for prices in this view. |
 
-Once this mapping is configured, all subsequent export and import jobs use it automatically - so you don't have to reconfigure it every time.
+## Rules to Know
 
-## How to Create the Import Job
+- The **All Store View** row is required. It stands for Magento's default scope, and every job starts with it.
+- The channel must exist in UnoPim. The locale and currency must be active.
+- Rows you leave empty are skipped.
+- Store view codes may use lowercase letters, numbers, and underscores, and must start with a letter.
 
-Go to **Data Transfer > Imports > Create Import Profile**.
+## Example
 
-![Create Import Profile](./assets/import/data-transfer.png)
-
-![Select Import Type](./assets/import/create-imports.png)
-
-Select **Magento Shop View Mapping** as the import type.
-
-Enter a unique code and a name for the job, then save it.
-
-
-![Select Import Type](./assets/import/shopview.png)
-## Available Filters
-
-| Filter | Required | Description |
-|---|---|---|
-| **Credential** | Yes | Select the Magento 2 store credential you want to fetch store views for. |
-
-## What Gets Imported
-
-This job reads the following from Magento 2:
-
-- All available **store views** with their codes and labels.
-- The associated **store groups** and **websites**.
-
-The data is saved to the credential's extras so it can be used when you configure the store view mapping manually in the credential settings.
-
-## Running the Import
-
-Click **Import Now** to start the process.
-
-![Import Store Views](./assets/import/shoview-import-now.png)
-
-Once complete, check the job summary. The store view data is now stored in your Magento credential in UnoPim.
-
-## Next Step: Map Store Views to UnoPim Channels
-
-After running this import, go to:
-
-`Magento 2 Connector > Credentials > Edit Credential`
-
-In the **Store View Mapping** section, you will see the store views fetched from Magento. For each store view, select the corresponding:
-
-- **UnoPim Channel**
-- **Locale**
-- **Currency**
-
-For example:
-| Magento Store View | UnoPim Channel | Locale | Currency |
+| Magento store view | UnoPim channel | Locale | Currency |
 |---|---|---|---|
-| `en_US` | `ecommerce` | `en_US` | `USD` |
-| `fr_FR` | `ecommerce` | `fr_FR` | `EUR` |
+| All Store View `[all]` | `default` | `en_US` | `USD` |
+| English `[eu_en]` | `europe` | `en_US` | `EUR` |
+| French `[eu_fr]` | `europe` | `fr_FR` | `EUR` |
+| German `[eu_de]` | `europe` | `de_DE` | `EUR` |
 
-Once this mapping is saved, all export and import jobs that use this credential will automatically apply the correct store view, locale, and currency for product data.
+## Currencies in Magento
 
-## Best Practice
+Magento holds prices in the base currency and converts them with rates. Choose one of these two setups.
 
-Run the **Shop View Mapping** import as early as possible in your setup - ideally right after creating your Magento credentials. Completing this step before running product exports ensures that localized product data is sent to the correct Magento store views.
+- **One currency for all views.** Map every view to the same currency and let Magento convert prices.
+- **A different currency for each view.** In Magento, go to **Stores > Configuration > General > Currency Setup** and turn off **Scheduled Import Settings**. Then set every rate to `1.0` under **Stores > Currency Rates**, so Magento does not change the prices UnoPim sends.
 
-If your Magento store is restructured or new store views are added, re-run this import job and update the mapping accordingly.
+## Loading the Store Views
+
+UnoPim keeps a saved copy of the store views. The table is empty at first, and the page shows "Store views have not been loaded from Magento yet".
+
+Click **Refresh from Magento** to load them. Saving the credential also reloads them. Do this again whenever someone adds or renames a store view in Magento.
+
+## Related Job: Import StoreView Details
+
+You can also build the UnoPim side from Magento. The **Magento StoreView Details** import creates channels, locales, and currencies from your Magento store groups. It does not fill this table, so you still map the views by hand. See [Import Store View Details](./import-store-view).

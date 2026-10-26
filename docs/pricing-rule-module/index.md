@@ -13,26 +13,26 @@ Author creates a rule (unique Code)
         ↓
 Execute rule from grid, rule editor, or Artisan
         ↓
-Queue job finds matching products
-        ↓
- Chunk jobs update target price values
+ Queue job finds matching products
+         ↓
+ Chunks of 100 update target price values
 ```
 
-Each rule run is dispatched as a queue job, and execution details are recorded both in Laravel logs and in a per-execution tracker log file.
+Each rule run is dispatched as a queue job and tracked in **Data Transfer > Job Tracker** as a system job, with its state, progress, updated/skipped counts, and a downloadable log. High-level messages are also written to the Laravel log.
 
 ## Key features
 
-- **Condition-based engine** — target products by SKU, attribute values, or any other product attribute available in Unopim.
-- **Action-based price assignment** — write a numeric value into a chosen price-type attribute when conditions are met.
-- **Channel & locale aware** — conditions and actions are saved separately per channel/locale combination.
-- **Currency-specific values** — set the price for any currency assigned to the selected channel.
-- **Operators** — `Contain` and `Is Equal to` matching for condition values.
-- **Single or mass execute** — run one rule from its row action or from inside the rule editor, or select multiple rules and use **Mass Execute**.
-- **Artisan command** — execute any rule by ID from the CLI: `php artisan unopim:price-rule:run {rule_id}`.
-- **Queue-based processing** — `ApplyPriceRule` and `ApplyPriceRuleToProducts` jobs handle product matching and chunked updates.
-- **History tab** — every saved rule has its own change history visible inside the editor.
-- **Execution logs** — per-run logs at `storage/logs/rule-tracker/{execution_id}/rule.log`.
-- **Permission-based access** — view, create, edit, delete, mass-delete, and execute are individually controlled via admin roles.
+- **Condition-based engine**: target products by SKU, attribute values, or any other product attribute available in Unopim.
+- **Action-based price assignment**: write a numeric value into a chosen price-type attribute when conditions are met.
+- **Channel & locale aware**: conditions and actions are saved separately per channel/locale combination.
+- **Currency-specific values**: set the price for any currency assigned to the selected channel.
+- **Operators**: `Contain` and `Is Equal to` matching for condition values.
+- **Single or mass execute**: run one rule from its row action or from inside the rule editor, or select multiple rules and use **Mass Execute**.
+- **Artisan command**: execute any rule by ID from the CLI: `php artisan unopim:price-rule:run {rule_id} {admin_email?}`. The optional admin email is shown against the run in the Job Tracker.
+- **Queue-based processing**: `ApplyPriceRule` and `ApplyPriceRuleToProducts` jobs handle product matching and updates in batches of 100.
+- **History tab**: every saved rule has its own change history visible inside the editor.
+- **Execution logs**: every run appears in **Data Transfer > Job Tracker** with a downloadable log, plus a per-run log file at `storage/logs/rule-tracker/{execution_id}/rule.log`.
+- **Permission-based access**: view, create, edit, delete, mass-delete, and execute are individually controlled via admin roles.
 
 ## Roles
 
@@ -43,9 +43,11 @@ Each rule run is dispatched as a queue job, and execution details are recorded b
 
 A user can hold both roles depending on their permissions.
 
+![Pricing Rule listing with one saved rule and the Create Rule button](./assets/setup/rule-listing.webp)
+
 ## Requirements
 
-- Unopim v3.0.0
+- Unopim v3.0.0 or later (tested on v3.1.3)
 - PHP 8.4+, Laravel 13.x, Concord ^1.16
 - Queue worker running (rule execution is dispatched as queue jobs)
 - Price-type attributes already created in Unopim

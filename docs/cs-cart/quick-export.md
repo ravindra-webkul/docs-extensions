@@ -1,48 +1,49 @@
 # Quick export
 
-Push a few selected products to CS-Cart straight from the product list - no need to create an export profile.
+Send selected products to CS-Cart straight from the product grid, without creating an export profile.
 
-> **Before you start.** Add a [CS-Cart credential](./credentials) and tick **Default for quick Export** on it in *Credential Settings*. The connector uses **the default credential** for every quick export. [Map locales](./locale-mapping) and [Map attributes](./attribute-mapping) on that credential too.
+> **Before you start.** On one credential, switch on **Default for quick Export** in [Credential Settings](./credentials#credential-settings), and set its **Quick Export Settings** (channel, locale, currency) in [Map attributes](./attribute-mapping#quick-export-settings). Quick export always uses that credential.
 
 **Open it from:** *Catalog → Products*
-
-<!-- TODO: capture screenshot - cscart-quick-export-action.png - Quick export action in the products list -->
 
 ## Steps
 
 1. Open **Catalog → Products**.
 
-![Products list](./assets/export/products.png)
-2. Tick one or more rows.
+![Products grid](./assets/export/products.png)
+
+2. Tick the products to send.
 
 ![Selected products](./assets/export/selected-export.png)
 
-3. Click **Quick Export → CS-Cart Quick Export**.
+3. Click **Quick Export**.
 
-![Quick export action](./assets/export/quick-export.png)
+![Quick Export button](./assets/export/quick-export.png)
 
-![Quick export form](./assets/export/c-product-export.png)
+4. In the dialog, pick **CS-Cart Product Export** as the format, switch **With Media** on if images should go too, and click **Quick Export**.
 
-The selected products are queued straight to CS-Cart. You'll see *Products queued for CS-Cart export.*
+![Quick export dialog](./assets/export/c-product-export.png)
 
-![Export success message](./assets/export/quick-export-progress.png)
+You see *The quick export job has been launched successfully. You can view it in the job tracker.*
 
-Watch the job in the Data Transfer Tracker.
+![Quick export launched](./assets/export/quick-export-progress.png)
 
 ## What it uses
 
-| Setting | Where it comes from |
+| Setting | Comes from |
 |--|--|
-| **CS-Cart credential** | The one marked **Default for quick Export**. |
-| **Store** | The default store on that credential. |
-| **Channel / Locale / Currency** | The active channel / locale / currency in your admin session. |
-| **Attribute mapping** | The default credential's [Attribute Mapping](./attribute-mapping). |
-| **With media** | On by default. |
+| **Credential** | The credential marked **Default for quick Export**. |
+| **Channel / Locale / Currency** | That credential's **Quick Export Settings**. |
+| **Fields and features** | That credential's [attribute mapping](./attribute-mapping). |
+| **Products** | The ticked rows. A ticked variant sends its whole configurable product. |
+| **With Media** | The switch in the dialog. |
 
-If you need finer control (specific locales, a non-default credential, a different channel), use a full [export profile](./export-products) instead.
+For other locales, another credential, or filters, use a full [export profile](./export-products).
 
-## If the action doesn't appear
+## If it does not start
 
-1. No credential is marked **Default for quick Export** - open *CS-Cart → Credentials → edit → Credential Settings* and turn it on.
-2. Your role doesn't have **Export to CS-Cart** permission. See [Installation → Give your role permission](./installation#_6-give-your-role-permission).
-3. Refresh the page - the action list is loaded once when the page opens.
+| Message | Fix |
+|--|--|
+| *None of the credentials are set as default for quick export.* | Switch on **Default for quick Export** on a credential. |
+| *Quick export settings are not configured in the default credential set for quick export.* | Set channel, locale, and currency under **Quick Export Settings**. |
+| **CS-Cart Product Export** is missing from the format list | Your role needs the **Export to CS-Cart** permission. |

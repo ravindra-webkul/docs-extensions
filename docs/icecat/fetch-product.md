@@ -28,7 +28,7 @@ Click **Icecat Fetch** from the dropdown. A modal dialog opens.
 | Field | Description |
 |---|---|
 | **Icecat Credential** | Select the credential to use for this fetch. If only one active credential exists, it is pre-selected automatically. |
-| **Icecat Language** | Select the UnoPim locale to fetch content in. |
+| **Icecat Language** | Select the UnoPim locale to fetch content in. It defaults to your current admin locale. Content is requested in that locale's language (for example `de_DE` → German) and written to that locale. |
 
 ![Icecat Fetch modal with credential and locale selectors](./images/import/single-fetch-4.png)
 
@@ -36,11 +36,12 @@ Click **Icecat Fetch** from the dropdown. A modal dialog opens.
 
 Click the **Icecat Fetch** button to submit the request. A spinner is shown while the connector queries the Icecat API.
 
-- On **success**, a confirmation flash message appears and the page reloads with the updated attribute values.
+- On **success**, the message **"Product data fetched from Icecat and updated successfully."** appears and the product page refreshes with the updated attribute values.
 - On **failure**, the error reason is shown inside the modal (e.g., product not found in Icecat, or no mappable values returned).
 
 ## Notes
 
 - The single-product fetch uses the same attribute mapping as the bulk import job. Make sure the credential's mapping is saved before using this feature.
-- Images are downloaded from Icecat and stored on the `public` disk, the same as in the bulk job.
+- Pictures are stored the same way as in the bulk job: in image or gallery attributes, or as DAM assets for asset attributes. A picture already stored for the product is reused instead of being downloaded again.
+- Only active credentials are listed. If none is active, the credential dropdown is empty and the **Icecat Fetch** button stays disabled. Create or activate one under **Icecat → Credentials** first.
 - The fetch always retrieves the latest data from Icecat at the time of the request.

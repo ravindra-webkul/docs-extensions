@@ -1,55 +1,37 @@
 # Video Mapping
 
-Video mapping allows you to map product video-related fields before exporting products from UnoPim to Magento 2.
+The **Videos** tab maps the UnoPim attributes that hold video links, so Magento can show them on the product page.
 
-Use this section when you want to export video URLs together with product data so Magento can display product videos with the correct details.
+Open it from **Magento2 > Credentials**, click a credential, then choose **Videos**.
 
-![Video Mapping](./assets/mapping/video-mapping.png)
+![Videos tab](./assets/mapping/video-mapping.png)
 
-## Video Mapping Options
+> [!NOTE]
+> Videos are exported only when **With Media** is switched on in the product export job.
 
-In the **Video Mapping** section, you can map the following fields:
+## Add a Video Field
 
-### Video Attribute `(Required)`
+Use **Add Video Fields** and pick a **Video Attribute**. The list offers text attributes whose validation is empty or set to URL. Attributes already used in another mapping are hidden.
 
-Map the UnoPim attribute that stores the product video URL.
+## The Columns
 
-This is the main field used to export the product video to Magento 2.
+| Column | Required | What it does |
+|---|---|---|
+| **Video Attributes** | Yes | The UnoPim attribute with the video URL. |
+| **Title** | Yes | The attribute with the video title. The server rejects a row without it. |
+| **Preview Image** | Yes in the form | The attribute with the preview picture. |
+| **Description** | No | The attribute with a short description. |
+| **Visibility** | No | Shows or hides the video on the product page. |
 
-### Preview Image `(Optional)`
+## Rules
 
-Map the UnoPim attribute that should be used as the preview image for the video.
+- Each video attribute can be added once.
+- A product with a video but no readable preview image is skipped for that video in the REST export. The log says "Video skipped: Magento needs a preview image".
+- The CSV export needs only a title. Without one the log says "This video cannot be exported because its title is not mapped".
+- YouTube and Vimeo links are recognised. Other hosts are sent without a provider name.
+- The **Visibility** switch works for the CSV export. The REST export always sends the video as visible.
 
-This image can be shown before the video is played in Magento.
+## Tips
 
-### Title `(Required)`
-
-Map the UnoPim attribute that contains the video title.
-
-The title helps identify the video in Magento and gives context to the product media.
-
-### Description `(Optional)`
-
-Map the UnoPim attribute that contains the video description.
-
-This can be used to provide additional information about the product video.
-
-### Hide from Product Page `(Optional)`
-
-Admins can enable or disable this option to control whether the mapped video should be visible on the Magento product page.
-
-Use this when video data should be exported but not shown directly on the storefront.
-
-## When to Use This Section
-
-Use the video mapping interface before exporting products if your product catalog includes video URLs and you want those videos to be transferred to Magento 2 along with the product data.
-
-## Best Practice
-
-Always map the required fields, especially the **Video Attribute** and **Title**, before running the export.
-
-If you want the video to display properly in Magento, also map a suitable preview image and review the visibility setting based on your storefront needs.
-
-## Result
-
-Once the video mapping is saved, UnoPim uses these settings while exporting product videos to Magento 2. This helps ensure that the video URL and its related information are sent in the correct structure.
+- Use full links, for example `https://www.youtube.com/watch?v=...`.
+- Keep the preview image as a normal image attribute with a file in storage.

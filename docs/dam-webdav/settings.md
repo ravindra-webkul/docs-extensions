@@ -4,6 +4,8 @@ Module-level settings that apply across all credentials, profiles, and remote so
 
 ## Fields
 
+![Nextcloud Settings](./images/settings.webp)
+
 | Field | Default | Description |
 |---|---|---|
 | **WebDAV Enabled** | On | Master switch. Turning this off returns `503` on all WebDAV endpoints and blocks the Nextcloud login-flow. Useful for emergency maintenance without uninstalling the module. |

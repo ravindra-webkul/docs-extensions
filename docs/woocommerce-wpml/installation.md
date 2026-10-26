@@ -4,6 +4,7 @@
 This add-on requires the UnoPim **WooCommerce Connector** to already be installed, configured, and connected to your store. If you have not done that yet, complete the WooCommerce Connector setup before continuing here.
 
 **WooCommerce Connector setup:**
+
 1. [Install the WooCommerce Connector](/woocommerce/installation)
 2. [Generate WooCommerce API Credentials](/woocommerce/api-credentials)
 3. [Setup Credentials in UnoPim](/woocommerce/setup-credentials)
@@ -15,7 +16,7 @@ The WooCommerce WPML add-on is installed **on top of** an already-working Unopim
 
 ## Requirements
 
-- Unopim v2.0.0 or higher (UnoPim ≥ 0.3.0 is the minimum)
+- Unopim v3.1.*
 - PHP 8.3+, Laravel 12.x
 - Unopim WooCommerce connector already installed
 - WPML plugin installed and configured in WordPress
@@ -26,13 +27,6 @@ The WooCommerce WPML add-on is installed **on top of** an already-working Unopim
 ### 1. Merge the package files
 
 Unzip the extension package and merge the `packages/` folder into the Unopim project root, so the add-on lands at `packages/Webkul/WooCommerceWPML/`.
-
-### 2. Apply patch files (only for older Unopim)
-
-| Unopim version | Action |
-|---|---|
-| **≥ 0.3.2** (incl. v2.0.x) | Skip — patch behavior is already in core. |
-| **≤ 0.3.2** | Merge the `packages/` folder from the patch directory shipped with the add-on into the project root. This applies compatibility fixes for the older connector structure and enables Quick Export. |
 
 ### 3. Register the service provider
 
@@ -68,16 +62,16 @@ php artisan optimize:clear
 
 The migration creates the `wk_wpml_data_mapping` table:
 
-| Column | Purpose |
-|---|---|
-| `entityType` | `category` / `attribute` / `product` |
-| `code` | Unopim entity code |
-| `externalId` | ID returned by WooCommerce / WPML |
-| `relatedId` | ID of the original (default-language) entity |
-| `relatedLanguage` | WPML language code of this row |
-| `langLabel` | Human-readable language label |
-| `jobInstanceId` | Job that produced the row |
-| `apiUrl` | WooCommerce API base used at the time |
+| Column              | Purpose                                      |
+| ------------------- | -------------------------------------------- |
+| `entityType`      | `category` / `attribute` / `product`   |
+| `code`            | Unopim entity code                           |
+| `externalId`      | ID returned by WooCommerce / WPML            |
+| `relatedId`       | ID of the original (default-language) entity |
+| `relatedLanguage` | WPML language code of this row               |
+| `langLabel`       | Human-readable language label                |
+| `jobInstanceId`   | Job that produced the row                    |
+| `apiUrl`          | WooCommerce API base used at the time        |
 
 ### 6. Restart the queue worker
 

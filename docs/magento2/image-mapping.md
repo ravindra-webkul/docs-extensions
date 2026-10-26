@@ -1,50 +1,49 @@
 # Image Mappings
 
-Image mapping allows you to decide which UnoPim image attributes should be exported to Magento 2 and how those images should be used on the product page.
+The **Images** tab chooses which UnoPim image attributes go to Magento and how each image is used on the product page.
 
-This helps ensure that product gallery images, role-based images, and optional image-related values are sent correctly during export.
+Open it from **Magento2 > Credentials**, click a credential, then choose **Images**.
 
-![Image Mapping](./assets/mapping/image-mapping.png)
+![Images tab](./assets/mapping/image-mapping.png)
 
-## Image Mapping Options
+> [!NOTE]
+> Images are exported only when **With Media** is switched on in the product export job. See [Export Magento Product](./export-product).
 
-### Image Attributes `(Required)`
+## Add an Image Attribute
 
-Select the UnoPim image attributes that should be exported to Magento 2.
+At the bottom, use **Add Image Fields** and pick an attribute in **Choose Image Attribute**. The list offers attributes of type **Image**, **Gallery**, and **Asset**. Each attribute can be added once.
 
-The selected image attributes will be visible in Magento as **product gallery images**.
+## The Columns
 
-### Alt Text Attribute `(Optional)`
+| Column | What it does |
+|---|---|
+| **Image Attributes** `(Required)` | The UnoPim attribute that holds the image. Everything you add becomes part of the Magento product gallery. |
+| **Alt Text** | An attribute whose value becomes the image label in Magento. |
+| **Role** | The Magento roles this image fills: **Base**, **Small**, **Thumbnail**, **Swatch**. |
+| **Visibility** | A switch between **Visible** and **Hidden**. A hidden image stays in the gallery data but does not show on the product page. |
 
-You can also map an attribute for image alt text.
+## Single Image and Gallery Rows
 
-If image labels or related text values are not being exported directly from UnoPim, map the attribute whose value you want Magento to display as the image text.
+A single image attribute lets you pick the alt text attribute and the roles. A **Gallery** or **Asset** row works differently:
 
-### Image Role `(Optional)`
+- The Alt Text and Role boxes are disabled.
+- The image file name becomes the alt text.
+- Any role you did not give to another row goes to the first gallery or asset image.
 
-You can define which images should be used for Magento’s main product image roles.
+## Rules
 
-Map the image role based on how you want the exported image to appear in Magento, such as:
+- Each role can be used on one row only. A second use shows "role already assigned to another image".
+- You need at least one row. With none, saving shows "No image field is added".
+- Image file names may contain only letters, numbers, underscores, spaces, and hyphens. Other names are skipped in the CSV export.
+- If the file is missing from storage, the image is skipped and the log names the path.
+- A row with no visibility choice is exported as visible, and the log notes it.
 
-- **Base Image**
-- **Small Image**
-- **Swatch Image**
-- **Thumbnail Image**
+## What Happens to Old Images
 
-This helps Magento assign the correct image to the correct display area.
+The REST export compares images one by one. Images that did not change stay as they are, and images that exist only in Magento are kept. When an image that the connector created is removed in UnoPim, it is removed in Magento too.
 
-### Hide from Product Page `(Optional)`
+## Tips
 
-Admins can enable or disable this option to control whether the mapped images should be hidden from the Magento product page.
-
-Use this when certain exported images are needed for data sync but should not be displayed on the storefront product page.
-
-## Best Practice
-
-Always map at least one valid UnoPim image attribute so Magento receives product gallery images properly.
-
-If you are using different image types for storefront display, make sure the correct role is assigned for base, small, swatch, and thumbnail usage.
-
-## Result
-
-Once the image mapping is saved, UnoPim will use these settings while exporting product images to Magento 2. This ensures the right images appear in the gallery and in the correct Magento image roles.
+- Give your main packshot the **Base**, **Small**, and **Thumbnail** roles so every storefront area shows it.
+- Use **Swatch** for the small color or texture image on configurable products.
+- Keep lifestyle shots in a gallery attribute, so you do not need one row per picture.

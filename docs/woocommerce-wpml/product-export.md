@@ -12,20 +12,18 @@ To create a product export job, go to:
 
 `Data Transfer > Exports`
 
-![Exports Navigation](assets/exports/data-trasnfer.png)
-
 From the Exports page, click **Create Export** in the top-right corner.
 
-![Create Export Job](assets/exports/create-export.png)
+![Exports Navigation](assets/exports/create-export-profile-option.png)
 
 ## Step 2 — Create a Product Export Job
 
 While creating the export job, the user needs to:
 
 - Enter the **Export Job Code**.
-- Search for and select **WooCommerce Product** as the export job type.
+- Search for and select **WooCommerce Product Export** as the export job type.
 
-![Product Export Job](assets/exports/product-export.png)
+![Product Export Job](assets/exports/Product-Export-job.png)
 
 ## Step 3 — Configure Product Export Filters
 
@@ -33,12 +31,25 @@ After selecting the job type, configure the following fields:
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| Credential | Select | Yes | The WooCommerce credential that has **Enable WPML Export** turned on. Make sure the credential's WPML Settings are configured before running this job. |
-| Channel | Select | Yes | The UnoPim channel to use for the export. |
-| Locale | Multiselect | Yes | One or more UnoPim locales to export. Each selected locale is exported as a separate WPML language translation of the product. The default locale defined in the credential's WPML Settings is treated as the base (original) product. |
-| Currency | Select | Yes | The currency to use for product pricing during export. |
-| Product SKU | Multiselect | No | Limit the export to specific products by their UnoPim SKU. Leave empty to export all products in the selected channel. |
+| WooCommerce Store URL | Select | Yes | The WooCommerce credential that has **Enable WPML Export** turned on. Make sure the credential's WPML Settings are configured before running this job. |
+| Channels | Multiselect | Yes | The UnoPim channel to use for the export. |
+| Locales | Multiselect | Yes | One or more UnoPim locales to export. Each selected locale is exported as a separate WPML language translation of the product. The default locale defined in the credential's WPML Settings is treated as the base (original) product. |
+| Currencies | Multiselect | Yes | The currency to use for product pricing during export. |
+| Attributes | Multiselect | No | Limit the export to specific attributes. |
 | With Media | Boolean | No | Enable this option if product images should also be exported to WooCommerce alongside the product data. |
+| Date Format | Select | No | The format used for exported date values. |
+
+![Product Export Output](assets/exports/product-export-filter-1.png)
+
+![Product Export Data](assets/exports/Product-data-export-filter-2.png)
+
+Under **Data Filters**, you can narrow the export by **Attribute Families**, **Status**, **Completeness**, **Time Condition** and **Categories**.
+
+![Product Export Filters](assets/exports/Product-Export-Job-filters-3.png)
+
+You can also limit the export to specific products using **Identifiers** (SKUs), or add **Attribute Conditions** (for example, **Color** not in list).
+
+![Product Export Identifiers and Conditions](assets/exports/Product-export-Filter-4.png)
 
 
 ::: warning
@@ -53,10 +64,10 @@ Each translated variation is exported with its WPML `translation_of` field set t
 
 ## Step 5 — Save and Run the Export Job
 
-After filling in the required fields, click **Save Export** to save the job.
+After filling in the required fields, click **Save changes** to save the job.
 
 To run the job, open it from the Exports list and click **Run**. You can monitor progress from the **Job Tracker**.
 
-<!-- ![Job Tracker](assets/exports/save-run-product.png) -->
+![Job Tracker](assets/exports/product-export-result.png)
 
 After the export completes successfully, the products and their WPML translations will be visible in the connected WooCommerce store. Each product will show its translated versions in the WPML translation panel on the product edit screen.

@@ -1,6 +1,6 @@
 # Configuration
 
-The Dynamic Pricing Rule extension does not have a dedicated settings page — its configuration lives at two places:
+The Dynamic Pricing Rule extension does not have a dedicated settings page: its configuration lives at two places:
 
 1. **Per-rule configuration** inside each rule's editor (Condition and Action tabs).
 2. **Permissions** assigned via admin roles, which control who can view, create, edit, delete, execute, and mass-delete rules.
@@ -26,6 +26,8 @@ To grant a user access:
 2. Enable the required permissions under **Pricing Rule**.
 3. Assign the role to the admin user.
 
+![Pricing Rule permissions expanded in the role editor, showing Create, Edit, Delete, Mass Delete and Execute](./assets/setup/role-permissions.webp)
+
 ::: tip
 The **Execute** button inside the rule editor and the play icon on each grid row are only visible when the user has the `pricingrulemodule.execute` permission. Grant this separately from edit access when you want authors who can configure rules but cannot run them in production.
 :::
@@ -44,7 +46,7 @@ Conditions and actions are stored per channel/locale combination. Make sure the 
 
 ### Currencies
 
-Action values are written for a specific currency. The currency must already be assigned to the selected channel — otherwise it will not appear in the action's currency dropdown.
+Action values are written for a specific currency. The currency must already be assigned to the selected channel: otherwise it will not appear in the action's currency dropdown.
 
 ### Queue worker
 
@@ -58,9 +60,9 @@ In production, run the worker under a process supervisor (Supervisor, systemd, e
 
 ## Logs
 
-The module writes execution output to two places:
+Every rule execution is tracked in two places. No configuration is required to enable either:
 
-- **Default Laravel log** — high-level run messages and errors.
-- **Per-execution tracker file** — `storage/logs/rule-tracker/{execution_id}/rule.log`, one folder per run.
+- **Data Transfer > Job Tracker**: each run appears as a `system` job showing its state, progress, how many products were updated and skipped, the reason each product was skipped, and a downloadable log. The run is attributed to the admin who triggered it (grid/editor runs) or to the admin email passed to the Artisan command. Per-product warnings are capped at 100 per batch.
+- **Per-execution log file**: `storage/logs/rule-tracker/{execution_id}/rule.log`, one folder per run.
 
-No configuration is required to enable these — they are produced automatically when a rule runs. Make sure `storage/logs/` is writable by the web server and the queue worker.
+High-level run messages and errors also appear in the default Laravel log. Make sure `storage/logs/` is writable by the web server and the queue worker.

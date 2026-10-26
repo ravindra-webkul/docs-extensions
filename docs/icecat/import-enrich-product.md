@@ -48,21 +48,23 @@ In the **Type** dropdown, select **Icecat Import Enrich Product**.
 | Filter | Required | Notes |
 |---|---|---|
 | **Icecat Credentials** | Yes | Select the active credential whose mapping configuration should be used. |
-| **Locale** | Yes | Select the UnoPim locale to enrich. The connector maps this to the corresponding Icecat locale via the credential's Locale Mapping tab. |
+| **Locale** | Yes | Select the UnoPim locale to enrich. Icecat content is requested in the language of this locale code (for example `en_US` → English) and written to this locale. |
 
 ### Step 5 — Save
 
-Click **Save** to store the import job.
+Click **Save changes** in the unsaved-changes bar at the bottom of the page to store the import job. Icecat jobs read data from the Icecat API, so no import file is needed.
 
 ### Step 6 — Import Now
 
-Click **Import Now** (or **Run**) to start the job.
+Click **Import Now** to start the job. It is added to the queue and runs in the background.
 
 ![Enrich Product Import Now](./images/import/enrich-product-import-now.png)
 
 ### Step 7 — Monitor progress
 
 Track the job in the **Job Tracker**. Live **Created / Updated / Skipped** counts update as the job runs. Open the job detail to see per-product log entries, including any errors or skipped records.
+
+![Track Enrich Product Import](./images/import/track-enrich-product-import.png)
 
 ## What the job does
 
@@ -77,9 +79,11 @@ For each product:
     Maps returned fields to UnoPim attributes
     (standard fields + configured feature attributes)
     ↓
-    Downloads and stores product images from Icecat
+    Stores product images (up to 10), reusing any
+    picture already stored from an earlier run
     ↓
     Writes attribute values via UnoPim's value API
+    (variant-aware, so inherited values are respected)
     ↓
 One failed record is logged and skipped — the batch continues
     ↓
@@ -88,7 +92,7 @@ Job summary: created / updated counts reported
 
 ## Re-running the job
 
-You can re-run the job at any time. On subsequent runs the job **updates** existing attribute values with the latest data from Icecat rather than creating duplicates.
+You can re-run the job at any time. On subsequent runs the job **updates** existing attribute values with the latest data from Icecat rather than creating duplicates. Pictures that have not changed in Icecat are reused from storage, so re-runs are faster and do not create duplicate files or DAM assets.
 
 ## Troubleshooting
 
@@ -98,11 +102,14 @@ The job found no products with an EAN value, or no products with both Product Co
 **"No Icecat attributes are configured for import on this credential"**
 No feature attributes have been added to the credential's Attribute Mapping tab. Add features there and re-run the [Attribute import](./import-attributes) before retrying.
 
+**A product is skipped with "Could not retrieve product data from Icecat"**
+Icecat has no datasheet for that EAN, or for that Product Code + Brand, in the selected language. Check the identifier values on the product and confirm the product exists in Icecat for that language.
+
 **Jobs stuck in "Pending"**
-No queue worker is running. Start one:
+No queue worker is running. Start one that listens on UnoPim's queues:
 
 ```bash
-php artisan queue:work
+php artisan queue:work --queue=webhooks,system,completeness,default,publication
 ```
 
 Then re-queue the job from **Data Transfer → Imports**.

@@ -11,7 +11,8 @@
   {
     "text": "Connections",
     "items": [
-      { "text": "Create & Test a Connection", "link": "/akeneo-migration/create-connection" }
+      { "text": "Create & Test a Connection", "link": "/akeneo-migration/create-connection" },
+      { "text": "Import Filters", "link": "/akeneo-migration/import-filters" }
     ]
   },
 

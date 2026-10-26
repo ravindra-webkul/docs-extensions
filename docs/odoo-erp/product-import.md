@@ -1,105 +1,50 @@
-# UnoPim - Odoo Import Product
+# Import Products
 
-Importing Products from Odoo
-
+Import simple products from Odoo into UnoPim.
 
 ## Overview
 
-This import job will import all the products from Odoo to UnoPim.
-
+The **Odoo Product** import job reads products from Odoo and creates them as simple products in UnoPim. Products that already exist in UnoPim are updated instead of being duplicated.
 
 ## Prerequisites
 
-Before importing products from Odoo, ensure that you have configured your Odoo credentials in UnoPim. It is also recommended to first import attributes and categories from Odoo.
+- Set up an [Odoo credential](./setup-credentials).
+- Import [attributes](./attribute-import) and [categories](./category-import) from Odoo first, so that product values and categories can be linked.
 
+## Step 1 - Open Imports
 
-## Step 1: Go to Data Transfer
+In the sidebar, go to **Data Transfer → Imports** and click **Create Import**.
 
-Navigate to the **Data Transfer** section from the main menu in UnoPim.
+![Imports list](./assets/import-jobs/imports-list.webp)
 
-![Data Transfer Menu](./assets/import-jobs/data-transfer.png)
+## Step 2 - Enter a Code and Select the Type
 
+Enter a unique **Code**, e.g. `odoo_product_import`. Open the **Type** dropdown and choose **Odoo Product**.
 
-## Step 2: Go to Imports
+![Choose an Odoo import type](./assets/import-jobs/import-type.webp)
 
-Click on **Imports** to view the available import options.
+## Step 3 - Configure the Settings
 
-![Imports Menu](./assets/import-jobs/import.png)
+![Odoo Product import settings](./assets/import-jobs/product-import-settings.webp)
 
+| Field | What it does |
+|---|---|
+| **Odoo credentials** | The Odoo store to import from. Required. |
+| **Channel** | The UnoPim channel to import into. Required. |
+| **Locale** | One or more UnoPim locales for the imported labels. Required. |
+| **Family** | The UnoPim attribute family the imported products are created in. Required. |
+| **With Media** | Turn on to import product images as well. |
 
-## Step 3: Create Import
+## Step 4 - Save the Import
 
-Click on **Create Import** to create a new import profile.
+Click **Save changes** in the bar at the bottom of the page. The import job page opens.
 
-![Create Import Button](./assets/import-jobs/create-import.png)
+## Step 5 - Run the Import
 
+Click **Import Now** to start the job.
 
-## Step 4: Enter Code and Select Type
+![Import Now](./assets/import-jobs/import-now.webp)
 
-In the **General** section, configure the following:
+## Step 6 - Monitor Progress
 
-### Code
-
-Enter a unique code for your import profile. This code will help you identify the import profile.
-
-**Example:** odoo_product_import_001
-
-### Type
-
-In the **Type** field, select **Odoo Product** from the dropdown menu.
-
-![General Section](./assets/import-jobs/odoo-product.png)
-
-
-## Step 5: Configure Settings
-
-In the **Settings** section, configure the following required fields:
-
-### Odoo Credentials
-
-Click on the **Odoo credentials** dropdown and select the specific Odoo credentials or connection you want to import from. This is a required field.
-
-### Channel
-
-Click on the **Channel** dropdown and select the appropriate channel or store view from your Odoo setup. This is a required field.
-
-### Locale
-
-Click on the **Locale** dropdown and select the language or regional settings for importing product data. This is a required field.
-
-### Family
-Click on the Family dropdown and select the product family you want to import products into. This is a required field.
-
-### With Media
-
-Toggle the With Media option to include or exclude product images and other media assets in the import.
-
-#### ON - Import products with all associated images and media files
-#### OFF - Import products without media files
-
-
-
-
-![Settings Section](./assets/import-jobs/odoo-product-settings.png)
-
-
-## Step 6: Save Import
-
-Click the **Save Import** button to save your import profile configuration.
-
-![Save Import Button](./assets/import-jobs/product-save-import.png)
-
-
-## Step 7: Import Now
-
-Once the import profile is saved, click the **Import Now** button to start the import process and import all Odoo products to UnoPim.
-
-![Import Now Button](./assets/import-jobs/product-import-now.png)
-
-
-## Step 8: Monitor Progress
-
-In the execution process, you can check the progress of the import job and view any errors in the log.
-
-![Import Progress](./assets/import-jobs/product-import-progress.png)
-
+UnoPim opens the **Job Tracker**, where you can follow the progress of the job. When it finishes, it shows how many records were created and updated. Click **Download log** to see warnings or errors for individual records.

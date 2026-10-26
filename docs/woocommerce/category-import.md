@@ -6,13 +6,11 @@ The UnoPim WooCommerce Connector allows users to import WooCommerce categories i
 
 To create an import job, go to:
 
-`Import > Create Import Profile`
+`Data Transfer > Imports`
 
-![Import Navigation](assets/jobs/data-transfer-import.png)
+From there, click **Create Import** in the top-right corner to open the import setup form.
 
-From there, click **Create Import** to open the import setup form.
-
-![Create Import Job](assets/jobs/create-import.png)
+![Imports Navigation](assets/jobs/create-Imports.png)
 
 ## Create a Category Import Job
 
@@ -21,19 +19,18 @@ While creating the import job, the user needs to:
 - Enter the **Code**.
 - Select **WooCommerce Category Import** as the import type.
 
-![Category Import Job](assets/jobs/category-import.png)
-
 ## Category Import Settings
 
 Under **Settings**, configure the following:
 
 - **WooCommerce Store URL**: Select the required WooCommerce store credentials.
 - **Locale**: Select the locale to be used during import.
+- **Category Name (comma separated)**: Optionally enter the names of specific categories to import.
 
-![Category Import Settings](assets/jobs/category-fields.png)
+![Category Import Settings](assets/jobs/category-imports-and-its-filters.png)
 
-After entering the required values, click **Save Import** to save the import profile.
+After entering the required values, click **Save changes** to save the import profile.
 
 Once the job is executed, the imported categories will be available in UnoPim.
 
-![Category Import Complete](assets/jobs/category-import-complete.png)
+![Category Import Complete](assets/jobs/Category-Import-job-completion.png)

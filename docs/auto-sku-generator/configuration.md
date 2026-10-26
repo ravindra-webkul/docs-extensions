@@ -56,3 +56,22 @@ Define the structure and format of your generated SKUs.
 
   > [!NOTE]
   > Only attributes of type *select* or *multiselect* that have values assigned to the product are included in the SKU.
+
+---
+
+## 5. Configurable Product Code
+
+A configurable product is a grouping, not a stock item. Give it a **code** here; the real SKUs are generated on its variants and sub-variants.
+
+![Configurable Product Code Settings](./assets/configurable-code.png)
+
+* **Generate Code for Configurables**  
+  When enabled, configurable products (and their sub-parents) receive an auto-generated code instead of an SKU. Their variants and sub-variants still get normal SKUs.
+* **Code Template**  
+  The free-text and auto-number pattern used to build the code. Use `{number}` for the auto-number, or `{number:4}` to zero-pad it.
+  * **Example:** `MODEL-{number:4}` produces `MODEL-0001`.
+  
+  > [!NOTE]
+  > If the template has no `{number}` token, the sequence number is appended at the end (e.g. `MODEL` → `MODEL-1`).
+* **Code Start Sequence From**  
+  The next number used in the configurable code. It auto-increments with each new configurable and is **independent of the SKU sequence**.

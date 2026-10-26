@@ -1,47 +1,57 @@
 # Export products
 
-Push UnoPim products - with attribute values, prices, stock, statuses, and images - to CS-Cart.
+Send UnoPim products to CS-Cart with their field values, features, categories, prices, stock, status, and images.
 
-> **Before you start.** Add a [CS-Cart credential](./credentials), [map locales](./locale-mapping), [map attributes](./attribute-mapping), and run [Export attributes](./export-attributes) and [Export categories](./export-categories) at least once so CS-Cart has the features and categories the products reference.
+> **Before you start.** Add a [credential](./credentials), [map locales](./locale-mapping) and [attributes](./attribute-mapping), then run [Export attributes](./export-attributes) and [Export categories](./export-categories) once so CS-Cart has the features and categories your products use.
 
-**Open it from:** *Data Transfer → Export*
+**Open it from:** *Data Transfer → Exports*
 
-![Create export profile page](./assets/export/data-transfer.png)
+## 1. Create the profile
 
-## Steps
+1. Open **Data Transfer → Exports** and click **Create Export**.
 
-### 1. Create the profile
+![Create export page](./assets/export/create_export.png)
 
-1. Open **Data Transfer → Export → + Create Export**.
+2. **Type** - pick **CS-Cart Product Export**.
+3. **Code** - a short identifier, e.g. `cscart_products`.
 
-![Create export profile form](./assets/export/create_export.png)
+![CS-Cart Product Export profile](./assets/export/product-export.png)
 
-2. **Type** - pick **CsCart Product Export**, **Code** - any short identifier, e.g. `cscart_products`.
-
-![Export profile form filled](./assets/export/product-export.png)
-
-3. **Fill the filter**
+## 2. Fill the filters
 
 | Filter | Required | What it does |
 |--|--|--|
-| **Credential** | ✓ | Which CS-Cart store to export to. |
-| **Store** | ✓ | The target CS-Cart storefront. |
-| **Channel** | ✓ | UnoPim channel whose product values are exported. |
-| **Locale** | ✓ | One or more UnoPim locales - must all be mapped. |
-| **Currency** | ✓ | Which UnoPim currency the price is read from. |
-| **Product SKU** | - | Optional. Pick specific SKUs to export. Leave empty to export everything in the channel. |
-| **With media** | - | When on, product images are pushed to CS-Cart too. |
+| **CS-Cart Credential** | ✓ | The CS-Cart store to export to. |
+| **Store Name** | ✓ | The CS-Cart storefront (company). The list is read live from the store. |
+| **Channel** | ✓ | The UnoPim channel whose values are exported. |
+| **Locale** | ✓ | One or more locales. Each must be [mapped](./locale-mapping). |
+| **Currency** | ✓ | The currency the price is read from. |
+| **Attributes** | - | Send only these mapped attributes. |
+| **Attribute Families / Status / Completeness / Categories** | - | Export only products that match. |
+| **Time Condition** | - | Export only products changed in the last *n* days or between two dates. |
+| **Identifiers** | - | Export only these SKUs. Leave empty for every product. |
+| **With Media** | - | Also send the images from **Attributes to use as Images**. |
 
-![Export profile filters](./assets/export/product-filter.png)
+![Product export filters](./assets/export/product-filter.png)
 
-Click **Save**.
+Scroll down to **Data Filters** to narrow the export by family, status, completeness, change date, category, or SKU (**Identifiers**). **Attribute Conditions** below it lets you add rules on attribute values.
 
-4. **Run it**
+![Product export data filters](./assets/export/product-data-filters.png)
 
-Open the profile and click **Start Export**.
+## 3. Run it
 
-![Start export button](./assets/export/product-export-now.png)
+Click **Save changes** in the bar at the bottom. UnoPim opens the profile page. Click **Export Now**.
 
-The job is queued. Watch progress in the Data Transfer Tracker.
+![Export Now button](./assets/export/product-export-now.png)
 
-![Tracker export progress](./assets/export/product-export-progress.png)
+The job runs in the queue. Follow it on **Data Transfer → Job Tracker**, where each batch shows how many records were created, updated, or skipped.
+
+![Job Tracker progress](./assets/export/product-export-progress.png)
+
+## What happens
+
+- **Simple products** become CS-Cart products. **Configurable products** become a **variation group**: the first variant carries the group and the others join it. A two-level product (for example color, then size) is flattened into one group.
+- The product status is sent as `A` (enabled) or `D` (disabled).
+- Products are linked to CS-Cart categories through the [category export](./export-categories) mappings.
+- A product with no price in the selected currency is skipped with *Skipped (sku): CS-Cart needs a price in (currency) before it can create the product.*
+- With **With Media** on, images missing from storage are skipped and the images already in CS-Cart are kept.

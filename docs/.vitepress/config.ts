@@ -25,6 +25,7 @@ const projects = [
   { slug: 'bigcommerce', label: 'BigCommerce' },
   { slug: 'azure-integration', label: 'Azure Integration' },
   { slug: 'cloudflare-r2-integration', label: 'Cloudflare R2 Integration' },
+  { slug: 'cloudinary', label: 'Cloudinary Connector' },
   { slug: 'commercetools', label: 'Commercetools' },
   { slug: 'cs-cart', label: 'CS-Cart' },
   { slug: 'dam', label: 'DAM' },

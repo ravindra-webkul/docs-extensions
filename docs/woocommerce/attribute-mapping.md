@@ -2,7 +2,9 @@
 
 Attribute mapping allows users to connect WooCommerce product fields with the correct UnoPim attributes. This ensures that product data is transferred into the right fields during synchronization.
 
-![Attribute Mapping Navigation](assets/mapping/attribute-mapping.png)
+Open a credential from **WooCommerce > Credentials** and go to the **Attribute Mapping** tab.
+
+![Attribute Mapping Navigation](assets/mapping/Attribute-mappings.png)
 
 While setting up the mapping, users need to select the UnoPim attribute that matches each WooCommerce product information field.
 
@@ -26,15 +28,13 @@ By default, the following WooCommerce fields can be mapped with UnoPim attribute
 - **Reviews Allowed `[reviews_allowed]`**: Defines whether customers can leave reviews for the product.
 - **Backorders Allowed `[backorders_allowed]`**: Defines whether the product can be ordered when it is out of stock.
 
-![Default Fields Mapping](assets/mapping/fields.png)
-
 > **Note:** For the WooCommerce **Quantity `[stock_quantity]`** field, map a UnoPim **text-type attribute**.
 
 ## Add Additional Meta Keys
 
 The connector also allows users to add custom WooCommerce fields through **Additional Meta Keys**.
 
-![Additional Meta Keys](assets/mapping/additional-attribute.png)
+![Additional Meta Keys](assets/mapping/Additional-mapping.png)
 
 In this section, users can enter a WooCommerce field code and press **Enter** to add it as a new mapping field. After that, they can assign the appropriate UnoPim attribute to the newly added field.
 
@@ -42,13 +42,16 @@ In this section, users can enter a WooCommerce field code and press **Enter** to
 
 Under **Other Mappings**, the admin can configure the following options:
 
-- **Non-Select attribute sent as Select attribute (recommended)**: Use this option when a WooCommerce field should be handled as a select-type value during synchronization.
-- **Attribute to be used as a custom attribute**: Use this option to define which UnoPim attributes should be treated as custom attributes in WooCommerce. Variant attributes must also be added here.
-- **Attribute to be used as Images**: Use this option to select the UnoPim attribute that should be used for product images.
+- **Non Select Attribute send as Select Attribute (Recommended)**: Use this option when a WooCommerce field should be handled as a select-type value during synchronization.
+- **Attribute to be used as Image**: Select the UnoPim attribute that should be used as the main product image.
+- **Attribute to be used as Image for Variant**: Select the UnoPim attribute that should be used as the variant image.
+- **Attribute to be used as Gallery Images**: Select the UnoPim attributes that should be used as gallery images.
+- **Attributes to be used as Brand**: Select the UnoPim attribute that should be used as the brand.
+- **Attributes to be used as Custom Attributes**: Define which UnoPim attributes should be treated as custom attributes in WooCommerce. Variant attributes must also be added here.
 
-![Other Mappings](assets/mapping/other-mapping.png)
+![Other Mappings](assets/mapping/Other-Mappings.png)
 
-This section is also used to add additional keywords required for mapping behavior.
+> **Note:** Attributes must be exported (or imported) via the WooCommerce Attributes job before they take effect in product exports. An attribute mapped here that has not been synced yet will be silently skipped during export.
 
 ## Quick Export Settings
 
@@ -57,10 +60,27 @@ Under **Quick Export Settings**, the admin needs to configure the following defa
 - Select the default **channel** for quick export.
 - Select the default **locale**.
 - Select the default **currency**.
+- Enable **Include media in quick export** if product media should also be exported during quick export.
 - Enable **Auto Sync Products** if products should be synced automatically from UnoPim to WooCommerce when they are created, updated, or deleted.
 
 For **Quick Export**, enabling auto sync is not required. The admin only needs to assign the default values for **channel**, **locale**, and **currency** in the attribute mapping, and then enable **Quick Export** in the credential settings.
 
-![Quick Export Settings](assets/mapping/quick-export.png)
+![Quick Export Settings](assets/mapping/Quick-Export-Settings.png)
 
 After completing the mapping configuration, click **Save** to store the settings.
+
+## Category Attribute Mappings
+
+The **Category Attribute Mappings** tab maps WooCommerce category fields to UnoPim category fields:
+
+- **Name `[name]`**: Map a text-type UnoPim category field.
+- **Description `[description]`**: Map a textarea-type UnoPim category field.
+- **Image `[image]`**: Map an image-type UnoPim category field.
+
+![Category Attribute Mappings](assets/mapping/Category-Attribute-mapping.png)
+
+## Media Settings
+
+The **Media Settings** tab holds the **WordPress Media Sync** credentials (WordPress username and application password) used to upload images to the WordPress media library, which also helps avoid duplicate images being created on repeated exports. See [Setup Credentials](./setup-credentials) for details.
+
+![Media Settings](assets/mapping/Media-Setting-to-avoid-dublicate-images.png)

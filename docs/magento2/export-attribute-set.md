@@ -1,47 +1,42 @@
 # Export Magento Attribute Set
 
-The **Magento Attribute Set** export job allows you to export UnoPim attribute families to Magento 2 as attribute sets.
+The **Magento Attribute Set** job sends UnoPim attribute families to Magento as attribute sets. It also creates the attribute groups and assigns attributes to them.
 
-This export automatically handles attribute groups and assigned attributes so the same family structure can be created in Magento as it exists in UnoPim.
+Run the [attribute export](./export-attribute) first. An attribute that does not exist in Magento yet cannot be assigned.
 
-If custom attributes are added to a new group in UnoPim, that group is also exported to Magento together with the assigned attributes.
+## Before You Start
 
-## What This Export Supports
+Magento builds a new attribute set from an existing one. Open the credential and set **Export Attribute Families Based on** to the Magento set you want to copy. If it is empty, the job is skipped. See [Setup Credentials](./setup-credentials).
 
-This job helps keep UnoPim attribute families and Magento attribute sets synchronized by:
+## Create the Job
 
-- Creating matching attribute sets in Magento
-- Creating the same attribute groups found in UnoPim
-- Assigning the correct attributes to those groups
+Go to **Data Transfer > Exports > Create Export** and choose **Magento Attribute Set** as the **Type**. Enter a unique **Code**.
 
-## Important Note
+![Choose the export type](./assets/export/create-exports.png)
 
-You can export any newly created attribute family based on the selection made in the **Credentials** section.
+![Magento Attribute Set export](./assets/export/attribute-set.png)
 
-Make sure the correct Magento connection is configured before creating the export job.
+| Filter | Required | What it does |
+|---|---|---|
+| **Magento Store URL** | Yes | The credential to export to. |
+| **Unopim Attribute Families** | No | The families to export. Leave empty to export all. |
 
-## How to Export Attribute Families
+Click **Save**, then **Export**.
 
-To export UnoPim attribute families to Magento:
+## What the Job Does
 
-1. Go to **Data Transfer > Exports > Create Export Profile**.
+- Creates a Magento attribute set for each family, copied from the base set.
+- Creates the attribute groups that exist in the UnoPim family.
+- Assigns attributes that are on the [Custom Mapping](./custom-mapping) tab and not yet in the base set.
 
-![Create Export Profile](./assets/export/data-transfer.png)
+Image and gallery attributes are left out. Use [Image Mapping](./image-mapping) for those.
 
-![Create Export Profile](./assets/export/create-exports.png)
+## Messages You May See
 
-2. Select **Magento Attribute Set** as the job type.
-3. Enter a unique code for the export job.
-4. Use the available filters such as **Magento Store URL** and **UnoPim Attribute Families**.
+- "Run the Magento Attribute Job first": an attribute is missing in Magento.
+- "This attribute set cannot be updated": the name is already used by another set in Magento. The message includes Magento's reply.
+- A hint after each run reminds you to add missing attributes to the mapping and run the attribute export again.
 
-![Select Export Type](./assets/export/attribute-set.png)
+## After the Run
 
-5. Click **Save Export**.
-
-After the profile is saved, you can run the export using that configuration.
-
-## After Export Completion
-
-Once the execution process is completed, you can review the exported attribute family status from the export job details.
-
-This helps confirm whether the selected UnoPim attribute families were successfully exported to Magento 2.
+Open **Stores > Attributes > Attribute Set** in Magento and check the new sets and groups. Then run the [product export](./export-product), so each product lands in the right set.

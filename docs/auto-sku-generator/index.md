@@ -44,5 +44,5 @@ SKUs entered manually by a user are **never overwritten** — auto-generation on
 
 ## Requirements
 
-- Unopim v2.0.0 or higher
-- PHP 8.2+
+- Unopim v3.1.3 or higher
+- PHP 8.4+

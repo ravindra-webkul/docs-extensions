@@ -12,11 +12,11 @@ To create a product import job, go to:
 
 `Data Transfer > Imports`
 
-![Import Navigation](assets/import/data-transfer-import.png)
+![Import Navigation](assets/import/Import-Job-creation.png)
 
-From there, click **Create Import** to open the import setup form.
+From there, click **Create Import** in the top-right corner to open the import setup form.
 
-![Create Import Job](assets/import/create%20import.png)
+![Create Import Job](assets/import/button-to-create-Imports-job.png)
 
 ## Step 2 — Create a Product Import Job
 
@@ -25,15 +25,15 @@ While creating the import job, the user needs to:
 - Enter the **Code**.
 - Search for and select **WooCommerce Product Import** as the import type.
 
-![Product Import Job](assets/import/product-import.png)
-
 ## Step 3 — Configure Product Import Settings
 
 Under **Settings**, configure the following fields:
 
+![Product Import Settings](assets/import/Product-import-job-creation-and-filters.png)
+
 | Field | Type | Required | Description |
 |---|---|---|---|
-| Credential | Select | Yes | The WooCommerce credential that has **Enable WPML Export** turned on. The addon uses WPML's API to fetch each language's product translations from WooCommerce. |
+| WooCommerce Store URL | Select | Yes | The WooCommerce credential that has **Enable WPML Export** turned on. The addon uses WPML's API to fetch each language's product translations from WooCommerce. |
 | Channel | Select | Yes | The UnoPim channel to assign imported products to. |
 | Locale | Multiselect | Yes | One or more UnoPim locales to import. For each selected locale, the addon fetches the matching WPML translation from WooCommerce and writes it to the corresponding locale on the UnoPim product. |
 | Currency | Select | Yes | The currency to use when importing product pricing data. |
@@ -43,8 +43,8 @@ Under **Settings**, configure the following fields:
 
 ## Step 4 — Save and Run the Import Job
 
-After entering the required values, click **Save Import** to save the import profile.
+After entering the required values, click **Save changes** to save the import profile.
 
 To run the job, open it from the Imports list and click **Run**. Once the job executes, the imported products will be available in UnoPim with each selected locale populated across the specified channel.
 
-![Product Import Complete](assets/import/save-run-product.png)
+![Product Import Complete](assets/import/after-product-import.png)

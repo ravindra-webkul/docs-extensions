@@ -1,50 +1,55 @@
 # Export attributes
 
-Push UnoPim attributes to CS-Cart as **features**. Run this once before exporting products that use those attributes - otherwise CS-Cart has no field to store the values in.
+Send UnoPim attributes to CS-Cart as **features**. Run this before exporting products that use those attributes, so CS-Cart has a feature to hold their values.
 
-> **Before you start.** Add a [CS-Cart credential](./credentials) and map every locale you plan to export - see [Map locales](./locale-mapping).
+> **Before you start.** Add a [credential](./credentials), [map your locales](./locale-mapping), and list the attributes under **Attributes to use as Custom Fields** in [Map attributes](./attribute-mapping#other-mapping). Only those attributes are exported.
 
-**Open it from:** *Data Transfer → Export*
+**Open it from:** *Data Transfer → Exports*
 
-![Create export profile page](./assets/export/data-transfer.png)
+## 1. Create the profile
 
-<!-- TODO: capture screenshot - cscart-export-attributes-profile.png - Create export profile for attributes -->
+1. Open **Data Transfer → Exports** and click **Create Export**.
 
-## Steps
+![Create export page](./assets/export/create_export.png)
 
-### 1. Create the profile
+2. **Type** - pick **CS-Cart Attribute Export**.
+3. **Code** - a short identifier, e.g. `cscart_attributes`.
 
-1. Open **Data Transfer → Export → + Create Export**.
+![CS-Cart Attribute Export profile](./assets/export/attribute-export.png)
 
-![Create export profile form](./assets/export/create_export.png)
+## 2. Fill the filters
 
-2. **Type** - pick **CsCart Attributes Export**.
-3. **Code** - any short identifier, e.g. `cscart_attributes_daily`.
+| Filter | Required | What it does |
+|--|--|--|
+| **CS-Cart Credential** | ✓ | The CS-Cart store to export to. |
+| **Store Name** | ✓ | The CS-Cart storefront (company). The list is read live from the store. |
+| **Channel** | ✓ | The UnoPim channel whose values are exported. |
+| **Locale** | ✓ | One or more locales. Each must be [mapped](./locale-mapping). |
+| **Attributes** | - | Export only some of the custom-field attributes. Leave empty for all of them. |
 
-![Export profile form filled](./assets/export/attribute-export.png)
+![Attribute export filters](./assets/export/attribute-fields.png)
 
+## 3. Run it
 
-### 2. Fill the filters
+Click **Save changes** in the bar at the bottom. UnoPim opens the profile page. Click **Export Now**.
 
-The export needs:
+![Export Now button](./assets/export/attribute-export-now.png)
 
-| Filter | What it does |
+The job runs in the queue. Follow it on **Data Transfer → Job Tracker**, where each batch shows how many records were created, updated, or skipped.
+
+![Job Tracker progress](./assets/export/attribute-export-progress.png)
+
+## What happens
+
+| UnoPim attribute type | CS-Cart feature type |
 |--|--|
-| **Credential** | Which CS-Cart store to export to. |
-| **Store** | Which CS-Cart storefront inside that store. *(Multi-Vendor / multi-storefront only.)* |
-| **Channel** | The UnoPim channel whose attribute values you're exporting. |
-| **Locale** | One or more UnoPim locales to push translations for. **Each must be mapped** - see [Map locales](./locale-mapping). |
+| select | Select box (S) |
+| multiselect | Multiple checkboxes (M) |
+| boolean | Single checkbox (C) |
+| number | Number (N) |
+| date | Date (D) |
+| any other | Text (T) |
 
-![Export profile filters](./assets/export/attribute-fields.png)
-
-Click **Save**.
-
-### 3. Run it
-
-Open the profile and click **Export Now**.
-
-![Start export button](./assets/export/attribute-export-now.png)
-
-The job is queued. Watch it on **Settings → Data Transfer → Tracker**.
-
-![Tracker export progress](./assets/export/attribute-export-progress.png)
+- Options of select and multiselect attributes become feature **variants**.
+- If no attribute is listed as a custom field, the job finishes with a warning and exports nothing.
+- An attribute used as a variant axis, such as *color* or *size*, is created as a variation feature so CS-Cart can build variation groups from it.

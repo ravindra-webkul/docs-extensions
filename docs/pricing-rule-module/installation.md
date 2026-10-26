@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- Unopim v3.0.0
+- Unopim v3.0.0 or later (tested on v3.1.3)
 - PHP 8.4+, Laravel 13.x, Concord ^1.16
 
 ## Steps
@@ -45,9 +45,15 @@ In `composer.json`, add under `autoload.psr-4`:
 "Webkul\\PricingRuleModule\\": "packages/Webkul/PricingRuleModule/src"
 ```
 
-### 5. Run installation commands
+### 5. Run the installer
 
-Run these in order:
+The module ships a one-step installer. It asks whether to run the migrations, then publishes the assets and clears the caches:
+
+```bash
+php artisan pricing-rule-package:install
+```
+
+If you prefer to run each step manually, these commands are the equivalent:
 
 ```bash
 composer dump-autoload
@@ -57,7 +63,7 @@ php artisan migrate
 
 ### 6. Publish front-end assets
 
-The module ships with pre-built assets — no `npm install` or build step is required:
+The module ships with pre-built assets. No `npm install` or build step is required:
 
 ```bash
 php artisan vendor:publish --tag=pricingrulemodule --force
@@ -75,4 +81,6 @@ In production, run the worker under a process supervisor (Supervisor, systemd, e
 
 ### 8. Verify
 
-Open the Unopim admin panel — a **Pricing Rule** entry should appear in the sidebar and clicking it should open the rule listing page.
+Open the Unopim admin panel: a **Pricing Rule** entry should appear in the sidebar and clicking it should open the rule listing page.
+
+![Pricing Rule listing with one saved rule and the Create Rule button](./assets/setup/rule-listing.webp)

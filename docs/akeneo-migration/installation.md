@@ -3,7 +3,7 @@
 Follow the steps below to install the **Akeneo to UnoPim Migration** plugin. You'll need terminal access to your UnoPim server before getting started.
 
 > [!NOTE]
-> Already running an older build of this plugin? Read [What's New & Upgrading](./upgrading) first — version 1.1.0 requires UnoPim 3.0.0.
+> Already running an older build of this plugin? Read [What's New & Upgrading](./upgrading) first — version 1.2.0 requires UnoPim 3.0.0.
 
 ## Requirements
 
@@ -19,7 +19,7 @@ Follow the steps below to install the **Akeneo to UnoPim Migration** plugin. You
 You will also need an **Akeneo** account with REST API (Connection) credentials.
 
 > [!TIP]
-> The [UnoPim DAM extension](https://packagist.org/packages/unopim/dam) (`unopim/dam`) is optional. Install it and the plugin adds a **DAM Assets** entity to the migration. Without it, the plugin runs normally and simply does not offer that entity.
+> The [UnoPim DAM extension](https://packagist.org/packages/unopim/dam) (`unopim/dam`) is optional. Install it and the plugin adds a **DAM Assets** entity to the migration. Without it, the plugin runs normally: it does not offer that entity, and Akeneo asset-collection attributes are skipped with a warning in the run log.
 
 ## Step 1 — Add the Package Files
 
@@ -94,11 +94,11 @@ The install command creates three tables:
 |---|---|
 | `akeneo_credentials` | Your Akeneo connections. The Client ID, Secret, and Password columns are **encrypted at rest**. |
 | `akeneo_mappings` | The recorded Akeneo↔UnoPim record mappings, reused on every later run. |
-| `akeneo_migration_runs` | The Migration History — one row per run you start. |
+| `akeneo_migration_runs` | The Migration History — one row per run you start, including the import filters it used. |
 
 ## Verify the Installation
 
-Once all commands have completed, log in to your UnoPim dashboard. You should see the **Akeneo Migration** option appear in the left sidebar — this confirms the plugin is installed and ready to configure.
+Once all commands have completed, log in to your UnoPim dashboard. You should see **Akeneo Migration** in the left sidebar — a single item that opens the connections list. This confirms the plugin is installed and ready to configure.
 
 <br>
 

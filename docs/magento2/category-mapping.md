@@ -1,43 +1,55 @@
 # Category Mapping
 
-The **Category Mapping** page allows you to manually map UnoPim category fields with Magento 2 category fields so the correct values are exported during category synchronization.
+The **Category Fields** tab maps UnoPim category fields to Magento category fields. The category export and the category import both read it.
 
-This is useful when you want more control over how category data is transferred from UnoPim to Magento.
+Open it from **Magento2 > Credentials**, click a credential, then choose **Category Fields**.
 
-![Category Mapping](./assets/mapping/category-maping.png)
+![Category Fields tab](./assets/mapping/category-maping.png)
 
-## How Category Mapping Works
+## What Is Sent Without a Mapping
 
-On the **Category Mapping** page, you can connect UnoPim category attributes to the corresponding Magento category fields.
+If you map nothing, the export still creates every category. It sends:
 
-This helps ensure that category information is exported into the right Magento fields based on your store requirements.
+- The **name**, taken from the locale of the "All Store View" row.
+- **Enable Category** and **Include in Menu**. Both are on for a new category.
 
-## Default Magento Behavior
+Everything else, including the URL key, stays empty until you map it.
 
-If no category mapping is configured, UnoPim follows Magento’s default behavior.
+## Fields You Can Map
 
-In that case, Magento categories are created using only the basic category information:
+| Magento field | UnoPim field type |
+|---|---|
+| **Enable Category** | Boolean |
+| **Include in Menu** | Boolean |
+| **Category Image** | Image |
+| **Description** | Textarea |
+| **URL Key** | Text |
+| **Meta Title** | Text |
+| **Meta Keywords** | Text |
+| **Meta Description** | Textarea |
 
-- **Name**
-- **URL Key**
-- **Enabled Status**
+New credentials start with a default mapping where UnoPim has a field with a matching code.
 
-This default behavior is enough for basic category creation, but it does not cover additional category fields.
+## Add Extra Magento Category Fields
 
-## Additional Category Field Mapping
+Use **Add Additional Fields** for a Magento category field that is not in the table.
 
-If your Magento store requires more category information, you can map additional UnoPim category fields on this page.
+1. Type the Magento category field code and press **Enter**.
+2. Pick the UnoPim category field that holds the value.
+3. Click **Save**.
 
-This allows you to export custom or extended category data beyond the default Magento fields.
+The code cannot contain spaces or special characters, and you cannot add the same code twice. If UnoPim already has a category field with that code, it is linked for you.
 
-Use this option when you need more detailed category synchronization for your Magento catalog structure.
+## Select Fields With a Hyphen
 
-## Best Practice
+A Magento select option may contain a hyphen, such as `product-full-width`. Create the UnoPim option code in CamelCase, for example `ProductFullWidth`. The export converts it back to the hyphen form.
 
-If you only need basic Magento category creation, the default behavior may be enough.
+## Images
 
-If your categories include extra content or custom field requirements, configure manual mapping so Magento receives the exact values you want to export.
+A category image is exported only when **With Media** is on in the category export job. The import downloads the Magento image into UnoPim when the field is mapped.
 
-## Result
+## Good to Know
 
-Once the category mapping is configured, UnoPim uses these field assignments while exporting categories to Magento 2. This helps ensure the correct category values are transferred based on your mapping setup.
+- If a mapped UnoPim category field is deleted later, the export logs "The mapped category field no longer exists and was not exported".
+- If the design "from" date is later than the "to" date, UnoPim drops both dates and logs a warning.
+- The category import reads these mappings too. A Magento value that has no mapped field is not imported.

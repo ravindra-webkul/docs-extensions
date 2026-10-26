@@ -1,88 +1,93 @@
 # Attribute Mapping
 
-Attribute mapping lets you connect Magento 2 product fields with the correct UnoPim product attributes. This ensures that product data is exported from UnoPim into the expected Magento fields during synchronization.
+The **Attributes** tab tells the connector which UnoPim attribute feeds each standard Magento product field. Open it from **Magento2 > Credentials**, click a credential, then choose **Attributes**.
 
-![Attribute Mapping](./assets/mapping/mapping.png)
+![Attributes tab](./assets/mapping/mapping.png)
 
-## Why Attribute Mapping Is Important
+## How the Tab Works
 
-Magento expects product information in specific fields such as `name`, `price`, `description`, and `sku`. In UnoPim, these values may exist under different attributes depending on how your product data is structured.
+The left column lists Magento product fields with their codes, such as `name` or `short_description`. The right column holds a drop-down of UnoPim attributes that fit the field.
 
-With attribute mapping, you can decide which UnoPim attribute should be used for each Magento product field. This helps keep exported product data accurate and consistent.
+Under each field label, a short hint says which attribute type is allowed. Pick the attribute and click **Save**.
 
-## How the Mapping Screen Works
+![Magento fields on the left, UnoPim attributes on the right](./assets/mapping/attribute-mapping.png)
 
-In the **Attribute Mapping** tab:
+## Required and Optional Fields
 
-- The **left side** shows the Magento 2 product fields.
-- The **right side** shows the available UnoPim attributes.
+Only two fields must be mapped:
 
-![Mapping Screen](./assets/mapping/attribute-mapping.png)
+- **Name** `[name]`: a text attribute marked as required in UnoPim.
+- **Price** `[price]`: a price attribute marked as required in UnoPim.
 
-To complete the setup, select the UnoPim attribute that matches each Magento field you want to export.
+A product without a name or a price is skipped during export. The job log says why for each store view.
 
-## Default Magento Fields Available for Mapping
+Other fields have safe defaults:
 
-By default, the following Magento 2 product fields can be mapped with UnoPim attributes:
+- **SKU** `[sku]`: if you leave it empty, the UnoPim SKU is used.
+- **Enable Product** `[status]`: if you leave it empty, the UnoPim product status is used.
+- **Visibility** `[visibility]`: variants default to "Not Visible Individually". New products default to "Catalog, Search".
 
-- **Enable Product `[status]`**: Controls whether the product is enabled or disabled in Magento.
-- **SKU `[sku]`**: Unique product identifier.
-- **Name `[name]`**: Product name shown on the storefront.
-- **Price `[price]`**: Standard selling price of the product.
-- **Description `[description]`**: Full product description.
-- **Short Description `[short_description]`**: Short summary displayed on the product page.
-- **Weight `[weight]`**: Product weight used for shipping and logistics.
-- **Product Has Weight `[product_has_weight]`**: Defines whether the product should be treated as a physical product with weight.
-- **Tax Class `[tax_class_id]`**: Tax class assigned to the product.
-- **Visibility `[visibility]`**: Controls where the product appears in Magento.
-- **Quantity `[qty]`**: Available stock quantity.
-- **Stock Status `[is_in_stock]`**: Indicates whether the product is in stock.
-- **URL Key `[url_key]`**: SEO-friendly product URL key.
-- **Meta Title `[meta_title]`**: SEO meta title for the product page.
-- **Meta Keyword `[meta_keyword]`**: SEO keywords for the product.
-- **Meta Description `[meta_description]`**: SEO meta description for the product page.
-- **Cost `[cost]`**: Internal product cost.
-- **Special Price `[special_price]`**: Promotional price.
-- **Special Price From `[special_from_date]`**: Start date for the special price.
-- **Special Price To `[special_to_date]`**: End date for the special price.
-- **Set Product as New From `[news_from_date]`**: Start date for the “new product” label.
-- **Set Product as New To `[news_to_date]`**: End date for the “new product” label.
-- **Country of Manufacture `[country_of_manufacture]`**: Product manufacturing country.
-- **Websites `[product_websites]`**: Magento websites where the product should be assigned.
-- **Layout `[page_layout]`**: Page layout used for the product page.
-- **Display Product Options In `[options_container]`**: Defines where product options are displayed.
-- **Schedule Update From `[custom_design_from]`**: Start date for a custom design update.
-- **Schedule Update To `[custom_design_to]`**: End date for a custom design update.
-- **New Theme `[custom_design]`**: Custom theme applied to the product page.
-- **New Layout `[custom_layout]`**: Custom layout update for the product page.
+> [!TIP]
+> New credentials start with a ready-made mapping. UnoPim matches attributes with the same code and a compatible type, for example `name` to `name`. Check these defaults before your first export.
 
-## Additional Field Mappings
+## Standard Fields and the Type They Expect
 
-This section allows you to map custom Magento product fields with UnoPim attributes.
+| Magento field | UnoPim attribute type |
+|---|---|
+| `name`, `meta_title`, `meta_keyword`, `meta_description` | Text (meta fields also accept Textarea) |
+| `sku`, `url_key` | Text, set as unique |
+| `description`, `short_description` | Textarea |
+| `price`, `special_price`, `cost` | Price |
+| `special_from_date`, `special_to_date`, `news_from_date`, `news_to_date`, `custom_design_from`, `custom_design_to` | Date |
+| `status` | Boolean |
+| `weight`, `qty` | Text, holding a plain number |
+| `product_has_weight`, `tax_class_id`, `visibility`, `country_of_manufacture`, `page_layout`, `options_container`, `custom_design`, `custom_layout`, `is_in_stock` | Select |
+| `product_websites` | Multiselect |
 
-If you want to export more product information than the default Magento fields, you can add extra Magento field codes and connect them to the appropriate UnoPim attributes. This is useful when your Magento store already has custom product attributes that should receive data from UnoPim during export.
+The tab shows a few more fields for special product types, such as gift cards. Each one has a hint with the type it needs.
 
-![Additional Mapping](./assets/mapping/additional-mapping.png)
+## Select Fields Need Matching Options
 
-### Variant-Specific Attribute Mapping
+For fields such as **Tax Class**, **Visibility**, and **Layout**, the option labels in UnoPim must match the Magento labels. UnoPim compares them in the language of each mapped store view.
 
-Additional field mappings are also important for configurable or variant products.
+For example, if every Magento store view maps to English, enter the Magento labels in the English label field of each UnoPim option.
 
-If you need to export variant-specific values such as **color** or **size**, select the corresponding UnoPim attributes or enter the Magento field codes that already exist in your Magento store. This ensures that each variant carries the correct attribute values when the product is exported.
+Two fields use codes instead of labels:
 
-For example:
+- **Stock Status** `[is_in_stock]`: use option codes `in_stock` or `out_of_stock`. `1`, `0`, `true`, `false`, `yes`, and `no` also work. If you leave it empty, the stock status follows the quantity.
+- **Websites** `[product_websites]`: the option codes must equal the Magento website codes.
 
-- Map **Color** to the UnoPim color attribute.
-- Map **Size** to the UnoPim size attribute.
+## Stock Quantity
 
-This setup helps Magento identify and store the correct variation data for each child product.
+Map **Quantity** `[qty]` to send stock. If you turn on **Skip inventory update for existing products** in the export job, stock is sent only for new products.
 
-## Best Practice
+## Map More Standard Attributes
 
-Review each field carefully before saving the mapping. Important fields such as `sku`, `name`, `price`, `status`, and `visibility` should always be mapped correctly to avoid incomplete or incorrect exports.
+Scroll to the bottom of the tab for **Map more Standard attributes**. Use it for Magento product fields that are not in the list above.
 
-If a Magento field should always use the same value, make sure the connected UnoPim attribute consistently stores that value for all products being exported.
+![Map more Standard attributes](./assets/mapping/additional-mapping.png)
 
-## Result
+1. Type the Magento field code, for example `ean_code`, and press **Enter**.
+2. Pick the UnoPim attribute that holds the value.
+3. Click **Save**.
 
-Once the mapping is configured, UnoPim uses these assignments while exporting products to Magento 2. This helps make sure that the right product data is sent to the right Magento fields.
+The connector checks every row when you save:
+
+- A code starts with a letter and uses only letters, numbers, and underscores, up to 60 characters.
+- A code that the connector already sends itself, such as `sku` or `price`, cannot be added here.
+- A code or a UnoPim attribute can appear only once across this tab and [Custom Mapping](./custom-mapping).
+- The UnoPim attribute must exist.
+
+You can add up to 200 rows. Click the bin icon to remove one.
+
+## Variant Attributes for Configurable Products
+
+Attributes that make up a variant, such as **color** or **size**, belong on the [Custom Mapping](./custom-mapping) tab. A configurable product is skipped for its variants if one of these attributes is missing there. The job log then shows "Variants skipped: the configurable attributes are not mapped".
+
+## Before You Run a Product Export
+
+- Map **Name** and **Price**.
+- Run the [attribute export](./export-attribute) first, so Magento knows every option you map.
+- Check that the select-type options match the Magento labels.
+
+Changes you save here apply to the next job run. You can review older versions on the **History** tab.

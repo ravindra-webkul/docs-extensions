@@ -4,11 +4,13 @@ A **Remote Source** is an external WebDAV server (a Nextcloud, an ownCloud, a Sy
 
 ## List
 
+![Remote Sources List](./images/remote-sources-list.webp)
 
 Columns: Label, URL, Last Poll, Last Result (✓ / ✗), Schedule, Actions (Edit, Test, Run, Delete).
 
 ## Create
 
+![Create Remote Source Form](./images/remote-sources-create.webp)
 
 Fields:
 
@@ -21,6 +23,7 @@ Fields:
 
 ## Test connection
 
+![Test Remote Connection](./images/remote-sources-test.webp)
 
 The Test button issues a single `PROPFIND` against the URL and returns:
 

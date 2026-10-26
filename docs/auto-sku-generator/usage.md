@@ -61,31 +61,30 @@ Each variant gets its own unique sequence number, ensuring no duplicate SKUs.
 
 ### Steps to Add Variants
 
-1. Create a **Configurable Product** and fill in base details
-2. Navigate to the **Variants** section
-3. Click **Add Variant**
+> [!NOTE]
+> Variants are now driven by a **variant structure** defined on the attribute family. The family must have at least one variant structure (its axes, e.g. Color and Size) before you can add variants. When you create the configurable product, you pick which structure to use.
 
-![Add Variant Button](./assets/add-variant.png)
+1. Click **Create Product**, choose type **Configurable**, select the **Family**, then click **Next**
+2. Pick the **Variant Structure** for the product and click **Save Product**. The configurable itself gets an auto-generated **code** (see [Configurable Product Code](./configuration#_5-configurable-product-code)), not a stock SKU.
+3. On the product edit page, open the **Variations** panel. Click the axis dropdown (e.g. **Select Color, Size**) and then **Add New**
 
-4. Select attribute values for the variant (e.g., Color: Red, Size: Medium)
+![Add New Variant](./assets/add-variant.png)
+
+4. In the **Add a new …** dialog, pick the axis values for the variant (e.g. Color: Red, Size: XS). The variant **SKU is generated automatically** from the selected attributes and shown in the SKU field
 
 ![Variant Configuration](./assets/added-variant.png)
 
-5. **Leave the SKU field empty** for auto-generation
-6. The variant SKU is automatically generated based on the selected attributes
-7. Repeat to add additional variants
+5. Click **Create** to add the variant. Repeat for each combination you need
 
 ![Variants Overview](./assets/variants.png)
 
-8. Click **Save** to save all variants
-
-**Result:** Each variant is saved with its own unique auto-generated SKU.
+**Result:** Each variant is saved under the configurable with its own unique auto-generated SKU. The **Variations** panel shows the variant count and lets you switch between variants.
 
 ### Manual SKU Entry (Optional)
 
 If you need a custom SKU for a specific variant:
-1. In the variant form, **enter a custom SKU** instead of leaving it blank
-2. The auto-generator will skip this variant
+1. In the **Add a new …** dialog, **replace the auto-filled SKU** with your own value before clicking **Create**
+2. The auto-generator keeps your custom SKU for that variant
 3. Other variants continue to receive auto-generated SKUs normally
 
 ---

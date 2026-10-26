@@ -1,29 +1,24 @@
 # Installation
 
-The UnoPim Magento 2 Connector links UnoPim with Magento 2 and helps streamline product synchronization between both platforms.
+Setup has two parts. You install a small module on the Magento side, then you add the connector package to UnoPim.
 
-This installation process includes two parts:
+## Do I Need the Magento Module?
 
-- Installing the required Magento 2 plugin.
-- Installing and registering the UnoPim Magento 2 Connector inside your UnoPim project.
+The module `Webkul_ProductImportQueue` is needed only for the **Magento Product Csv** export. That job builds a CSV file and hands it to Magento through this module.
 
-## Required Magento 2 Plugin
+The **Magento Product** export and every import job talk to the standard Magento REST API. They work without the module. If you run the CSV export without it, the job stops with a message that the plugin is not installed.
 
-Before using the connector, you need to install the required Magento 2 plugin:
+Skip to [Install the Connector in UnoPim](#install-the-connector-in-unopim) if you do not plan to use the CSV export.
 
-- **Plugin Name**: `ProductImportQueue`
+## Install the Magento Module
 
-## Install the Magento 2 Plugin
+### Step 1: Copy the Module Files
 
-### Step 1: Extract and Move the Plugin Files
+Extract the `Magento2Plugin` package. Move the `app` folder from inside its `src` directory into the root folder of your Magento installation.
 
-Extract the `Magento2Plugin` package.
+### Step 2: Enable the Module
 
-Then move the `app` folder from inside the `src` directory into the root directory of your Magento installation.
-
-### Step 2: Enable the Magento Module
-
-Run the following commands in your Magento root directory:
+Run these commands in the Magento root folder:
 
 ```bash
 php bin/magento module:enable Webkul_ProductImportQueue
@@ -32,80 +27,73 @@ php bin/magento setup:di:compile
 php bin/magento setup:static-content:deploy
 ```
 
-| Command | Purpose |
+| Command | What it does |
 |---|---|
-| `php bin/magento module:enable Webkul_ProductImportQueue` | Enables the required Magento module. |
-| `php bin/magento setup:upgrade` | Applies module database/schema updates. |
-| `php bin/magento setup:di:compile` | Rebuilds Magento dependency injection classes. |
-| `php bin/magento setup:static-content:deploy` | Publishes static frontend/admin assets. |
+| `module:enable` | Turns the module on. |
+| `setup:upgrade` | Applies the module's database changes. |
+| `setup:di:compile` | Rebuilds Magento's generated classes. |
+| `setup:static-content:deploy` | Publishes static files for the storefront and admin. |
 
-### Step 3: Flush Cache and Reindex
-
-After enabling the module, run the following commands:
+### Step 3: Clear the Cache and Reindex
 
 ```bash
 php bin/magento cache:clean
 php bin/magento indexer:reindex
 ```
 
-| Command | Purpose |
-|---|---|
-| `php bin/magento cache:clean` | Clears Magento cache entries after module setup. |
-| `php bin/magento indexer:reindex` | Rebuilds Magento indexes for updated data visibility. |
+## Install the Connector in UnoPim
 
-## Install the UnoPim Magento 2 Connector
+### Step 1: Add the Package Files
 
-Unzip the connector package and merge the `packages` folder into the root directory of your UnoPim project.
+Unzip the connector package. Merge its `packages` folder into the root folder of your UnoPim project.
 
-## Register the Package Provider
+### Step 2: Register the Service Provider
 
-Open the `bootstrap/providers.php` file and add the following import:
+Open `bootstrap/providers.php`. Add this import at the top:
 
 ```php
 use Webkul\Magento2\Providers\Magento2ServiceProvider;
 ```
 
-Then, inside the returned `providers` array, add:
+Then add this line inside the returned array:
 
 ```php
 Magento2ServiceProvider::class,
 ```
 
 > [!NOTE]
-> This registers `Magento2ServiceProvider` in Laravel so the connector can bootstrap its services, routes, and package configuration during application startup.
+> The provider loads the connector's routes, migrations, and settings when UnoPim starts.
 
-## Update Composer Autoload
+### Step 3: Add the Autoload Path
 
-Open the `composer.json` file and add the following line under the `psr-4` section:
+Open `composer.json`. Under `autoload` > `psr-4`, add:
 
 ```json
 "Webkul\\Magento2\\": "packages/Webkul/Magento2/src"
 ```
 
-## Run the Installation Commands
+### Step 4: Run the Install Commands
 
-Run the following commands from your UnoPim project root:
-
-### Dump Composer Autoload
+Run these from the UnoPim project root:
 
 ```bash
 composer dump-autoload
-```
-
-### Install the Magento 2 Package
-
-```bash
 php artisan magento-package:install
-```
-
-### Clear the Application Cache
-
-```bash
 php artisan optimize:clear
 ```
 
-| Command | Purpose |
+| Command | What it does |
 |---|---|
-| `composer dump-autoload` | Regenerates Composer's autoloader mapping to include the newly added namespace. |
-| `php artisan magento-package:install` | Runs the connector installer to apply required setup tasks. |
-| `php artisan optimize:clear` | Clears all cached files (bootstrap, configuration, routes, and views) to load the new changes. |
+| `composer dump-autoload` | Lets PHP find the new `Webkul\Magento2` classes. |
+| `php artisan magento-package:install` | Asks whether to run the migrations (answer yes the first time) and publishes the connector config. |
+| `php artisan optimize:clear` | Clears cached config, routes, and views so the new menu shows up. |
+
+## Check the Install
+
+Sign in to the UnoPim admin. You should see **Magento2** in the sidebar with **Credentials** under it. If it is missing, run `php artisan optimize:clear` again and reload the page.
+
+Your admin role also needs the Magento2 permissions. Open **Settings > Roles**, edit the role, and tick the Magento2 entries. Next, [set up your credentials](./setup-credentials).
+
+## Upgrading
+
+After you replace the package files with a newer version, run `php artisan migrate` and `php artisan optimize:clear`. Newer versions add database changes, for example encrypted secrets and per-credential mappings.

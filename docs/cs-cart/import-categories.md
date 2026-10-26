@@ -1,44 +1,46 @@
 # Import categories
 
-Pull your CS-Cart category tree into UnoPim, keeping the parent / child hierarchy intact.
+Pull your CS-Cart category tree into UnoPim with its parent and child links and its images.
 
-> **Before you start.** Add a [CS-Cart credential](./credentials) and [map locales](./locale-mapping).
+> **Before you start.** Add a [credential](./credentials), [map your locales](./locale-mapping), and [map category fields](./category-mapping).
 
-**Open it from:** *Data Transfer → Import*
+**Open it from:** *Data Transfer → Imports*
 
-![Create import profile page](./assets/import/data-transfer.png)
+## 1. Create the profile
 
-## Steps
+1. Open **Data Transfer → Imports** and click **Create Import**.
 
-### 1. Create the profile
+![Create import page](./assets/import/create-import.png)
 
-1. Open **Data Transfer → Import → + Create Import**.
+2. **Type** - pick **CS-Cart Category Import**.
+3. **Code** - a short identifier, e.g. `cscart_categories_import`.
 
-![Create import profile form](./assets/import/create-import.png)
+![CS-Cart Category Import profile](./assets/import/category-import.png)
 
-2. **Type** - pick **CsCart Categories Import**, **Code** - any short identifier, e.g. `cscart_categories_import`.
-
-![Import profile form filled](./assets/import/category-import.png)
-
-3. **Fill the filter**
+## 2. Fill the filters
 
 | Filter | Required | What it does |
 |--|--|--|
-| **Credential** | ✓ | Which CS-Cart store to pull from. |
-| **Store** | ✓ | The source CS-Cart storefront. |
-| **Channel** | ✓ | The UnoPim channel that owns the imported categories. |
-| **Locale** | ✓ | One or more UnoPim locales to import category names and descriptions for. |
+| **CS-Cart Credential** | ✓ | The CS-Cart store to import from. |
+| **Store Name** | ✓ | The CS-Cart storefront (company) to read. |
+| **Channel** | ✓ | Top-level CS-Cart categories are placed under this channel's root category. |
+| **Locale** | ✓ | One or more locales to fill. Each must be [mapped](./locale-mapping). |
 
-![Import profile filters](./assets/import/category-settings.png)
+![Import filters](./assets/import/category-settings.png)
 
-Click **Save**.
+## 3. Run it
 
-4. **Run it**
+Click **Save changes** in the bar at the bottom. UnoPim opens the profile page. Click **Import Now**.
 
-Open the profile and click **Start Import**.
+![Import Now button](./assets/import/category-import-now.png)
 
-![Start import button](./assets/import/category-import-now.png)
+The job runs in the queue. Follow it on **Data Transfer → Job Tracker**.
 
-The job is queued. Watch progress in the Data Transfer Tracker.
+![Job Tracker progress](./assets/import/category-import-progress.png)
 
-![Tracker import progress](./assets/import/category-import-progress.png)
+## What happens
+
+- The category code is the code it was exported with, or else its CS-Cart **SEO name**. When two categories share an SEO name, the second one gets its own code.
+- Field values land in the UnoPim fields set in [Map categories](./category-mapping).
+- When a **Category Media** field is set, the CS-Cart category image is downloaded into it.
+- A category that already exists in UnoPim is updated in place.

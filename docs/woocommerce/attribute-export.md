@@ -8,11 +8,9 @@ To create an attribute export job, go to:
 
 `Data Transfer > Exports`
 
-![Exports Navigation](assets/jobs/Data-trnsfer.png)
-
 From the Exports page, click **Create Export** in the top-right corner.
 
-![Create Export Job](assets/jobs/create-export.png)
+![Exports Navigation](assets/jobs/create-Exports.png)
 
 ## Create an Attribute Export Job
 
@@ -25,21 +23,19 @@ While creating the export job, the user needs to:
 
 ## Attribute Export Filters
 
-After selecting the attribute export job type, configure the following filters as needed:
+After selecting the attribute export job type, configure the following options under **Output**:
 
 - **WooCommerce Store URL**: Select the required WooCommerce store credentials.
-- **Channel**: Select the channel to use for the export.
-- **Locale**: Select the required locale.
-- **Additional Attribute for Mapping**: Select the additional attribute that should be used for mapping during export.
+- **Additional Attributes from mapping**: Select the additional attributes (configured in the credential's attribute mapping) that should also be exported.
 
-![Attribute Export Filters](assets/jobs/attribute-fields.png)
+![Attribute Export Filters](assets/jobs/save-attribute-export.png)
 
 ## Save and Run the Export Job
 
-After completing the required fields, click **Save Export** to create and save the export job.
+After completing the required fields, click **Save changes** to create and save the export job.
 
 Once the job is run, the export progress can be tracked from the **Job Tracker**.
 
-![Job Tracker](assets/jobs/attribute-complete.png)
+![Job Tracker](assets/jobs/After-attribute-export.png)
 
 After the export completes successfully, the selected attributes will be available in the connected WooCommerce store.

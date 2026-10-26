@@ -36,9 +36,9 @@ Disconnecting here removes the subscription only. Delivery history is kept.
 
 ### What Unreachable means
 
-A subscription is marked Unreachable after **five consecutive failed deliveries**. It is not deleted, and its history stays.
+A subscription is marked Unreachable after **five consecutive failed deliveries**, or at once if n8n answers 404 or 410. It is not deleted, and its history stays.
 
-This is deliberate. n8n runs on your own infrastructure, so a webhook that stops answering is far more often a stopped container than a deleted workflow. Switching the workflow on again in n8n re registers it and clears the failure count, so the subscription recovers by itself.
+This is deliberate. n8n runs on your own infrastructure, so a webhook that stops answering is far more often a stopped container than a deleted workflow. An Unreachable subscription is switched back on by itself after a cool down, 15 minutes by default, unless n8n said the webhook is gone. Switching the workflow on again in n8n re registers it and clears the failure count in either case.
 
 ---
 

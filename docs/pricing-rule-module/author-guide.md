@@ -1,18 +1,18 @@
 # Author Guide
 
-A **Rule Author** is any admin user with `create` and `edit` permissions on the Dynamic Pricing Rule module. Authors define what each rule does — its code, conditions, and actions — but do not necessarily run it.
+A **Rule Author** is any admin user with `create` and `edit` permissions on the Dynamic Pricing Rule module. Authors define what each rule does: its code, conditions, and actions, but do not necessarily run it.
 
 ## Opening the module
 
 In the admin panel, click **Pricing Rule** in the sidebar. The listing page shows every saved rule with a summary of its conditions and actions, and is the entry point for creating new ones.
 
 ::: tip
-A rule without saved conditions or saved actions is considered incomplete. Incomplete rules can still be opened for editing but cannot be executed — the Execute button is disabled for them.
+A rule without saved conditions or saved actions is considered incomplete. Incomplete rules can still be opened for editing but cannot be executed. The Execute button is disabled for them.
 :::
 
 ## Creating a rule
 
-### Step 1 — Enter the rule code
+### Step 1: Enter the rule code
 
 1. Click **Create Rule** on the listing page.
 2. A modal dialog opens. Enter a unique **Code**.
@@ -28,7 +28,9 @@ channel-sale-price
 
 After saving, Unopim navigates you to the rule editor where conditions and actions are configured.
 
-### Step 2 — Configure conditions
+![Create New Rule dialog with the rule code filled in](./assets/author/create-rule-modal.webp)
+
+### Step 2: Configure conditions
 
 The **Condition** tab decides which products a rule applies to.
 
@@ -37,14 +39,14 @@ The **Condition** tab decides which products a rule applies to.
 3. Choose the required **Locale** using the locale switcher.
 4. Click **Add Attribute**.
 5. Fill in the condition row:
-   - **Attribute** — any product attribute available in Unopim
-   - **Operation** — `Contain` or `Is Equal to`
-   - **Value** — the text value to match
+   - **Attribute**: any product attribute available in Unopim
+   - **Operation**: `Contain` or `Is Equal to`
+   - **Value**: the text value to match
 6. Repeat **Add Attribute** to add more condition rows.
 7. Click **Save** in the page save bar (top of the editor).
 
 ::: warning
-Conditions are saved per channel/locale pair. Switching channel or locale shows the conditions stored for that combination. If you switch while there are unsaved changes, the editor prompts you to confirm — switching discards unsaved changes in the current view.
+Conditions are saved per channel/locale pair. Switching channel or locale shows the conditions stored for that combination. If you switch while there are unsaved changes, the editor prompts you to confirm, because switching discards unsaved changes in the current view.
 :::
 
 #### Example condition setups
@@ -57,7 +59,9 @@ Conditions are saved per channel/locale pair. Switching channel or locale shows 
 
 To remove a condition row, click the delete icon at the end of the row.
 
-### Step 3 — Configure actions
+![Condition tab with one filled condition row for the Master Catalog channel and English locale](./assets/author/condition-tab.webp)
+
+### Step 3: Configure actions
 
 The **Action** tab defines what gets written to matching products.
 
@@ -65,22 +69,23 @@ The **Action** tab defines what gets written to matching products.
 2. Choose the required **Channel** and **Locale** using the switchers.
 3. Click **Add Attribute**.
 4. Fill in the action row:
-   - **Attribute** — a product attribute of type `price`
-   - **Currency** — one of the currencies assigned to the selected channel
-   - **Value** — the numeric amount to write (must be zero or positive)
+   - **Attribute**: a product attribute of type `price`
+   - **Currency**: one of the currencies assigned to the selected channel
+   - **Value**: the numeric amount to write (must be zero or positive)
 5. Repeat **Add Attribute** to add more action rows.
 6. Click **Save** in the page save bar.
 
 #### Example action setup
 
 - Attribute: `price`
-- Currency: `USD`
+- Currency: `EUR`
 - Value: `499`
 
-This writes `499` into the `price` attribute for every matching product under the selected channel + locale + USD path.
+This writes `499` into the `price` attribute for every matching product under the selected channel + locale + EUR path.
 
+![Action tab with one filled price action row for the Master Catalog channel and English locale](./assets/author/action-tab.webp)
 ::: warning
-The action assigns the exact value you enter — it is a direct price assignment, not a formula-based discount. The value is written as-is to the target attribute.
+The action assigns the exact value you enter. It is a direct price assignment, not a formula-based discount. The value is written as-is to the target attribute.
 :::
 
 ## Editing a rule
@@ -90,7 +95,7 @@ The action assigns the exact value you enter — it is a direct price assignment
 3. Modify conditions or actions on the respective tab.
 4. Click **Save** in the page save bar to apply changes, or **Discard** to revert to the last saved state.
 
-The editor stays on the active tab after saving — there is no page reload or redirect.
+The editor stays on the active tab after saving. There is no page reload or redirect.
 
 ## Viewing rule history
 
@@ -98,19 +103,21 @@ Switch to the **History** tab inside the rule editor to see a timeline of every 
 
 History records show the values that changed, making it easy to correlate "who edited this rule before last night's run."
 
+![History tab showing the three saved versions of the rule](./assets/author/history-tab.webp)
+
 ## Deleting a rule
 
-- **Single delete** — click the **Delete** icon on the rule row in the listing.
-- **Mass delete** — select multiple rows and choose **Delete** from the mass-action dropdown.
+- **Single delete**: click the **Delete** icon on the rule row in the listing.
+- **Mass delete**: select multiple rows and choose **Delete** from the mass-action dropdown.
 
 Deleted rules are removed from the listing and cannot be executed.
 
 ## What authors should not do
 
-- Edit the wrong channel/locale by mistake — always verify the channel and locale switchers before modifying conditions or actions.
-- Mix unrelated business logic in one rule — keep one purpose per rule (one channel sale, one B2B update, etc.).
-- Leave the Action tab empty — a rule without an action does nothing and cannot be executed.
-- Use spaces or special characters in the rule code — only letters, digits, and hyphens are accepted.
+- Edit the wrong channel/locale by mistake: always verify the channel and locale switchers before modifying conditions or actions.
+- Mix unrelated business logic in one rule: keep one purpose per rule (one channel sale, one B2B update, etc.).
+- Leave the Action tab empty. A rule without an action does nothing and cannot be executed.
+- Use spaces or special characters in the rule code: only letters, digits, and hyphens are accepted.
 
 ## Best practices
 

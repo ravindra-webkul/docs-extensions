@@ -52,7 +52,7 @@ Attributes come across with their labels, flags, and — for select types — th
 | `pim_catalog_price_collection` | `price` |
 | `pim_catalog_image` | `image` |
 | `pim_catalog_file` | `file` |
-| `pim_catalog_asset_collection` | `asset` |
+| `pim_catalog_asset_collection` | `asset` *(only when the DAM extension is installed — otherwise skipped)* |
 | `pim_catalog_reference_data_simpleselect` | `select` |
 | `pim_catalog_reference_data_multiselect` | `multiselect` |
 | `pim_catalog_table` | **Not supported — skipped** |
@@ -60,6 +60,8 @@ Attributes come across with their labels, flags, and — for select types — th
 | `akeneo_reference_entity_collection` | **Not supported — skipped** |
 
 An attribute with an unsupported type is skipped and the reason is written to the run log, so you can decide how to model it in UnoPim by hand.
+
+A type is only used if UnoPim has it registered. The `asset` type comes from the [UnoPim DAM extension](https://packagist.org/packages/unopim/dam), so without DAM an Akeneo asset-collection attribute is logged as unmappable and skipped instead of being created with a type UnoPim does not know.
 
 ### Flags
 
@@ -145,8 +147,18 @@ Each Akeneo **asset family** becomes a directory in the DAM library, and each as
 - The file used is the asset family's **attribute as main media**.
 - An asset with no main media is skipped, and logged.
 - A media file that fails to download is skipped, and logged with the error.
+- **Re-running updates in place.** An asset imported before gets the new file, size, and type, stays in its folder, and products keep pointing at it — no duplicates. An asset deleted from the DAM is imported again.
+- **Akeneo Community Edition is skipped.** Asset Manager exists only on Akeneo Enterprise / Serenity. Against a Community Edition instance the step logs a warning and finishes, instead of failing the run.
 
 Assets are processed in small batches (10 by default) because each one is a file download.
+
+---
+
+## Association Types
+
+Each Akeneo association type becomes a UnoPim association type with the same code and label. The mapping is recorded, so the **Associations** step later files every association under the type Akeneo declared — instead of folding an unknown type into related products.
+
+Run it before **Associations**; the dependency order does this for you.
 
 ---
 
@@ -215,11 +227,11 @@ Akeneo's `locale` and `scope` on each value map directly onto UnoPim's value buc
 | **Date** | A **calendar date** (`YYYY-MM-DD`) — the time part of an Akeneo timestamp is dropped, which is what UnoPim's date attributes and the search index expect. |
 | **Metric / measurement** | When the UnoPim attribute is a measurement attribute, the amount **and its unit** are kept as a measurement value. Otherwise only the amount is stored. |
 | **Asset collection** | The matching DAM asset IDs, resolved through the recorded asset mappings. |
-| **Image / file / gallery** | Downloaded from Akeneo and stored in UnoPim's public media storage. |
+| **Image / file / gallery** | Downloaded from Akeneo and stored on UnoPim's default filesystem disk — AWS S3 when the AWS integration is enabled. Skipped when **With media** is off in the [import filters](./import-filters). |
 
 ### Associations
 
-Akeneo product associations are carried across onto UnoPim's product relations:
+The **Associations** entity runs last, once every product and configurable exists, and carries Akeneo product associations across onto UnoPim's product relations:
 
 | Akeneo association type | UnoPim relation |
 |---|---|

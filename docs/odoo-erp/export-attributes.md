@@ -1,69 +1,53 @@
-# UnoPim - Export Jobs
+# Export Attributes
 
-Exporting Catalog Information to Odoo
-
+Export UnoPim attributes and their options to Odoo.
 
 ## Overview
 
-In this module, you will find the following types of export jobs for exporting catalog information to Odoo.
+The **Odoo Attribute** export job creates or updates **product attributes** and their **values** in Odoo. Run it before exporting products, so that configurable products can use these attributes for their variants.
 
+Only **select**, **multiselect** and **checkbox** attributes are exported - these are the attribute types Odoo can use as product attributes.
 
-## Odoo Export Attribute
+## Step 1 - Open Exports
 
-Once you select this job, you can export all the UnoPim attributes and options to Odoo.
+In the sidebar, go to **Data Transfer → Exports** and click **Create Export**.
 
+![Exports list](./assets/export-jobs/exports-list.webp)
 
-## How to Export Attributes to Odoo
+## Step 2 - Enter a Code and Select the Type
 
-Follow these steps to export your UnoPim attributes to Odoo:
+Enter a unique **Code** for the job, e.g. `odoo_attribute_export`. Open the **Type** dropdown and choose **Odoo Attribute**.
 
-### Step 1: Go to Data Transfer
+![Choose an Odoo export type](./assets/export-jobs/export-type.webp)
 
-Navigate to the **Data Transfer** section from the main menu.
+## Step 3 - Set the Filters
 
-![Data Transfer](./assets/export-jobs/export-attribute.png)
+![Odoo Attribute export filters](./assets/export-jobs/attribute-filters.webp)
 
-### Step 2: Select Exports
+| Filter | What it does |
+|---|---|
+| **Odoo credentials** | The Odoo store to export to. Required. |
+| **Channel** | The UnoPim channel to read labels from. Required. |
+| **Locale** | One or more locales for the attribute and option labels. Required. |
+| **Odoo Display Type** | How the attribute is shown in Odoo: **Select**, **Radio**, **Color**, **Pills** or **Multi-checkbox**. Required. |
+| **Attributes** | Pick the attributes to export. Leave it empty to export every select, multiselect and checkbox attribute. |
 
-Click on **Exports** to view the available export options.
+> **Variant creation mode:** attributes exported with the **Multi-checkbox** display type are created in Odoo with variant creation set to **Never** - they describe the product but don't create variants. All other display types use **Instantly**, so they can create variants. If an attribute is already used on products in Odoo, its variant creation mode is left unchanged and a warning is written to the job log.
 
-![Exports](./assets/export-jobs/export-1.png)
+## Step 4 - Save the Export
 
-## Step 3: click on Create Export 
-Click on the **Create Export** button to start configuring your export job.
+Click **Save changes** in the bar at the bottom of the page. The export job page opens.
 
-![Create Export](./assets/export-jobs/create-export-1.png)
+## Step 5 - Run the Export
 
-### Step 4: Select Type
+Click **Export Now** to start the job.
 
-Select **Odoo Export Attribute** as the export type to export all UnoPim attributes and options to Odoo.
+![Export Now](./assets/export-jobs/export-now.webp)
 
-![Select Type](./assets/export-jobs/attribute-type.png)
+## Step 6 - Check the Result
 
-### Step 5: Filter Fields
+UnoPim opens the **Job Tracker**. When the job finishes you'll see how many records were **created** and **updated** in Odoo. Click **Download log** to see warnings or errors for individual attributes.
 
-Apply the desired filters to specify which attributes to export:
+![Attribute export completed](./assets/export-jobs/attribute-export-completed.webp)
 
-- **Odoo Credentials** - Choose the specific Odoo instance or credentials you're exporting to
-- **Channel** - Export attributes associated with a specific sales or eCommerce channel
-- **Locales** - Select the language/localized data you want to include
-- **Display Type** - Filter attributes based on how they are displayed (Radio, Select, Color, Pills, Multi-checkbox)
-- **Filter by Code** - Export only specific attributes using their unique codes
-
-![Filter Fields](./assets/export-jobs/export-filter-field.png)
-
-### Step 6: Save Export
-
-Click the **Save** button to save your export configuration with the selected filters and settings.
-
-![Save Export](./assets/export-jobs/savte-attribute-export.png)
-
-### Step 7: Export Now
-
-Click the **Export Now** button to execute the export job and transfer the filtered attributes to Odoo.
-
-![Export Now](./assets/export-jobs/attribute-export-now.png)
-
-![Export Confirmation](./assets/export-jobs/attribute-exports.png)
-
-
+Run the job again at any time - attributes and options that already exist in Odoo are updated, new ones are created.

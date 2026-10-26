@@ -2,6 +2,7 @@
 
 The Activity log records every sync event: pushes, pulls, conflicts, errors, and remote-source polls. It is the first place to look when something behaves unexpectedly.
 
+![Sync Activity Log](./images/activity.webp)
 
 ## Columns
 

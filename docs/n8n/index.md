@@ -88,9 +88,12 @@ You need:
 
 | Requirement | Details |
 |---|---|
-| **UnoPim** | 3.0+ (Laravel 13) |
+| **Connector version** | 1.0.1 |
+| **n8n node** | [`n8n-nodes-unopim`](https://www.npmjs.com/package/n8n-nodes-unopim) 1.0.5 |
+| **UnoPim** | 3.0+ (Laravel 13), tested on 3.1.3 |
 | **PHP** | 8.4+ |
-| **n8n** | 1.x or newer |
+| **n8n** | 1.x or newer, tested on 2.44.4 |
 | **Node** | 22+ and npm 10+, only if you build the node package yourself |
 | **Network** | UnoPim and n8n must be able to reach each other over HTTP or HTTPS |
 | **Queue** | A worker running `php artisan queue:work --queue=n8n` |
+| **Scheduler** | The Laravel scheduler, so paused subscriptions come back on by themselves |

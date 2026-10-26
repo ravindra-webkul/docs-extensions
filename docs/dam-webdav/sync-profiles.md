@@ -4,6 +4,8 @@ A **Sync Profile** defines the rules applied to any credential bound to it: whic
 
 ## List
 
+![Sync Profiles List](./images/profiles-list.webp)
+
 Columns:
 
 - **Name**
@@ -18,6 +20,8 @@ Columns:
 
 ## Create / Edit
 
+![Create Sync Profile Form](./images/profiles-create.webp)
+
 ### Main fields
 
 | Field | Required | Description |
@@ -27,6 +31,7 @@ Columns:
 | **Root Directory** | No | Limits the client to a subtree of the DAM. Leave blank (or select "All directories") for unrestricted access to the entire DAM. |
 | **Delete Mode** | Yes | How client-side deletions are handled: `hard` (permanent), `soft` (unlinked from directory but not purged), or `trash` (moved to Trash and retained for the configured period). |
 | **Max File MB** | No | Per-file upload limit for this profile, in megabytes (1–102400). Overrides the global setting when set. |
+| **Allowed File Types** | No | Multi-select restriction to allow only specific file categories (`Images`, `Documents`, `Videos`, `Audio`). Leave empty to allow all file types. |
 | **Allowed Roles** | No | When set, only admin users whose role is in this list can use credentials bound to this profile. Leave blank to allow all admin roles. |
 
 ### Permission toggles
@@ -52,9 +57,10 @@ Columns:
 2. Enter a **Name** and pick a **Direction**.
 3. Optionally select a **Root Directory** in the picker to limit the client to a subtree.
 4. Set **Delete Mode** — use `trash` for any external-facing profile to recover accidental deletions.
-5. Toggle **Allow Create / Update / Delete** as needed for the intended use case.
-6. Save.
-7. Go to [Credentials](./credentials) and generate a credential bound to this profile.
+5. Select **Allowed File Types** if you want to restrict uploads to specific formats (Images, Documents, Videos, Audio), or leave empty to allow all types.
+6. Toggle **Allow Create / Update / Delete** as needed for the intended use case.
+7. Save.
+8. Go to [Credentials](./credentials) and generate a credential bound to this profile.
 
 ## Tips
 

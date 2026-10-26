@@ -3,45 +3,44 @@
     "text": "Odoo ERP",
     "items": [
       { "text": "Overview", "link": "/odoo-erp/" },
-      {"text" : "Odoo Setup", "link": "/odoo-erp/odoo-setup" },
-      {"text" : "Installation", "link": "/odoo-erp/installation" },
-      {"text" : "Setup Odoo Credentials in  Unopim", "link": "/odoo-erp/setup-credentials" }
+      { "text": "Odoo Setup", "link": "/odoo-erp/odoo-setup" },
+      { "text": "Installation", "link": "/odoo-erp/installation" },
+      { "text": "Setup Odoo Credentials", "link": "/odoo-erp/setup-credentials" }
     ]
   },
-
   {
-    "text": "Configuration",
+    "text": "Mapping (per Credential)",
     "items": [
-  {"text" : "Attribute Mapping", "link": "/odoo-erp/attribute-mapping" },
-  {"text" : "Additional Mapping", "link" : "/odoo-erp/additional-mapping" },
-  {"text" : "Category Mapping", "link" : "/odoo-erp/category-mapping" }
-
-]
-  },
-
-  {
-    "text":"Export Jobs",
-    "items":[
-      {"text" : "Export Attributes", "link": "/odoo-erp/export-attributes" },
-      {"text" : "Export Categories", "link": "/odoo-erp/export-categories" },
-      {"text" : "Export Products", "link": "/odoo-erp/export-products" }
+      { "text": "Attribute Mapping", "link": "/odoo-erp/attribute-mapping" },
+      { "text": "Additional Attribute Mappings", "link": "/odoo-erp/additional-mapping" },
+      { "text": "Category Field Mapping", "link": "/odoo-erp/category-mapping" },
+      { "text": "Associations Mapping", "link": "/odoo-erp/associations-mapping" },
+      { "text": "Mapping History", "link": "/odoo-erp/mapping-history" }
     ]
   },
-
   {
-    "text":"Import Jobs",
-    "items":[
-      {"text" : "Attribute import", "link": "/odoo-erp/attribute-import" },
-      {"text" : "Category Import", "link": "/odoo-erp/category-import" },
-      {"text" : "Product Import", "link": "/odoo-erp/product-import" },
-      {"text" : "Product Model", "link": "/odoo-erp/product-model-import" }
+    "text": "Export Jobs",
+    "items": [
+      { "text": "Export Attributes", "link": "/odoo-erp/export-attributes" },
+      { "text": "Export Categories", "link": "/odoo-erp/export-categories" },
+      { "text": "Export Products", "link": "/odoo-erp/export-products" },
+      { "text": "Export Product Associations", "link": "/odoo-erp/export-product-associations" }
     ]
   },
-
   {
-    "text":"Support",
-    "items":[
-      {"text" : "Contact & Support", "link": "/odoo-erp/contact" }
+    "text": "Import Jobs",
+    "items": [
+      { "text": "Import Attributes", "link": "/odoo-erp/attribute-import" },
+      { "text": "Import Categories", "link": "/odoo-erp/category-import" },
+      { "text": "Import Products", "link": "/odoo-erp/product-import" },
+      { "text": "Import Product Models", "link": "/odoo-erp/product-model-import" },
+      { "text": "Import Product Associations", "link": "/odoo-erp/product-association-import" }
+    ]
+  },
+  {
+    "text": "Support",
+    "items": [
+      { "text": "Contact & Support", "link": "/odoo-erp/contact" }
     ]
   }
 ]

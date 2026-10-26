@@ -1,49 +1,50 @@
 # Export Category
 
-To export product-related data from UnoPim to Magento 2, you first need to create an export job profile.
+The **Magento Category** job sends UnoPim categories to a Magento 2 store. Run it before the product export, so products can be linked to their categories.
 
-Go to **Data Transfer > Exports > Create Export Profile** to create a new export job.
+## Create the Job
 
-![Create Export Profile](./assets/export/data-transfer.png)
+Go to **Data Transfer > Exports** and click **Create Export**.
 
-![Select Export Type](./assets/export/create-exports.png)
+![Exports list](./assets/export/data-transfer.png)
 
-## Supported Magento 2 Export Job Types
+Enter a unique **Code**, open the **Type** list, and choose **Magento Category**.
 
-The UnoPim Magento 2 Connector supports the following export job types:
+![Choose the export type](./assets/export/create-exports.png)
 
-- **Magento Category**
-- **Magento Attribute**
-- **Magento Attribute Set**
-- **Magento Product** `(includes simple and configurable products)`
+Fill in the filters, then click **Save**.
 
-Use the export type that matches the data you want to send from UnoPim to Magento 2.
+![Magento Category export](./assets/export/export-category.png)
 
-## Exporting Categories to Magento 2
+| Filter | Required | What it does |
+|---|---|---|
+| **Magento Store URL** | Yes | The credential to export to. Disabled credentials are not listed. |
+| **Magento Store Views** | No | Limits the export to these store views. |
+| **With Media** | No | Also sends category images. Off by default. |
 
-To export categories from UnoPim to Magento, create a new export profile and select **Magento Category** as the job type.
+Click **Export** on the job page to start it.
 
-After that, enter a unique code for the job profile and click **Save Export**.
+## What Gets Exported
 
-Then click **Export Now** to start the category export process.
+- Only the categories under the root category of the channel that each selected store view uses. With no store view selected, the job uses the "All Store View" channel.
+- Each category goes to every store view whose channel contains it.
+- The **name** comes from the locale of that store view. If it is empty, the category code is used.
+- **Enable Category** and **Include in Menu** default to on for a new category.
+- Extra values go out as mapped on the [Category Fields](./category-mapping) tab.
 
-![Export Categories](./assets/export/export-category.png)
+## Order Matters
 
-## Important Note
+A category can only be created when its parent exists in Magento. The job works through the tree from the top, in order. If a parent is missing, the child is skipped with the message "The parent category is not exported to Magento yet". Run the job again once the parent is exported.
 
-All categories, including multi-level subcategories, can be exported.
+If you move a category in UnoPim, the next run moves it in Magento too.
 
-You can export any category available in your UnoPim catalog. However, **channel-based category export is not supported** for this Magento 2 connector.
+## Before You Run It
 
-## After Running the Export
+- The **All Store View** row on the credential must be mapped. Otherwise the job logs "The All store view is not mapped".
+- The credential must be switched on.
 
-Wait a few seconds for the export process to complete.
+## After the Run
 
-Once the job finishes, you can view:
+Open the job in **Data Transfer > Job Tracker** to see the status and the counts of created, updated, skipped, and failed rows. Use **Download log** for the reason behind each skipped row.
 
-- The number of categories exported from UnoPim to Magento 2
-- The export job status, such as **Completed**
-
-## View Exported Categories in Magento
-
-After the export is completed, the categories available in UnoPim will also be available in the selected Magento 2 store, based on the export configuration.
+Then check **Catalog > Categories** in Magento. The tree should match UnoPim for the exported channel.

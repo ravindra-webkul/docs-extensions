@@ -1,36 +1,54 @@
 # CS-Cart Connector
 
-Sync your **CS-Cart** store with UnoPim. Push enriched product data out, or pull existing catalog data in to enrich it in UnoPim.
+Store Link: [View on UnoPim Store](https://unopim.com/extensions/cs-cart-unopim-connector/)
+
+---
+
+Sync your **CS-Cart** store with UnoPim. Push enriched product data out to CS-Cart, or pull your existing CS-Cart catalog into UnoPim to enrich it.
 
 <br>
 
 <div align="center">
-  <img src="./assets/intro-banner.png" alt="UnoPim Shopify Connector" width="100%" style="max-height:330px; object-fit:cover; border-radius:18px;" />
+  <img src="./assets/intro-banner.png" alt="UnoPim CS-Cart Connector" width="100%" style="max-height:330px; object-fit:cover; border-radius:18px;" />
 </div>
 
-<br> 
+<br>
 
 ## What you can do
 
-- **Export to CS-Cart** - push UnoPim **attributes**, **categories**, and **products** (with prices, stock, statuses, and images) into your CS-Cart store.
-- **Import from CS-Cart** - pull existing CS-Cart **features**, **categories**, and **products** into UnoPim to enrich them.
-- **Multi-store, multi-locale** - sync to multiple CS-Cart storefronts and map every UnoPim locale to a CS-Cart `lang_code`.
-- **Quick export from the product list** - push a few selected products in one click.
-- **Watch progress** - every import or export shows up live in the Data Transfer Tracker.
+- **Export to CS-Cart** - send UnoPim **attributes** (as CS-Cart features), **categories** (with their images), and **products** (with prices, stock, status, and images).
+- **Import from CS-Cart** - pull CS-Cart **features**, **categories**, and **products** into UnoPim.
+- **Configurable products** - UnoPim products with variants become CS-Cart **variation groups**, and import back the same way. Two-level variant trees are flattened into one CS-Cart group.
+- **Multi-store and multi-locale** - pick the CS-Cart storefront per job and map every UnoPim locale to a CS-Cart language.
+- **Quick export and quick import** - send or fetch selected products straight from the product grid.
+- **Track every job** - imports and exports run in the queue and show up in the **Job Tracker**.
 
-## Requirments
+## What syncs where
+
+| UnoPim | CS-Cart | Export | Import |
+|---|---|:-:|:-:|
+| Attribute (select, multiselect, boolean, number, date, text) | Feature (type S, M, C, N, D, T) | ✓ | ✓ |
+| Attribute options | Feature variants | ✓ | ✓ |
+| Category tree and category image | Categories and category image | ✓ | ✓ |
+| Simple product | Product | ✓ | ✓ |
+| Configurable product and its variants | Variation group | ✓ | ✓ |
+| Product images (incl. DAM assets) | Product images | ✓ | ✓ |
+
+> [!NOTE]
+> The connector creates and updates records. It never deletes anything in CS-Cart or in UnoPim.
+
+## Requirements
 
 | Requirement | Details |
-|---|---| 
-| **UnoPim** | 2.0+ |
-| **PHP** | 8.3+ |
-| **CS-Cart API Account** | API account with *Products* and *Information & Settings* scopes (read or read/write depending on whether you're importing only or also exporting) | 
+|---|---|
+| **UnoPim** | 3.1.3 |
+| **PHP** | 8.4 or later |
+| **CS-Cart** | 4.x store with admin access |
+| **CS-Cart add-on** | `cscart_unopim.zip`, shipped with the connector - see [Installation](./installation#_1-install-the-cs-cart-add-on) |
+| **CS-Cart API access** | An admin user with API access switched on and an API key |
 
 ## Before you start
 
-You need:
-
-1. A working **UnoPim 2.0+** installation.
-2. A **CS-Cart store** (4.x or higher) with admin access.
-3. A **CS-Cart API key** from *User Profile → API* on your CS-Cart admin.
-4. The **CS-Cart Connector** extension installed - see [Installation](./installation).
+1. Install the connector and the CS-Cart add-on - see [Installation](./installation).
+2. Add a credential for your store - see [Add CS-Cart credentials](./credentials).
+3. Map your locales and fields - see [Map locales](./locale-mapping), [Map attributes](./attribute-mapping), and [Map categories](./category-mapping).

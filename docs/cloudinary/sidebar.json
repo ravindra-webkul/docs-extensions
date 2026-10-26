@@ -1,0 +1,29 @@
+[
+  {
+    "text": "Getting Started",
+    "items": [
+      { "text": "Overview", "link": "/cloudinary/" },
+      { "text": "Cloudinary Setup", "link": "/cloudinary/cloudinary-setup" },
+      { "text": "Installation", "link": "/cloudinary/installation" }
+    ]
+  },
+  {
+    "text": "Configuration",
+    "items": [
+      { "text": "Credentials Setup", "link": "/cloudinary/setup" },
+      { "text": "Image Transformations", "link": "/cloudinary/transformations" }
+    ]
+  },
+  {
+    "text": "Media Management",
+    "items": [
+      { "text": "Media Synchronization", "link": "/cloudinary/sync-media" }
+    ]
+  },
+  {
+    "text": "Support",
+    "items": [
+      { "text": "Support", "link": "/cloudinary/support" }
+    ]
+  }
+]
